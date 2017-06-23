@@ -11,11 +11,11 @@
 	input[type=checkbox]:hover + label { background-color: rgb(120,120,120); box-shadow: 0px 0px 3px rgb(255,255,255); transition: 2s; border-radius: 10px; filter: brightness(110%); }
 	input[type=checkbox]:checked + label { background-color: rgb(200,200,200); box-shadow: 0px 0px 3px rgb(200,200,200); transition: 2s; border-radius: 20px; filter: brightness(120%); }
 	input[type=checkbox]:disabled + label { background-color: rgb(100,100,100); transition: 1s; border-radius: 20px; }
-	input[type=checkbox] { visibility: hidden; position: relative; }
+	input[type=checkbox] { visibility: hidden; position: relative; cursor: default; }
 	:placeholder-shown { color: rgb(200,200,200); font-style: italic; }
 	input[type=button], input[type=submit] {border-style: none; border-radius: 2px; background: linear-gradient(rgb(40,40,30), rgb(20,20,10), rgb(30,30,20)); color: rgb(120,120,120); transition: 2s; height: 15px; opacity: 1; }
 	input[type=button]:hover, input[type=submit]:hover { background: linear-gradient(rgb(30,30,20), rgb(10,10,0), rgb(20,20,10)); color: rgb(200,200,200); box-shadow: 0px 0px 1px rgb(40,40,40); transition: 2s; border-radius: 5px; filter: brightness(105%); cursor: pointer; }
-	input[type=button]:disabled, input[type=submit]:disabled { background: linear-gradient(rgb(70,70,70), rgb(90,90,90), rgb(70,70,70)); opacity: 0.5; color: rgb(0,0,0); transition: 2s; }
+	input[type=button]:disabled, input[type=submit]:disabled { background: linear-gradient(rgb(70,70,70), rgb(90,90,90), rgb(70,70,70)); opacity: 0.5; color: rgb(0,0,0); transition: 2s; cursor: default; border-radius: 0px; box-shadow: 0px 0px 0px; }
 	input:not([type=range]):not([type=button]):not([type=submit]):disabled {background-color: rgb(90,90,90); color: rgb(120,120,120); transition: 2s;}
 	input:not([type=range]):not([type=button]):not([type=submit]):disabled:hover {background-color: rgb(20,20,20); color: rgb(30,30,30); transition: 2s; border-radius: 20px;}
 	input[type=range] { opacity: 0; position: absolute; width: 100%; z-index: 2; left: 0; top: -8px; }
