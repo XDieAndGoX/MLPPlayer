@@ -23,4 +23,6 @@ The media player was created for the enjoynment of myself and others. The contro
     10. Apple Bloom is the best theme... and pony. :)
     
     
-[Media Player](http://eternitytrials.000webhostapp.com/) [(Mirror 1)](http://eternitytrials.x10host.com/)
+[Media Player](http://eternitytrials.000webhostapp.com/) - [(Mirror 1)](http://eternitytrials.x10host.com/)
+
+**Note** The files have additional code completely unrelated to the player itself! Although you can see what the other code does by using the links above, focus is not placed on these other tools, so.
