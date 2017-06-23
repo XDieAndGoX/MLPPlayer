@@ -21,3 +21,6 @@ The media player was created for the enjoynment of myself and others. The contro
     9. The Clear Playlist link resets the counter back to 1, clears your song history (which you could access before using the back and next buttons) and lets you start fresh. The song you are currently on upon clearing the playlist will become the new first song in your history, so keep that in mind!  
     
     10. Apple Bloom is the best theme... and pony. :)
+    
+    
+(Media Player)[http://eternitytrials.000webhostapp.com/] ([Mirror 1])[http://eternitytrials.x10host.com/]
