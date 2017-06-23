@@ -23,4 +23,4 @@ The media player was created for the enjoynment of myself and others. The contro
     10. Apple Bloom is the best theme... and pony. :)
     
     
-[edia Player](http://eternitytrials.000webhostapp.com/] [(Mirror 1)](http://eternitytrials.x10host.com/)
+[Media Player](http://eternitytrials.000webhostapp.com/) [(Mirror 1)](http://eternitytrials.x10host.com/)
