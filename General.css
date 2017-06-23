@@ -53,11 +53,11 @@
 	span.AudioImage { position: absolute; top: 0px; }
 	#VolumeBody { width: 7px; height: 7px; position: absolute; top: 6.5px; left: 3px; border-radius: 1px; box-shadow: none; border: none; }
 	#VolumeArc { width: 0; height: 0; border-top: 10px solid transparent; border-right-width: 10px; border-right-style: solid; transform: rotate(135deg); position: absolute; top: 5px; left: 5px; border-radius: 5px 0px 0 0px; }
-	.VolumeBar1 { width: 2px; height: 2px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 10px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 9px; left: 9.5px; }	
-	.VolumeBar2 { width: 4px; height: 4px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 10px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 8px; left: 9.5px; }	
-	.VolumeBar3 { width: 6px; height: 6px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 10px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 7px; left: 10px; }
-	.VolumeBar4 { width: 8px; height: 8px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 10px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 6px; left: 10px; }
-	.VolumeBar5 { width: 10px; height: 10px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 11px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 5px; left: 9.5px; }
+	.VolumeBar1 { width: 1px; height: 1px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 10px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 9px; left: 9.5px; }	
+	.VolumeBar2 { width: 3px; height: 3px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 10px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 8px; left: 9.5px; }	
+	.VolumeBar3 { width: 5px; height: 5px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 10px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 7px; left: 10px; }
+	.VolumeBar4 { width: 7px; height: 7px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 10px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 6px; left: 10px; }
+	.VolumeBar5 { width: 9px; height: 9px; border-style: solid; border-width: 1px 1px 0 0; border-radius: 0 11px 0 0; transform: rotate(44deg); position: absolute; display: inline; top: 5px; left: 9.5px; }
 	#VolumeX { width: 8px; height: 8px; position: absolute; display: inline; top: 3.5px; left: 11px; text-shadow: none; }
 	TD.VolumeControlCell { position: absolute; }
 	Table.VolumeControl { width: 44px; height: 20px; position: relative; left: 8px; border-radius: 15pt; z-index: 3; border-collapse: collapse; overflow: hidden; transition: 0.7s; }
