@@ -2,7 +2,7 @@ The media player was created for the enjoynment of myself and others. The contro
 
 
  # FEATURES:  
-    1. The media player was configured to use `localStorage` to save its settings and remember them when the page is reloaded or visited.  
+    1. The media player was configured to use localStorage to save its settings and remember them when the page is reloaded or visited.  
     
     2. Repeat Mode endlessly repeats the currently playing song until it is unchecked.  
     
