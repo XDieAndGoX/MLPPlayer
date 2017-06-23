@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<HTML lang="en">
+	<head>
+		<Title>Eternity Trials</Title>
+		<meta charset="UTF-8">
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+		<Link rel="stylesheet" type="text/css" href="General.css">
+	</head>
+	<Body>
+		<div class="ContentShade" id="ContentShade">
+		</div>
+		<div id="MediaPlayerContainer">
+			<table id="MediaPlayerSection">
+				<TR>
+					<TD>
+						<Table id="SongTrack">
+							<TR>
+								<TD id="PlayTimeCurrent">
+									<span id="CurrentPlayback">
+										0:00
+									</span>
+								</TD>
+								<TD class="PlayTrackCell">
+									<span class="PlaybackContainer">
+										<span class="RangeTotalLength">
+											<span id="PlayTrackLength">
+												<span id="PlayTrackFill">&nbsp;</span>
+											</span>
+												<span id="PlayTrackThumb">&nbsp;</span>
+										</span>
+										<input type=range step="0.01" id="PlayTrack" value="0">
+									</span>
+								</TD>
+								<TD id="PlayTimeTotal">
+									<span id="TotalPlayback">
+										-0:00
+									</span>
+								</TD>
+							</TR>
+						</Table>
+					</TD>
+				</TR>
+				<TR>
+					<TD class="VolumeControlCell">
+						<Table id="VolumeControlTable">
+							<TR>
+								<TD id="VolumeCell">
+									<span class="AudioImage">
+										<div class="VolumeBody" id="VolumeBody"></div>
+										<div class="VolumeArc" id="VolumeArc"></div>
+										<div class="VolumeBar1" id="VolumeBar1"></div>
+										<div class="VolumeBar2" id="VolumeBar2"></div>
+										<div class="VolumeBar3" id="VolumeBar3"></div>
+										<div class="VolumeBar4" id="VolumeBar4"></div>
+										<div class="VolumeBar5" id="VolumeBar5"></div>
+										<div class="VolumeX" id="VolumeX"></div>
+									</span>
+									<span id="VolumeNumber">
+										100
+									</span>
+								</TD>
+								<TD class="VolumeTrackCell">
+									<span class="RangeTotalLength">
+										<span id="VolumeLength">
+											<span id="VolumeFill">&nbsp;</span>
+										</span>
+										<span id="VolumeThumb">&nbsp;</span>
+										<input class="VolumeControl" value="100" accesskey="X" id="VolumeSlider" type=range>
+									</span>
+								</TD>
+							</TR>
+						</Table>
+						<div id="SongCount">
+							Listened to<br><span id="ListenedSongs"></span> out of <span id="NumberOfSongs"></span> Available Songs
+						</div>
+					</TD>
+				</TR>
+				<TR>
+					<TD class="PlayButtonsCell">
+						<span class="PlayButtonsSection">
+							<input type="button" id="PreviousSong" value="|<<" disabled accesskey=",">
+							<input type="button" id="PlayButton" Value="Play" accesskey="P">
+							<input type="button" id="NextSong" value=">>|" accesskey=".">
+						</span>
+					</TD>
+				</TR>
+				<TR>
+					<TD class="CheckboxesCell">
+						<Table id="CheckboxesSection">
+							<TR>
+								<TD class="Repeat">
+										Repeat:
+								</TD>
+								<TD class="CheckboxInput">
+									<input type="checkbox" id="RepeatModeCheck" accesskey="R"><label for="RepeatModeCheck"></label>
+								</TD>
+							</TR>
+							<TR>
+								<TD class="Shuffle">
+										Shuffle:
+								</TD>
+								<TD class="CheckboxInput">
+									<input type="checkbox" id="ShuffleModeCheck" accesskey="S"><label for="ShuffleModeCheck"></label>
+								</TD>
+							</TR>
+							<TR>
+								<TD class="Loop">
+										&nbsp;&nbsp;&nbsp;Loop:
+								</TD>
+								<TD class="CheckboxInput">
+									<input type="checkbox" id="LoopModeCheck" accesskey="O"><label for="LoopModeCheck"></label>
+								</TD>
+							</TR>
+							<TR>
+								<TD class="Theme">
+										&nbsp;&nbsp;&nbsp;Theme:
+								</TD>
+								<TD class="CheckboxInput">
+									<input type="checkbox" id="ThemeModeCheck" accesskey="T"><label for="ThemeModeCheck"></label>
+								</TD>
+							</TR>
+						</Table>
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<Span class="PlayerLinks" id="PlayerLinks">
+							<A id="PortablePlayerLink" accesskey="W">[Portable Player]</A> <span>-</span> <A id="ClearPlaylistLink" accesskey="C">[Clear Playlist]</A><br><span id="PlayerSize">Size:</span> <A id="ScaleLinkx1" accesskey="1">x1</A> <span>-</span> <A id="ScaleLinkx2" accesskey="2">x2</A> <span>-</span> <A id="ScaleLinkx3" accesskey="3">x3</A> <span>-</span> <A id="ScaleLinkx4" accesskey="4">x4</A> <span>|</span>
+							<span class="ThemeSelectionContainer">
+								<div id="ThemeSelection">
+								</div>
+							</span>
+						</span>
+					</TD>
+				</TR>
+				<TR>
+					<TD class="CurrentlyPlayingList">
+						<span id="CurrentlyPlaying">
+							Currently Playing
+						</span>
+						<div class="SongListContainer" id="SongListContainer">
+							<div id="SongCategory">
+							</div>
+							<div id="SongSelection">
+							</div>
+							<div class="Scrollable">
+								<div class="ArrowUp" id="ArrowUp">
+								</div>
+								<div class="ArrowDown" id="ArrowDown">
+								</div>
+							</div>
+						</div>
+					</TD>
+				</TR>
+			</Table>
+		</div>
+		<div class="MainContent" id="MainContent">
+			<div class="Introduction">
+				I am well aware that this is empty, dull, unexciting, and whatever else you come up with to call this site, but I was never planning on doing anything big and flashy... <sub>for now.</sub><br>
+				For the time being however, you will only find links to useful tools and whatever random pages I feel like making (You are all at the mercy of my whimsical cravings), so come check this page once in a while for links to new exciting things!<br>
+				Oh yeah! If you want to choose the song you want to listen to, just hover your mouse over its title to expand the list and select the song you want!
+			</div>
+			<div class="Tools">
+				Tools
+			</div>
+			<div class="LinkDescription">
+				<A href=javascript:void(0); id="StopwatchLink" class="ToolLinks">
+					Stopwatch/Timer
+				</A>
+				Count up -OR- down... Why? I'uuno, just do it! How do you do it You may ask... Well, putting aside the hysterical assumption you do not know how to work a stopwatch or timer, let me explain. All you need to do is set the time (provided you want to count down or, for some odd reason, count up from a certain point in time.) Too lazy to set the time? No problem. Just hit the "Count" button and it will count the seconds you have wasted playing with this tool all the way from 0. :) Want to count down? Again, no problem! Just "Pause" the current count first and then count down from that very point! Running marathons to lose some extra fat? See how you improve in each lap by saving up to 5 different counts of the time! Whether up or down, it is recorded for your personal use. Close the window when you are bored of using it though which will probably be before you count to 5. Enjoy! :)
+			</div>
+			<div class="LinkDescription">
+				<A href=javascript:void(0); id="HTMLPreviewLink" class="ToolLinks">
+					HTML Preview
+				</A>
+				Test your coding skills in real time! Make something awesome by watching your code come to life as you type it! Sounds cool? It is. There is a reason this is here, right? Right.
+			</div>
+		<div class="Donations">
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="CWG3LFS4Y4ZH2">
+				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
+		</div>
+		</div>
+		<span id="HiddenPlayerContainer">
+			<audio id="BackgroundMusic" class="BackgroundMusic">
+				<source src="A%20Changeling%20Can%20Change.mp3" type="audio/mp3" title="A Changeling Can Change">
+				<source src="A%20Friend%20For%20Life.mp3" type="audio/mp3" title="A Friend For Life">
+				<source src="A%20True,%20True%20Friend.mp3" type="audio/mp3" title="A True, True Friend">				
+				<source src="ACADECA.mp3" type="audio/mp3" title="ACADECA">
+				<source src="Apples%20to%20the%20Core.mp3" type="audio/mp3" title="Apples to the Core">
+				<source src="Art%20of%20the%20Dress%20%28Reprise%29.mp3" type="audio/mp3" title="Art of the Dress (Reprise)">
+				<source src="Art%20of%20the%20Dress.mp3" type="audio/mp3" title="Art of the Dress">
+				<source src="At%20the%20Gala.mp3" type="audio/mp3" title="At The Gala">
+				<source src="Babs%20Seed.mp3" type="audio/mp3" title="Babs Seed">
+				<source src="Ballad%20of%20the%20Crystal%20Ponies.mp3" type="audio/mp3" title="Ballad of the Crystal Ponies">
+				<source src="Bats.mp3" type="audio/mp3" title="Bats">
+				<source src="BBBFF.mp3" type="audio/mp3" title="BBBFF">
+				<source src="Becoming%20Popular.mp3" type="audio/mp3" title="Becoming Popular">
+				<source src="Behold,%20Princess%20Twilight%20Sparkle.mp3" type="audio/mp3" title="Behold, Princess Twilight Sparkle">
+				<source src="Best%20Friends%20Until%20the%20End%20of%20Time.mp3" type="audio/mp3" title="Best Friends Until the End of Time">
+				<source src="The%20Best%20Place%20for%20Me.mp3" type="audio/mp3" title="The Best Place for Me">
+				<source src="Cafeteria%20Song.mp3" type="audio/mp3" title="Cafeteria Song">
+				<source src="Can%20I%20Do%20It%20On%20My%20Own.mp3" type="audio/mp3" title="Can I Do It On My Own">
+				<source src="Celestia's%20Ballad.mp3" type="audio/mp3" title="Celestia's Ballad">
+				<source src="Cheese%20Confesses.mp3" type="audio/mp3" title="Cheese Confesses">
+				<source src="CHS%20Rally%20Song.mp3" type="audio/mp3" title="CHS Rally Song">
+				<source src="CMC%20Go%20Crusading.mp3" type="audio/mp3" title="CMC Go Crusading">
+				<source src="Cupcakes.mp3" type="audio/mp3" title="Cupcakes">
+				<source src="Cutie%20Mark%20Crusaders.mp3" type="audio/mp3" title="Cutie Mark Crusaders">
+				<source src="Dance%20Magic.mp3" type="audio/mp3" title="Dance Magic">
+				<source src="Days%20Gone%20By.mp3" type="audio/mp3" title="Days Gone By">
+				<source src="Deck%20the%20Halls.mp3" type="audio/mp3" title="Deck the Halls">
+				<source src="Derby%20Racers.mp3" type="audio/mp3" title="Derby Racers">
+				<source src="Embrace%20the%20Magic.mp3" type="audio/mp3" title="Embrace the Magic">
+				<source src="Equestria,%20The%20Land%20I%20Love.mp3" type="audio/mp3" title="Equestria, The Land I Love">
+				<source src="Equestria%20Girls%20(feat.%20Danielkon).mp3" type="audio/mp3" title="Equestria Girls (feat. Danielkon)">
+				<source src="Find%20a%20Way.mp3" type="audio/mp3" title="Find a Way">
+				<source src="Find%20the%20Music%20In%20You.mp3" type="audio/mp3" title="Find the Music In You">
+				<source src="Find%20The%20Purpose%20In%20Your%20Life.mp3" type="audio/mp3" title="Find The Purpose In Your Life">
+				<source src="The%20Flim%20Flam%20Cider%20Song.mp3" type="audio/mp3" title="The Flim Flam Cider Song">
+				<source src="Flim%20Flam%20Miracle%20Curative%20Tonic.mp3" type="audio/mp3" title="Flim Flam Miracle Tonic">
+				<source src="Friends%20Are%20Always%20There%20For%20You.mp3" type="audio/mp3" title="Friends Are Always There For You">
+				<source src="The%20Friendship%20Games.mp3" type="audio/mp3" title="The Friendship Games">
+				<source src="Friendship%20Through%20the%20Ages.mp3" type="audio/mp3" title="Friendship Through the Ages">
+				<source src="Generosity.mp3" type="audio/mp3" title="Generosity">
+				<source src="Glass%20of%20Water.mp3" type="audio/mp3" title="Glass of Water">
+				<source src="The%20Goof%20Off.mp3" type="audio/mp3" title="The Goof Off">
+				<source src="Hearth's%20Warming%20Eve%20Is%20Here%20Once%20Again.mp3" type="audio/mp3" title="Hearth's Warming Is Here Once Again">
+				<source src="The%20Heart%20Carol.mp3" type="audio/mp3" title="The Heart Carol">
+				<source src="Hearts%20as%20Strong%20as%20Horses.mp3" type="audio/mp3" title="Hearts as Strong as Horses">
+				<source src="Hearts%20as%20Strong%20as%20Horses%20%28Reprise%29.mp3" type="audio/mp3" title="Hearts as Strong as Horses (Reprise)">
+				<source src="Hope%20Shines%20Eternal.mp3" type="audio/mp3" title="Hope Shines Eternal">
+				<source src="Hush%20Now,%20Little%20Sister.mp3" type="audio/mp3" title="Hush Now, Little Sister">
+				<source src="Hush%20Now,%20Quiet%20Now.mp3" type="audio/mp3" title="Hush Now, Quiet Now">
+				<source src="I'll%20Fly.mp3" type="audio/mp3" title="I'll Fly">
+				<source src="In%20Our%20Town.mp3" type="audio/mp3" title="In Our Town">
+				<source src="It's%20a%20Pony%20Kind%20of%20Christmas.mp3" type="audio/mp3" title="It's a Pony Kind of Christmas">
+				<source src="It's%20Gonna%20Work.mp3" type="audio/mp3" title="It's Gonna Work">
+				<source src="Jingle%20Bells.mp3" type="audio/mp3" title="Jingle Bells">
+				<source src="Jolly%20ol'%20St.%20Nick.mp3" type="audio/mp3" title="Jolly ol' St. Nick">
+				<source src="The%20Laughter%20Song.mp3" type="audio/mp3" title="The Laughter Song">
+				<source src="Last%20Year%20I%20Got%20Coal%20for%20Christmas.mp3" type="audio/mp3" title="Last Year I Got Coal for Christmas">
+				<source src="Legend%20of%20Everfree%20(Main%20Title).mp3" type="audio/mp3" title="Legend of Everfree (Main Title)">
+				<source src="Legend%20You%20Are%20Meant%20To%20Be.mp3" type="audio/mp3" title="Legend You Are Meant To Be">
+				<source src="Let%20the%20Rainbow%20Remind%20You.mp3" type="audio/mp3" title="Let The Rainbow Remind You">
+				<source src="Life%20in%20Equestria.mp3" type="audio/mp3" title="Life in Equestria">
+				<source src="Life%20Is%20a%20Runway.mp3" type="audio/mp3" title="Life Is a Runway">
+				<source src="Light%20of%20Your%20Cutie%20Mark.mp3" type="audio/mp3" title="Light of Your Cutie Mark">
+				<source src="Love%20Is%20in%20Bloom.mp3" type="audio/mp3" title="Love is in Bloom">
+				<source src="Luna's%20Future.mp3" type="audio/mp3" title="Luna's Future">
+				<source src="The%20Magic%20Inside.mp3" type="audio/mp3" title="The Magic Inside">
+				<source src="Make%20a%20Wish.mp3" type="audio/mp3" title="Make a Wish">
+				<source src="Make%20This%20Castle%20a%20Home.mp3" type="audio/mp3" title="Make This Castle A Home">
+				<source src="May%20the%20Best%20Pet%20Win.mp3" type="audio/mp3" title="May the Best Pet Win">
+				<source src="The%20Midnight%20in%20Me.mp3" type="audio/mp3" title="The Midnight in Me">
+				<source src="Morning%20In%20Ponyville.mp3" type="audio/mp3" title="Morning In Ponyville">
+				<source src="My%20Little%20Pony%20Theme.mp3" type="audio/mp3" title="My Little Pony Theme">
+				<source src="My%20Past%20Is%20Not%20Today.mp3" type="audio/mp3" title="My Past Is Not Today">
+				<source src="Out%20On%20My%20Own.mp3" type="audio/mp3" title="Out On My Own">
+				<source src="The%20Perfect%20Stallion.mp3" type="audio/mp3" title="The Perfect Stallion">
+				<source src="Pinkie%20the%20Party%20Planner.mp3" type="audio/mp3" title="Pinkie the Party Planner">
+				<source src="Pinkie's%20Lament.mp3" type="audio/mp3" title="Pinkie's Lament">
+				<source src="Pinkie's%20Present.mp3" type="audio/mp3" title="Pinkie's Present">
+				<source src="Pony%20Pokey.mp3" type="audio/mp3" title="Pony Pokey">
+				<source src="The%20Pony%20I%20Want%20To%20Be%20%28Reprise%29.mp3" type="audio/mp3" title="The Pony I Want To Be (Reprise)">
+				<source src="The%20Pony%20I%20Want%20To%20Be.mp3" type="audio/mp3" title="The Pony I Want To Be">
+				<source src="Raise%20This%20Barn.mp3" type="audio/mp3" title="Raise This Barn">
+				<source src="Rappin'%20History%20of%20the%20Wonderbolts.mp3" type="audio/mp3" title="Rappin' History of the Wonderbolts">
+				<source src="Right%20There%20in%20Front%20of%20Me.mp3" type="audio/mp3" title="Right There in Front of Me">
+				<source src="Rules%20of%20Rarity.mp3" type="audio/mp3" title="Rules of Rarity">
+				<source src="Say%20Goodbye%20to%20the%20Holiday.mp3" type="audio/mp3" title="Say Goodbye to the Holiday">
+				<source src="The%20Seeds%20of%20the%20Past.mp3" type="audio/mp3" title="The Seeds of the Past">
+				<source src="Shine%20Like%20Rainbows.mp3" type="audio/mp3" title="Shine Like Rainbows">
+				<source src="Silent%20Night.mp3" type="audio/mp3" title="Silent Night">
+				<source src="Singing%20Telegram.mp3" type="audio/mp3" title="Singing Telegram">
+				<source src="Sisterhood.mp3" type="audio/mp3" title="Sisterhood">
+				<source src="So%20Many%20Wonders.mp3" type="audio/mp3" title="So Many Wonders">
+				<source src="The%20Smile%20Song.mp3" type="audio/mp3" title="The Smile Song">
+				<source src="The%20Spectacle.mp3" type="audio/mp3" title="The Spectacle">
+				<source src="Super%20Duper%20Party%20Pony.mp3" type="audio/mp3" title="Super Duper Party Pony">
+				<source src="This%20Day%20Aria.mp3" type="audio/mp3" title="This Day Aria">
+				<source src="Twelve%20Days%20of%20Christmas.mp3" type="audio/mp3" title="Twelve Days of Christmas">
+				<source src="Twilight's%20Failure%20Song.mp3" type="audio/mp3" title="Twilight's Failure Song">
+				<source src="Twilight's%20Success%20Song.mp3" type="audio/mp3" title="Twilight's Success Song">
+				<source src="Under%20Our%20Spell.mp3" type="audio/mp3" title="Under Our Spell">
+				<source src="Unleash%20the%20Magic.mp3" type="audio/mp3" title="Unleash the Magic">
+				<source src="The%20Vote.mp3" type="audio/mp3" title="The Vote">
+				<source src="We'll%20Make%20Our%20Mark.mp3" type="audio/mp3" title="We'll Make Our Mark">
+				<source src="We'll%20Make%20Our%20Mark%20%28Prologue%29.mp3" type="audio/mp3" title="We'll Make Our Mark (Prologue)">
+				<source src="We%20Will%20Stand%20for%20Everfree.mp3" type="audio/mp3" title="We Will Stand for Everfree">
+				<source src="We%20Wish%20You%20a%20Merry%20Christmas.mp3" type="audio/mp3" title="We Wish You a Merry Christmas">
+				<source src="What%20More%20Is%20Out%20There.mp3" type="audio/mp3" title="What More Is Out There">
+				<source src="What%20My%20Cutie%20Mark%20Is%20Telling%20Me.mp3" type="audio/mp3" title="What My Cutie Mark Is Telling Me">
+				<source src="Winter%20Wrap%20Up.mp3" type="audio/mp3" title="Winter Wrap Up">
+				<source src="You%20Gotta%20Share.mp3" type="audio/mp3" title="You Gotta Share">
+				<source src="You'll%20Play%20Your%20Part.mp3" type="audio/mp3" title="You'll Play Your Part">
+			</audio>
+		</span>
+		<script>
+			var IsPortable = 0;
+		</script>
+		<Script src="General.js"></Script>
+	</Body>
+</HTML>
