@@ -161,7 +161,7 @@ function initialSetup()
 			}
 		assignEvents();
 		preliminaryChecks();
-		changeTheme(CurrentTheme.replace(' ', '_'));
+		changeTheme();
 		setSong(0);
 		checkControls();
 	}
