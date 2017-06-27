@@ -8,7 +8,7 @@
 	input[type=text], textarea { background-color: rgb(0,0,0); color: rgb(190,190,200); border-style: dotted; transition: 2s; padding: 5px; }
 	input[type=text]:focus, textarea:focus { background-color: rgb(10,10,10); color: rgb(220,220,230); border-radius: 10px; outline: 0; transition: 2s; }
 	input[type=checkbox] + label { background-color: rgb(60,60,60); transition: 1s; cursor: pointer; width: 8px; height: 8px; box-shadow: 0px 0px 1px rgb(80,80,80); }
-	input[type=checkbox]:hover + label { background-color: rgb(120,120,120); box-shadow: 0px 0px 3px rgb(255,255,255); transition: 2s; border-radius: 10px; filter: brightness(110%); }
+	input[type=checkbox] + label:hover { background-color: rgb(120,120,120); box-shadow: 0px 0px 3px rgb(255,255,255); transition: 2s; border-radius: 10px; filter: brightness(110%); }
 	input[type=checkbox]:checked + label { background-color: rgb(200,200,200); box-shadow: 0px 0px 3px rgb(200,200,200); transition: 2s; border-radius: 20px; filter: brightness(120%); }
 	input[type=checkbox]:disabled + label { background-color: rgb(100,100,100); transition: 1s; border-radius: 20px; }
 	input[type=checkbox] { display: none; position: relative; width: 10px; height: 10px; cursor: default; border: 0px; }
