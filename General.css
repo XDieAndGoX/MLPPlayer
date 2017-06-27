@@ -22,7 +22,7 @@
 
 /* Main Page & Portable Player */
 
-	div#MediaPlayerContainer { width: 250px; margin: 0 auto 0 auto; position: relative;}
+	div#MediaPlayerContainer { width: 270px; margin: 0 auto 0 auto; position: relative;}
 	Table.MediaPlayerSection { margin: 0 auto 0 auto; border-radius: 6px; position: fixed; font-size: 7pt; display: block; top: 10px; padding: 2px; border-collapse: collapse; transition: transform 1s, top 1s; z-index: 2; border-style: solid; border-width: 3px; }
 	Table.MediaPlayerSection A { font-size: 6pt; font-weight: bold; cursor: pointer; }
 	Table.MediaPlayerSection A:hover { filter: brightness(140%); }
@@ -30,7 +30,7 @@
 	Table.MediaPlayerSectionScaledx3 { transform: scale(3,3); top: 165px; transition: transform 1s, top 1s, opacity 1s; z-index: 3; }
 	Table.MediaPlayerSectionScaledx4 { transform: scale(4,4); top: 240px; transition: transform 1s, top 1s, opacity 1s; z-index: 3; }
 	Table.MediaPlayerSection TD { text-align: center; }
-	Table.SongTrack { border-collapse: collapse; width: 240px; opacity: 1; margin-bottom: 2px; font-size: 10pt; font-weight: bold; border-radius: 8px; }
+	Table.SongTrack { border-collapse: collapse; width: 250px; opacity: 1; margin-bottom: 2px; font-size: 10pt; font-weight: bold; border-radius: 8px; }
 	.PlayTimeCurrent, .PlayTimeTotal { width: 30px; padding: 1px 3px 1px 3px;}
 	#PlayTimeCurrent { border-left: 0; border-bottom: 0; border-top: 0; border-right-style: solid; border-right-width: 2px; background: none; box-shadow: none; }
 	#PlayTimeTotal { border-right: 0; border-bottom: 0; border-top: 0; border-left-style: solid; border-left-width: 2px; background: none; box-shadow: none; }
@@ -46,7 +46,7 @@
 	span.PlayerLinks { position: relative; opacity: 1; width: 130px; margin: 0 auto 0 auto; left: 4px; display: block; }
 	Span.PlayerLink + Span { font-weight: bolder; }
 	input[type=checkbox]#RepeatModeCheck + label, input[type=checkbox]#ShuffleModeCheck + label, input[type=checkbox]#LoopModeCheck + label, input[type=checkbox]#ThemeModeCheck + label { position: absolute; bottom: 2px; left: 5px; }
-	Table.CheckboxesSection { position: absolute; margin-left: 188px; top: 23px; border-collapse: collapse; border-spacing: 0px; opacity: 1; border-radius: 7px; }
+	Table.CheckboxesSection { position: absolute; left: 78.5%; top: 24px; border-collapse: collapse; border-spacing: 0px; opacity: 1; border-radius: 7px; }
 	Table.CheckboxesSection TD { padding: 1.7px 0 1.7px 0; font-size: 6pt; text-align: right; position: relative; }
 	Table.CheckboxesSection TD.CheckboxInput { width: 20px; text-align: center; }
 	TD.VolumeControlCell { position: relative; }
