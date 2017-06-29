@@ -86,40 +86,42 @@
 				</TR>
 				<TR>
 					<TD class="CheckboxesCell">
-						<Table id="CheckboxesSection">
-							<TR>
-								<TD class="Repeat">
-										Repeat:
-								</TD>
-								<TD class="CheckboxInput">
-									<input type="checkbox" id="RepeatModeCheck" accesskey="R"><label for="RepeatModeCheck"></label>
-								</TD>
-							</TR>
-							<TR>
-								<TD class="Shuffle">
-										Shuffle:
-								</TD>
-								<TD class="CheckboxInput">
-									<input type="checkbox" id="ShuffleModeCheck" accesskey="S"><label for="ShuffleModeCheck"></label>
-								</TD>
-							</TR>
-							<TR>
-								<TD class="Loop">
-										&nbsp;&nbsp;&nbsp;Loop:
-								</TD>
-								<TD class="CheckboxInput">
-									<input type="checkbox" id="LoopModeCheck" accesskey="O"><label for="LoopModeCheck"></label>
-								</TD>
-							</TR>
-							<TR>
-								<TD class="Theme">
-										&nbsp;&nbsp;&nbsp;Theme:
-								</TD>
-								<TD class="CheckboxInput">
-									<input type="checkbox" id="ThemeModeCheck" accesskey="T"><label for="ThemeModeCheck"></label>
-								</TD>
-							</TR>
-						</Table>
+						<div class="CheckboxTableContainer">
+							<Table id="CheckboxesSection">
+								<TR>
+									<TD>
+											Repeat:
+									</TD>
+									<TD class="CheckboxInput">
+										<input type="checkbox" id="RepeatModeCheck" accesskey="R"><label for="RepeatModeCheck"></label>
+									</TD>
+								</TR>
+								<TR>
+									<TD>
+											Shuffle:
+									</TD>
+									<TD class="CheckboxInput">
+										<input type="checkbox" id="ShuffleModeCheck" accesskey="S"><label for="ShuffleModeCheck"></label>
+									</TD>
+								</TR>
+								<TR>
+									<TD>
+											Loop:
+									</TD>
+									<TD class="CheckboxInput">
+										<input type="checkbox" id="LoopModeCheck" accesskey="O"><label for="LoopModeCheck"></label>
+									</TD>
+								</TR>
+								<TR>
+									<TD>
+											Theme:
+									</TD>
+									<TD class="CheckboxInput">
+										<input type="checkbox" id="ThemeModeCheck" accesskey="T"><label for="ThemeModeCheck"></label>
+									</TD>
+								</TR>
+							</Table>
+						</div>
 					</TD>
 				</TR>
 				<TR>
@@ -139,13 +141,18 @@
 							Currently Playing
 						</span>
 						<div class="SongListContainer" id="SongListContainer">
-							<div id="SongCategory">
+							<div id="SongInformation">
 							</div>
 							<div id="SongSelection">
 							</div>
-							<div class="Scrollable">
-								<div class="ArrowUp" id="ArrowUp">
+							<div class="Scrollable" id="Scrollable">
+								<div id="ArrowUp">
 								</div>
+								<div id="ScrollBar">
+								</div>
+								<div id="ScrollRange">
+								</div>
+								<input type=range step="0.01" id="SongListTrack" class="SongListTrack" value="0">
 								<div class="ArrowDown" id="ArrowDown">
 								</div>
 							</div>
@@ -186,14 +193,14 @@
 		</div>
 		<span id="HiddenPlayerContainer">
 			<audio id="BackgroundMusic" class="BackgroundMusic">
-				<source src="A%20Changeling%20Can%20Change.mp3" type="audio/mp3" title="A Changeling Can Change">
+				<source src="A%20Changeling%20Can%20Change.mp3" type="audio/mp3" title="A Changeling Can Change" data-artist="Spike" data-featuredin="S06E16 - Times They Are A Changeling">
 				<source src="A%20Friend%20For%20Life.mp3" type="audio/mp3" title="A Friend For Life">
 				<source src="A%20True,%20True%20Friend.mp3" type="audio/mp3" title="A True, True Friend">				
 				<source src="ACADECA.mp3" type="audio/mp3" title="ACADECA">
 				<source src="Apples%20to%20the%20Core.mp3" type="audio/mp3" title="Apples to the Core">
-				<source src="Art%20of%20the%20Dress%20%28Reprise%29.mp3" type="audio/mp3" title="Art of the Dress (Reprise)">
-				<source src="Art%20of%20the%20Dress.mp3" type="audio/mp3" title="Art of the Dress">
-				<source src="At%20the%20Gala.mp3" type="audio/mp3" title="At The Gala">
+				<source src="Art%20of%20the%20Dress%20%28Reprise%29.mp3" type="audio/mp3" title="Art of the Dress (Reprise)" data-artist="Rarity" data-featuredin="S01E14 - Suited for Success" data-contributingartist="Mane Six">
+				<source src="Art%20of%20the%20Dress.mp3" type="audio/mp3" title="Art of the Dress" data-artist="Rarity" data-featuredin="S01E14 - Suited for Success" data-album="SFM, MFT, FIMc">
+				<source src="At%20the%20Gala.mp3" type="audio/mp3" title="At The Gala" data-artist="Mane Six" data-featuredin="S01E26 - The Best Night Ever" data-contributingartist="Crowd" data-album="SFM, MFT, CC, FIMc">
 				<source src="Babs%20Seed.mp3" type="audio/mp3" title="Babs Seed">
 				<source src="Ballad%20of%20the%20Crystal%20Ponies.mp3" type="audio/mp3" title="Ballad of the Crystal Ponies">
 				<source src="Bats.mp3" type="audio/mp3" title="Bats">
@@ -209,8 +216,8 @@
 				<source src="Cheese%20Confesses.mp3" type="audio/mp3" title="Cheese Confesses">
 				<source src="CHS%20Rally%20Song.mp3" type="audio/mp3" title="CHS Rally Song">
 				<source src="CMC%20Go%20Crusading.mp3" type="audio/mp3" title="CMC Go Crusading">
-				<source src="Cupcakes.mp3" type="audio/mp3" title="Cupcakes">
-				<source src="Cutie%20Mark%20Crusaders.mp3" type="audio/mp3" title="Cutie Mark Crusaders">
+				<source src="Cupcakes.mp3" type="audio/mp3" title="Cupcakes" data-artist="Pinkie Pie" data-featuredin="S01E12 - Call of the Cutie">
+				<source src="Cutie%20Mark%20Crusaders.mp3" type="audio/mp3" title="Cutie Mark Crusaders" data-artist="Cutie Mark Crusaders" data-featuredin="S01E18 - The Show Stoppers">
 				<source src="Dance%20Magic.mp3" type="audio/mp3" title="Dance Magic">
 				<source src="Days%20Gone%20By.mp3" type="audio/mp3" title="Days Gone By">
 				<source src="Deck%20the%20Halls.mp3" type="audio/mp3" title="Deck the Halls">
@@ -235,14 +242,14 @@
 				<source src="Hearts%20as%20Strong%20as%20Horses%20%28Reprise%29.mp3" type="audio/mp3" title="Hearts as Strong as Horses (Reprise)">
 				<source src="Hope%20Shines%20Eternal.mp3" type="audio/mp3" title="Hope Shines Eternal">
 				<source src="Hush%20Now,%20Little%20Sister.mp3" type="audio/mp3" title="Hush Now, Little Sister">
-				<source src="Hush%20Now,%20Quiet%20Now.mp3" type="audio/mp3" title="Hush Now, Quiet Now">
+				<source src="Hush%20Now,%20Quiet%20Now.mp3" type="audio/mp3" title="Hush Now, Quiet Now" data-artist="Fluttershy, Sweetie Belle" data-featuredin="S01E17 - The Stare Master">
 				<source src="I'll%20Fly.mp3" type="audio/mp3" title="I'll Fly">
 				<source src="In%20Our%20Town.mp3" type="audio/mp3" title="In Our Town">
 				<source src="It's%20a%20Pony%20Kind%20of%20Christmas.mp3" type="audio/mp3" title="It's a Pony Kind of Christmas">
 				<source src="It's%20Gonna%20Work.mp3" type="audio/mp3" title="It's Gonna Work">
 				<source src="Jingle%20Bells.mp3" type="audio/mp3" title="Jingle Bells">
 				<source src="Jolly%20ol'%20St.%20Nick.mp3" type="audio/mp3" title="Jolly ol' St. Nick">
-				<source src="The%20Laughter%20Song.mp3" type="audio/mp3" title="The Laughter Song">
+				<source src="The%20Laughter%20Song.mp3" type="audio/mp3" title="The Laughter Song" data-artist="Pinkie Pie" data-featuredin="S01E02 - Friendship is Magic, part 2" data-album="SFM, MFT, FIMc">
 				<source src="Last%20Year%20I%20Got%20Coal%20for%20Christmas.mp3" type="audio/mp3" title="Last Year I Got Coal for Christmas">
 				<source src="Legend%20of%20Everfree%20(Main%20Title).mp3" type="audio/mp3" title="Legend of Everfree (Main Title)">
 				<source src="Legend%20You%20Are%20Meant%20To%20Be.mp3" type="audio/mp3" title="Legend You Are Meant To Be">
@@ -260,14 +267,14 @@
 				<source src="Morning%20In%20Ponyville.mp3" type="audio/mp3" title="Morning In Ponyville">
 				<source src="Music%20to%20My%20Ears.mp3" type="audio/mp3" title="Music to My Ears">
 				<source src="My%20Little%20Pony%20Friends.mp3" type="audio/mp3" title="My Little Pony Friends">
-				<source src="My%20Little%20Pony%20Theme.mp3" type="audio/mp3" title="My Little Pony Theme">
+				<source src="My%20Little%20Pony%20Theme.mp3" type="audio/mp3" title="My Little Pony Theme" data-artist="Twilight Sparkle" data-contributingartist="Mane Six">
 				<source src="My%20Past%20Is%20Not%20Today.mp3" type="audio/mp3" title="My Past Is Not Today">
 				<source src="Out%20On%20My%20Own.mp3" type="audio/mp3" title="Out On My Own">
 				<source src="The%20Perfect%20Stallion.mp3" type="audio/mp3" title="The Perfect Stallion">
 				<source src="Pinkie%20the%20Party%20Planner.mp3" type="audio/mp3" title="Pinkie the Party Planner">
 				<source src="Pinkie's%20Lament.mp3" type="audio/mp3" title="Pinkie's Lament">
 				<source src="Pinkie's%20Present.mp3" type="audio/mp3" title="Pinkie's Present">
-				<source src="Pony%20Pokey.mp3" type="audio/mp3" title="Pony Pokey">
+				<source src="Pony%20Pokey.mp3" type="audio/mp3" title="Pony Pokey" data-artist="Pinkie Pie" data-featuredin="S01E26 - The Best Night Ever" data-album="PP">
 				<source src="The%20Pony%20I%20Want%20To%20Be%20%28Reprise%29.mp3" type="audio/mp3" title="The Pony I Want To Be (Reprise)">
 				<source src="The%20Pony%20I%20Want%20To%20Be.mp3" type="audio/mp3" title="The Pony I Want To Be">
 				<source src="Raise%20This%20Barn.mp3" type="audio/mp3" title="Raise This Barn">
@@ -278,9 +285,9 @@
 				<source src="The%20Seeds%20of%20the%20Past.mp3" type="audio/mp3" title="The Seeds of the Past">
 				<source src="Shine%20Like%20Rainbows.mp3" type="audio/mp3" title="Shine Like Rainbows">
 				<source src="Silent%20Night.mp3" type="audio/mp3" title="Silent Night">
-				<source src="Singing%20Telegram.mp3" type="audio/mp3" title="Singing Telegram">
+				<source src="Singing%20Telegram.mp3" type="audio/mp3" title="Singing Telegram" data-artist="Pinkie Pie" data-featuredin="S01E25 - Party of One">
 				<source src="Sisterhood.mp3" type="audio/mp3" title="Sisterhood">
-				<source src="So%20Many%20Wonders.mp3" type="audio/mp3" title="So Many Wonders">
+				<source src="So%20Many%20Wonders.mp3" type="audio/mp3" title="So Many Wonders" data-artist="Fluttershy" data-featuredin="S01E23 - The Cutie Mark Chronicles">
 				<source src="The%20Smile%20Song.mp3" type="audio/mp3" title="The Smile Song">
 				<source src="The%20Spectacle.mp3" type="audio/mp3" title="The Spectacle">
 				<source src="Super%20Duper%20Party%20Pony.mp3" type="audio/mp3" title="Super Duper Party Pony">
@@ -297,8 +304,8 @@
 				<source src="We%20Wish%20You%20a%20Merry%20Christmas.mp3" type="audio/mp3" title="We Wish You a Merry Christmas">
 				<source src="What%20More%20Is%20Out%20There.mp3" type="audio/mp3" title="What More Is Out There">
 				<source src="What%20My%20Cutie%20Mark%20Is%20Telling%20Me.mp3" type="audio/mp3" title="What My Cutie Mark Is Telling Me">
-				<source src="Winter%20Wrap%20Up.mp3" type="audio/mp3" title="Winter Wrap Up">
-				<source src="You%20Gotta%20Share.mp3" type="audio/mp3" title="You Gotta Share">
+				<source src="Winter%20Wrap%20Up.mp3" type="audio/mp3" title="Winter Wrap Up" data-artist="Mane Six" data-contributingartist="Crowd" data-featuredin="S01E11 - Winter Wrap Up" data-album="SFM, MFT, CC, FIMC">
+				<source src="You%20Gotta%20Share.mp3" type="audio/mp3" title="You Gotta Share" data-artist="Pinkie Pie" data-featuredin="S01E21 - Over a Barrel">
 				<source src="You'll%20Play%20Your%20Part.mp3" type="audio/mp3" title="You'll Play Your Part">
 			</audio>
 		</span>

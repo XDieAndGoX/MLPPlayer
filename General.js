@@ -3,6 +3,7 @@
 
 		var MediaPlayerSection = document.getElementById("MediaPlayerSection");
 		var SongTrack = document.getElementById("SongTrack");
+		var SongListTrack = document.getElementById("SongListTrack");
 		var MusicPlayer = document.getElementById("BackgroundMusic");
 		var SongCount = document.getElementById("SongCount");
 		var ChecboxesSection = document.getElementById("CheckboxesSection");
@@ -12,6 +13,7 @@
 		var NextSong = document.getElementById('NextSong');
 		var PreviousSong = document.getElementById('PreviousSong');
 		var VolumeCell = document.getElementById('VolumeCell');
+		var SongListContainer = document.getElementById('SongListContainer');
 		var SongSelection = document.getElementById('SongSelection');
 		var VolumeSlider = document.getElementById('VolumeSlider');
 		var VolumeNumber = document.getElementById('VolumeNumber');
@@ -25,8 +27,11 @@
 		var LoopModeCheck = document.getElementById("LoopModeCheck");
 		var ThemeModeCheck = document.getElementById("ThemeModeCheck");
 		var SongSelection = document.getElementById("SongSelection");
-		var SongCategory = document.getElementById("SongCategory");
+		var SongInformation = document.getElementById("SongInformation");
+		var Scrollable = document.getElementById("Scrollable");		
 		var ArrowUp = document.getElementById("ArrowUp");
+		var ScrollBar = document.getElementById("ScrollBar");
+		var ScrollRange = document.getElementById("ScrollRange");
 		var ArrowDown = document.getElementById("ArrowDown");
 		var PlayTrackFill = document.getElementById("PlayTrackFill");
 		var PlayTrackThumb = document.getElementById("PlayTrackThumb");
@@ -121,9 +126,13 @@
 		var SongTime;
 		var SongSelectorID;
 		var SongOption;
+		var MouseOverSong;
 		var LastSong;
 		var VolumeOver;
 		var ThemeCount;
+		var SongInfoFunction;
+		var SongScrollUpFunction;
+		var SongScrollDownnFunction;
 		
 	/* HTML Preview */
 	
@@ -163,7 +172,25 @@ function initialSetup()
 		preliminaryChecks();
 		changeTheme();
 		setSong(0);
+		SongInformation.textContent = document.getElementById(SongName).dataset.series;
+		SongInfoNumber = 2;
+		initialSongInfo();
 		checkControls();
+	}
+	
+function initialSongInfo()
+	{
+		SongInfoFunction = setInterval(setSongInformation, 7000);
+	}
+	
+function scrollSongListUp()
+	{
+		SongScrollUpFunction = setInterval(scrollUp, 0200);
+	}
+	
+function scrollSongListDown()
+	{
+		SongScrollDownFunction = setInterval(scrollDown, 0200);
 	}
 		
 function assignEvents()
@@ -173,6 +200,8 @@ function assignEvents()
 			ContentShade.addEventListener("click", resetPlayerSize);
 			PlayTrack.addEventListener("change", seekMusic);
 			PlayTrack.addEventListener("input", seekMusic);
+			SongListTrack.addEventListener("change", scrollSongList);
+			SongListTrack.addEventListener("input", scrollSongList);
 			VolumeControlTable.addEventListener("mouseover", function() { setVolumeWidth(1); VolumeOver = 1; });
 			VolumeControlTable.addEventListener("mouseout", function() { VolumeOver = 0; });
 			VolumeSlider.addEventListener("change", setVolume);
@@ -189,8 +218,19 @@ function assignEvents()
 			ScaleLinkx2.addEventListener("click", function() { scalePlayer(2) });
 			ScaleLinkx3.addEventListener("click", function() { scalePlayer(3) });
 			ScaleLinkx4.addEventListener("click", function() { scalePlayer(4) });
-			SongSelection.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); }); 
-			SongSelection.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6); }, 0100); }); 
+			SongListContainer.addEventListener("mouseover", function() { SongInformation.style.opacity = "0"; clearTimeout(SongInfoFunction); }); 
+			SongListContainer.addEventListener("mouseleave", initialSongInfo); 
+			SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); });
+			SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6); }, 0100); }); 
+			SongSelection.addEventListener("scroll", scrollBar);
+			ArrowUp.addEventListener ("click", scrollUp);
+			ArrowUp.addEventListener ("mousedown", scrollSongListUp);
+			ArrowUp.addEventListener ("mouseup", function() { clearTimeout(SongScrollUpFunction); });
+			ArrowUp.addEventListener ("mouseleave", function() { clearTimeout(SongScrollUpFunction); });
+			ArrowDown.addEventListener ("click", scrollDown);
+			ArrowDown.addEventListener ("mousedown", scrollSongListDown);
+			ArrowDown.addEventListener ("mouseup", function() { clearTimeout(SongScrollDownFunction); });
+			ArrowDown.addEventListener ("mouseleave", function() { clearTimeout(SongScrollDownFunction); });
 			MusicPlayer.addEventListener("error", function() { checkError(1); });
 			MusicPlayer.addEventListener("loadstart", loading);
 			MusicPlayer.addEventListener("timeupdate", getPlayTime);
@@ -286,7 +326,25 @@ initialSetup();
 					{	
 						SongName = MusicPlayer.children[Song].title.replace(/ /g, '_').replace(/,/g, '');
 						MusicPlayer.children[Song].setAttribute("id", SongName);
-						MusicPlayer.children[Song].setAttribute("data-artist", "My Little Pony: Friendship is Magic");
+						MusicPlayer.children[Song].setAttribute("data-series", "My Little Pony: Friendship is Magic");
+						MusicPlayer.children[Song].setAttribute("data-composer", "Composed by: Daniel Ingram");
+						MusicPlayer.children[Song].setAttribute("data-copyright", "Copyright \u00A9 Hasbro. All Rights Reserved."); 
+						if (MusicPlayer.children[Song].dataset.artist != null)
+							{
+								MusicPlayer.children[Song].dataset.artist = "Lead Singer(s): " + MusicPlayer.children[Song].dataset.artist;
+							}
+						if (MusicPlayer.children[Song].dataset.featuredin != null)
+							{
+								MusicPlayer.children[Song].dataset.featuredin = "Featured in: " + MusicPlayer.children[Song].dataset.featuredin;
+							}
+						if (MusicPlayer.children[Song].dataset.album != null)
+							{
+								MusicPlayer.children[Song].dataset.album = "Album(s): " + MusicPlayer.children[Song].dataset.album;
+							}
+						if (MusicPlayer.children[Song].dataset.contributingartist != null)
+							{
+								MusicPlayer.children[Song].dataset.contributingartist = "Also Sang by: " + MusicPlayer.children[Song].dataset.contributingartist;
+							}
 						GeneratedID = document.getElementById(MusicPlayer.children[Song].id);
 						GeneratedID.src = HostURL + GeneratedID.src.substr(GeneratedID.src.lastIndexOf('/') + 1);
 						TotalSongs.push(SongName);
@@ -319,7 +377,6 @@ initialSetup();
 				}
 				
 			MusicPlayer.src = SongID.src;
-			SongCategory.textContent = SongID.dataset.artist;
 					if (ThemeMode == 1)
 						{
 							RandomNumber = Math.floor((Math.random() * Themes.length));
@@ -921,10 +978,162 @@ initialSetup();
 				}
 		}
 		
+	function setSongInformation()
+		{				
+			SongInformation.style.opacity = "0";
+			setTimeout(checkSongInformation, 1000);
+			setTimeout(songInfoVisible, 1000);
+		}
+			
+			
+	function checkSongInformation()
+		{
+			if (SongInfoNumber == 1)
+				{
+					if (SongID.dataset.series != null)
+						{
+							SongInformation.textContent = SongID.dataset.series;
+						}
+						
+					SongInfoNumber++;
+					
+					if (SongID.dataset.series != null)
+						{
+							return;
+						}
+				}
+				
+			if (SongInfoNumber == 2)
+				{
+					if (SongID.dataset.composer != null)
+						{
+							SongInformation.textContent = SongID.dataset.composer;
+						}
+						
+					SongInfoNumber++;
+
+					if (SongID.dataset.composer != null)
+						{
+							return;
+						}
+				}
+				
+			if (SongInfoNumber == 3)
+				{
+					if (SongID.dataset.artist != null)
+						{
+							SongInformation.textContent = SongID.dataset.artist;
+						}
+
+					SongInfoNumber++;
+					
+					if (SongID.dataset.artist != null)
+						{
+							return;
+						}
+				}
+				
+			if (SongInfoNumber == 4)
+				{
+					if (SongID.dataset.contributingartist != null)
+						{
+							SongInformation.textContent = SongID.dataset.contributingartist;
+						}
+
+					SongInfoNumber++;
+					
+					if (SongID.dataset.contributingartist != null)
+						{
+							return;
+						}
+				}
+				
+			if (SongInfoNumber == 5)
+				{
+					if (SongID.dataset.album != null)
+						{
+							SongInformation.textContent = SongID.dataset.album;
+						}
+
+					SongInfoNumber++;
+					
+					if (SongID.dataset.album != null)
+						{
+							return;
+						}
+				}
+				
+			if (SongInfoNumber == 6)
+				{
+					if (SongID.dataset.featuredin != null)
+						{
+							SongInformation.textContent = SongID.dataset.featuredin;
+						}
+
+					SongInfoNumber++;
+					
+					if (SongID.dataset.featuredin != null)
+						{
+							return;
+						}
+				}
+				
+			if (SongInfoNumber == 7)
+				{
+					if (SongID.dataset.copyright != null)
+						{
+							SongInformation.textContent = SongID.dataset.copyright;
+						}
+
+					SongInfoNumber = 1;
+
+					if (SongID.dataset.copyright != null)
+						{
+							return;
+						}
+					else
+						{
+							checkSongInformation();
+						}
+				}
+		}
+		
+	function songInfoVisible()
+		{
+			SongInformation.style.opacity = "1";
+		}			
+		
 	function scrollToPlaying(OffSet)
 		{
 			SongSelectorID = document.getElementById(Playlist[PlaylistCount]+"-Selected");
 			SongSelection.scrollTop = SongSelectorID.offsetTop - OffSet;
+		}
+		
+	function scrollUp()
+		{
+			var ScrollNumber = SongSelection.scrollTop;
+			SongSelection.scrollTop = ScrollNumber - 20;
+			scrollBar();
+		}
+		
+	function scrollDown()
+		{
+			var ScrollNumber = SongSelection.scrollTop;
+			SongSelection.scrollTop = ScrollNumber + 20;
+			scrollBar();
+		}
+		
+	function scrollBar()
+		{
+			SongListTrack.value = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop;
+			ScrollBar.style.top = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop + 30.5 + "%";
+		}
+		
+	function scrollSongList()
+		{
+			SongSelection.scrollTop = (SongSelection.scrollHeight / 100) * SongListTrack.value;
+			ScrollBar.style.top = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop + 30.5 + "%";
+			
 		}
 		
 	function portableMode()
@@ -980,8 +1189,10 @@ initialSetup();
 				ScaleLinkx4.className = "PlayerLink"+CurrentTheme;
 				VolumeCell.className = "VolumeCell VolumeCell"+CurrentTheme;
 				SongSelection.className = "SongList SongList"+CurrentTheme;
-				SongCategory.className = "SongCategory SongCategory"+CurrentTheme;
+				SongInformation.className = "SongInformation SongInformation"+CurrentTheme;
 				ArrowUp.className = "ArrowUp ArrowUp"+CurrentTheme;
+				ScrollBar.className = "ScrollBar ScrollBar"+CurrentTheme;
+				ScrollRange.className = "ScrollRange ScrollRange"+CurrentTheme;
 				ArrowDown.className = "ArrowDown ArrowDown"+CurrentTheme;
 				ThemeSelection.className = "ThemeSelection SongList"+CurrentTheme;
 				SelectTheme.className = "SelectTheme"+CurrentTheme;

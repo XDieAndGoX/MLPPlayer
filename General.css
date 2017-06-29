@@ -22,7 +22,7 @@
 
 /* Main Page & Portable Player */
 
-	div#MediaPlayerContainer { width: 270px; margin: 0 auto 0 auto; position: relative;}
+	div#MediaPlayerContainer { width: 270px; margin: 0 auto 0 auto; position: relative; user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-user-select: none; }
 	Table.MediaPlayerSection { margin: 0 auto 0 auto; border-radius: 6px; position: fixed; font-size: 7pt; display: block; top: 10px; padding: 2px; border-collapse: collapse; transition: transform 1s, top 1s; z-index: 2; border-style: solid; border-width: 3px; }
 	Table.MediaPlayerSection A { font-size: 6pt; font-weight: bold; cursor: pointer; }
 	Table.MediaPlayerSection A:hover { filter: brightness(140%); }
@@ -43,12 +43,12 @@
 	span.RangeLength { display: inherit; width: 106%; height: 2px; border-radius: 20px; position: absolute; border: 0; left: 0; transition: 1s; }
 	span.RangeFill { border-radius: 20px; position: absolute; left: 0; height: 2px; width: 0px; }
 	span.RangeThumb { position: absolute; left: 0; width: 13px; height: 13px; border-radius: 20px; bottom: -5px; margin-left: -2px; }
-	span.PlayerLinks { position: relative; opacity: 1; width: 130px; margin: 0 auto 0 auto; left: 4px; display: block; }
+	span.PlayerLinks { position: relative; opacity: 1; width: 130px; margin: 0 auto 0 auto; left: 4px; display: block; white-space: nowrap; }
 	Span.PlayerLink + Span { font-weight: bolder; }
 	input[type=checkbox]#RepeatModeCheck + label, input[type=checkbox]#ShuffleModeCheck + label, input[type=checkbox]#LoopModeCheck + label, input[type=checkbox]#ThemeModeCheck + label { position: absolute; bottom: 2px; left: 5px; }
 	Table.CheckboxesSection { position: absolute; left: 78.5%; top: 24px; border-collapse: collapse; border-spacing: 0px; opacity: 1; border-radius: 7px; }
-	Table.CheckboxesSection TD { padding: 1.7px 0 1.7px 0; font-size: 6pt; text-align: right; position: relative; }
-	Table.CheckboxesSection TD.CheckboxInput { width: 20px; text-align: center; }
+	Table.CheckboxesSection TD:not(.CheckboxInput) { padding: 1.7px 0 1.7px 4px; font-size: 6pt; text-align: right; position: relative; }
+	Table.CheckboxesSection TD.CheckboxInput { position: relative; width: 20px; text-align: center; }
 	TD.VolumeControlCell { position: relative; }
 	span.AudioImage { position: absolute; top: 0px; }
 	#VolumeBody { width: 7px; height: 7px; position: absolute; top: 6.5px; left: 3px; border-radius: 1px; box-shadow: none; border: none; }
@@ -91,21 +91,27 @@
 	span#PlayerLinks span:not(#PlayerSize) { text-shadow: none; }
 	#SelectTheme, #SongInformation { background: none; box-shadow: none; }
 	span.PlayerSize { font-size: 7pt; font-weight: bolder; }
-	div.Scrollable { position: absolute; top: 0; padding-top: 1.5px; right: 3px; z-index: 5; transition: 2s; }
+	div.Scrollable { position: absolute; top: 0; padding-top: 1.5px; right: 3px; height: 30px; }
 	div.ArrowUp { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom-width: 7px; border-bottom-style: solid; }
-	div.ArrowDown { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top-width: 7px; border-top-style: solid; margin-top: 2px; }
+	input.SongListTrack { position: absolute; left: -15px; top: 20.5px; transform: rotate(90deg); width: 40px; }
+	div#ScrollBar { position: absolute; width: 10px; height: 9px; top: 30%; z-index: 2; border-radius: 3px; opacity: 0; transition: opacity 0.1s; border: none; box-shadow: none; }
+	div#ScrollRange { position: absolute; width: 4px; left: 3px; height: 0px; opacity: 0; top: 32%; border-radius: 20px; border: none; box-shadow: none; transition: opacity 0.1s 1s, height 1s; filter: brightness(90%); }
+	div.ArrowDown { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top-width: 7px; border-top-style: solid; transition: 1s; top: 10px; position: absolute; user-select: none; }
+	div.ArrowUp:hover, div.ArrowDown:hover { cursor: pointer; }
+	div.SongListContainer { position: relative; margin-top: 2px; overflow: hidden; border-radius: 8px; }
+	div.SongList { height: 19px; width: 107%; position: relative; overflow: hidden; transition: 1s; scroll-behavior: smooth; border-radius: 8px; }
 	div.SongListContainer > div.SongList span:first-child { padding-top: 6px; }
 	div.SongListContainer > div.SongList span:last-child { padding-bottom: 40px; }
 	div.SongListContainer:hover > div.SongList span:first-child { padding-top: 0px; }
-	div.SongListContainer:hover > div.Scrollable { opacity: 0; transition: 0.4s; z-index: -1; }
-	div.SongListContainer:hover > div.SongList, div.SongList:hover, div.SongList:active, div.SongListContainer:active > div.SongList { height: 60px; transition: height 1s; overflow-y: scroll; }
-	div.SongListContainer:hover > div.SongList span { padding-bottom: 5px; }
+	div.SongListContainer:hover div.ArrowDown, div.SongListContainer:active div.ArrowDown { top: 50px; transition: 1s; }
+	div.SongListContainer:hover div#ScrollBar, div.SongListContainer:active div#ScrollBar { transition: opacity 1s 0.8s; opacity: 1; }
+	div.SongListContainer:hover div#ScrollRange, div.SongListContainer:active div#ScrollRange { transition: opacity 0.2s, height 1s; height: 38px; opacity: 1; }
+	div.SongListContainer:hover > div.SongList, div.SongList:hover, div.SongList:active, div.SongListContainer:active > div.SongList { height: 60px; transition: height 1s; overflow: auto; }
+	div.SongListContainer:hover > div.SongList span { padding-bottom: 5px; margin-left: -1%; }
 	div.SongListContainer:hover > div.SongInformation { opacity: 0; z-index: -1; transition: opacity 0.1s, z-index 0s 0.1s; }
 	span.CurrentlyPlaying { font-size: 10pt; font-weight: bolder; display: block; margin: 0 auto 0 auto; border-radius: 3px; }
 	#CurrentlyPlaying, #PlayerSize { text-shadow: 0px 0px 3px rgb(100,100,100); background-color: transparent; }
-	div.SongListContainer { position: relative; margin-top: 2px; }
-	div.SongList { height: 19px; width: 100%; position: relative; overflow: hidden; transition: 1s; scroll-behavior: smooth; border-radius: 8px; }
-	div.SongList span { font-size: 10px; display: block; padding-bottom: 12px; text-shadow: 0px 0px 1px rgb(100,100,100); transition: color 1s, text-shadow 1s, filter 1s; }
+	div.SongList span { font-size: 10px; display: block; padding-bottom: 12px; text-shadow: 0px 0px 1px rgb(100,100,100); transition: color 1s, text-shadow 1s, filter 1s; margin-left: -7%; }
 	div.SongList span:hover { cursor: pointer; transition: color 1s, text-shadow 1s, filter 1s; filter: brightness(150%); }
 	div.SongInformation { position: absolute; margin: 0 auto 0 auto; z-index: 3; top: -5%; width: 100%; font-weight: bolder; font-size: 5pt; opacity: 1; transition: opacity 1s; }
 	div.ContentShade { opacity: 0; transition: opacity 1s, z-index 0s 1s; position: absolute; overflow: hidden; z-index: 0; width: 100%; height: 100%; }
@@ -123,7 +129,7 @@
 		/* Media Player Theme - Apple Bloom */
 	
 			.MediaPlayerSectionApple_Bloom, .RangeLengthApple_Bloom { background: linear-gradient(rgb(224,224,160), rgb(244,244,155), rgb(224,224,160)); box-shadow: 0px 0px 2px rgb(244,244,155); border-color: rgb(218,197,114); }
-			.VolumeBodyApple_Bloom, .PlayerTextApple_Bloom { background-color: rgb(244,244,155); color: rgb(244,244,155); }
+			.VolumeBodyApple_Bloom, .ScrollBarApple_Bloom, .ScrollRangeApple_Bloom, .PlayerTextApple_Bloom { background-color: rgb(244,244,155); color: rgb(244,244,155); }
 			.PlayTimeCurrentApple_Bloom, .PlayTimeTotalApple_Bloom, .VolumeControl:hover .VolumeCellApple_Bloom, .VolumeControl:active .VolumeCellApple_Bloom, .ArrowUpApple_Bloom, .ArrowDownApple_Bloom, .VolumeBar1Apple_Bloom, .VolumeBar2Apple_Bloom, .VolumeBar3Apple_Bloom, .VolumeBar4Apple_Bloom, .VolumeBar5Apple_Bloom, .VolumeArcApple_Bloom { border-color: rgb(244,244,155); }
 			.ContentShadeApple_Bloom, .PlayerSectionApple_Bloom, input[type=button].PlayButtonsApple_Bloom, .SongListApple_Bloom, .SongInformationApple_Bloom, .SelectThemeApple_Bloom  { background: linear-gradient(270deg, rgb(200,23,48), rgb(176,23,48), rgb(200,23,48)); color: rgb(244,244,155); }
 			.PlayerLinkApple_Bloom { color: rgb(156,3,28); }
@@ -134,7 +140,7 @@
 		/* Media Player Theme - Applejack */
 	
 			.MediaPlayerSectionApplejack, .RangeLengthApplejack { background: linear-gradient(rgb(255,194,97), rgb(239,176,93), rgb(255,194,97)); box-shadow: 0px 0px 2px rgb(239,176,93); border-color: rgb(242,111,49); }
-			.VolumeBodyApplejack, .PlayerTextApplejack { background-color: rgb(239,176,93); color: rgb(239,176,93); }
+			.VolumeBodyApplejack, .ScrollBarApplejack, .ScrollRangeApplejack, .PlayerTextApplejack { background-color: rgb(239,176,93); color: rgb(239,176,93); }
 			.PlayTimeCurrentApplejack, .PlayTimeTotalApplejack, .VolumeControl:hover .VolumeCellApplejack, .VolumeControl:active .VolumeCellApplejack, .ArrowUpApplejack, .ArrowDownApplejack, .VolumeBar1Applejack, .VolumeBar2Applejack, .VolumeBar3Applejack, .VolumeBar4Applejack, .VolumeBar5Applejack, .VolumeArcApplejack { border-color: rgb(239,176,93); }
 			.ContentShadeApplejack, .PlayerSectionApplejack, input[type=button].PlayButtonsApplejack, .SongListApplejack, .SongInformationApplejack, .SelectThemeApplejack  { background: linear-gradient(270deg, rgb(243,236,165), rgb(253,246,175), rgb(243,236,165)); color: rgb(239,176,93); }
 			.PlayerLinkApplejack { color: rgb(253,246,175); }
@@ -145,7 +151,7 @@
 		/* Media Player Theme - Fluttershy */
 	
 			.MediaPlayerSectionFluttershy, .RangeLengthFluttershy { background: linear-gradient(rgb(253,246,175), rgb(254,231,143), rgb(253,246,175)); box-shadow: 0px 0px 2px rgb(254,231,143); border-color: rgb(234,212,99); }
-			.VolumeBodyFluttershy, .PlayerTextFluttershy { background-color: rgb(254,231,143); color: rgb(254,231,143); }
+			.VolumeBodyFluttershy, .ScrollBarFluttershy, .ScrollRangeFluttershy, .PlayerTextFluttershy { background-color: rgb(254,231,143); color: rgb(254,231,143); }
 			.PlayTimeCurrentFluttershy, .PlayTimeTotalFluttershy, .VolumeControl:hover .VolumeCellFluttershy, .VolumeControl:active .VolumeCellFluttershy, .ArrowUpFluttershy, .ArrowDownFluttershy, .VolumeBar1Fluttershy, .VolumeBar2Fluttershy, .VolumeBar3Fluttershy, .VolumeBar4Fluttershy, .VolumeBar5Fluttershy, .VolumeArcFluttershy { border-color: rgb(254,231,143); }
 			.ContentShadeFluttershy, .PlayerSectionFluttershy, input[type=button].PlayButtonsFluttershy, .SongListFluttershy, .SongInformationFluttershy, .SelectThemeFluttershy  { background: linear-gradient(270deg, rgb(233,182,207), rgb(243,182,207), rgb(233,182,207)); color: rgb(254,231,143); }
 			.PlayerLinkFluttershy { color: rgb(243,182,207); }
@@ -156,7 +162,7 @@
 		/* Media Player Theme - Original Theme */
 	
 			.MediaPlayerSectionOriginal, .RangeLengthOriginal { background: linear-gradient(rgb(180,180,180), rgb(200,200,200), rgb(180,180,180)); box-shadow: 0px 0px 2px rgb(200,200,200); border-color: rgb(150,150,150); }
-			.VolumeBodyOriginal, .PlayerTextOriginal { background-color: rgb(200,200,200); color: rgb(200,200,200); }
+			.VolumeBodyOriginal, .ScrollBarOriginal, .ScrollRangeOriginal, .PlayerTextOriginal { background-color: rgb(200,200,200); color: rgb(200,200,200); }
 			.PlayTimeCurrentOriginal, .PlayTimeTotalOriginal, .VolumeControl:hover .VolumeCellOriginal, .VolumeControl:active .VolumeCellOriginal, .ArrowUpOriginal, .ArrowDownOriginal, .VolumeBar1Original, .VolumeBar2Original, .VolumeBar3Original, .VolumeBar4Original, .VolumeBar5Original, .VolumeArcOriginal { border-color: rgb(200,200,200); }
 			.ContentShadeOriginal, .PlayerSectionOriginal, input[type=button].PlayButtonsOriginal, .SongListOriginal, .SongInformationOriginal, .SelectThemeOriginal  { background: linear-gradient(270deg, rgb(40,40,30), rgb(20,20,10), rgb(30,30,20)); color: rgb(200,200,200); }
 			.PlayerLinkOriginal { color: rgb(20,20,20); }
@@ -167,7 +173,7 @@
 		/* Media Player Theme - Pinkie Pie */
 	
 			.MediaPlayerSectionPinkie_Pie, .RangeLengthPinkie_Pie { background: linear-gradient(rgb(243,182,207), rgb(236,157,196), rgb(243,182,207)); box-shadow: 0px 0px 2px rgb(236,157,196); border-color: rgb(235,129,180); }
-			.VolumeBodyPinkie_Pie, .PlayerTextPinkie_Pie { background-color: rgb(236,157,196); color: rgb(236,157,196); }
+			.VolumeBodyPinkie_Pie, .ScrollBarPinkie_Pie, .ScrollRangePinkie_Pie, .PlayerTextPinkie_Pie { background-color: rgb(236,157,196); color: rgb(236,157,196); }
 			.PlayTimeCurrentPinkie_Pie, .PlayTimeTotalPinkie_Pie, .VolumeControl:hover .VolumeCellPinkie_Pie, .VolumeControl:active .VolumeCellPinkie_Pie, .ArrowUpPinkie_Pie, .ArrowDownPinkie_Pie, .VolumeBar1Pinkie_Pie, .VolumeBar2Pinkie_Pie, .VolumeBar3Pinkie_Pie, .VolumeBar4Pinkie_Pie, .VolumeBar5Pinkie_Pie, .VolumeArcPinkie_Pie { border-color: rgb(236,157,196); }
 			.ContentShadePinkie_Pie, .PlayerSectionPinkie_Pie, input[type=button].PlayButtonsPinkie_Pie, .SongListPinkie_Pie, .SongInformationPinkie_Pie, .SelectThemePinkie_Pie  { background: linear-gradient(270deg, rgb(227,59,129), rgb(237,69,139), rgb(227,59,129)); color: rgb(236,157,196); }
 			.PlayerLinkPinkie_Pie { color: rgb(237,69,139); }
@@ -178,7 +184,7 @@
 		/* Media Player Theme - Rainbow Dash */
 	
 			.MediaPlayerSectionRainbow_Dash, .RangeLengthRainbow_Dash { background: linear-gradient(rgb(138,199,229), rgb(158,219,249), rgb(138,199,229)); box-shadow: 0px 0px 2px rgb(158,219,249); border-color: rgb(119,176,224); }
-			.VolumeBodyRainbow_Dash, .PlayerTextRainbow_Dash { background-color: rgb(158,219,249); color: rgb(158,219,249); }
+			.VolumeBodyRainbow_Dash, .ScrollBarRainbow_Dash, .ScrollRangeRainbow_Dash, .PlayerTextRainbow_Dash { background-color: rgb(158,219,249); color: rgb(158,219,249); }
 			.PlayTimeCurrentRainbow_Dash, .PlayTimeTotalRainbow_Dash, .VolumeControl:hover .VolumeCellRainbow_Dash, .VolumeControl:active .VolumeCellRainbow_Dash, .ArrowUpRainbow_Dash, .ArrowDownRainbow_Dash, .VolumeBar1Rainbow_Dash, .VolumeBar2Rainbow_Dash, .VolumeBar3Rainbow_Dash, .VolumeBar4Rainbow_Dash, .VolumeBar5Rainbow_Dash, .VolumeArcRainbow_Dash { border-color: rgb(158,219,249); }
 			.ContentShadeRainbow_Dash, .PlayerSectionRainbow_Dash, input[type=button].PlayButtonsRainbow_Dash, .SongListRainbow_Dash, .SongInformationRainbow_Dash, .SelectThemeRainbow_Dash  { background: linear-gradient(90deg, rgb(238,65,68), rgb(243,112,51), rgb(253,246,175), rgb(98,188,77), rgb(30,152,211), rgb(103,47,137)); color: rgb(158,219,249); text-shadow: 0px 0px 1px rgb(20,20,20); }
 			.PlayerLinkRainbow_Dash { color: rgb(98,188,77); }
@@ -189,7 +195,7 @@
 		/* Media Player Theme - Rarity */
 	
 			.MediaPlayerSectionRarity, .RangeLengthRarity { background: linear-gradient(rgb(235,239,241), rgb(222,227,228), rgb(235,239,241)); box-shadow: 0px 0px 2px rgb(222,227,228); border-color: rgb(190,194,195); }
-			.VolumeBodyRarity, .PlayerTextRarity { background-color: rgb(222,227,228); color: rgb(222,227,228); }
+			.VolumeBodyRarity, .ScrollBarRarity, .ScrollRangeRarity, .PlayerTextRarity { background-color: rgb(222,227,228); color: rgb(222,227,228); }
 			.PlayTimeCurrentRarity, .PlayTimeTotalRarity, .VolumeControl:hover .VolumeCellRarity, .VolumeControl:active .VolumeCellRarity, .ArrowUpRarity, .ArrowDownRarity, .VolumeBar1Rarity, .VolumeBar2Rarity, .VolumeBar3Rarity, .VolumeBar4Rarity, .VolumeBar5Rarity, .VolumeArcRarity { border-color: rgb(222,227,228); }
 			.ContentShadeRarity, .PlayerSectionRarity, input[type=button].PlayButtonsRarity, .SongListRarity, .SongInformationRarity, .SelectThemeRarity  { background: linear-gradient(270deg, rgb(84,69,152), rgb(94,79,162), rgb(84,69,152)); color: rgb(222,227,228); }
 			.PlayerLinkRarity { color: rgb(94,79,162); }
@@ -200,7 +206,7 @@
 		/* Media Player Theme - Scootaloo */
 	
 			.MediaPlayerSectionScootaloo, .RangeLengthScootaloo { background: linear-gradient(rgb(242,171,86), rgb(251,186,100), rgb(242,171,86)); box-shadow: 0px 0px 2px rgb(251,186,100); border-color: rgb(243,112,51); }
-			.VolumeBodyScootaloo, .PlayerTextScootaloo { background-color: rgb(251,186,100); color: rgb(251,186,100); }
+			.VolumeBodyScootaloo, .ScrollBarScootaloo, .ScrollRangeScootaloo, .PlayerTextScootaloo { background-color: rgb(251,186,100); color: rgb(251,186,100); }
 			.PlayTimeCurrentScootaloo, .PlayTimeTotalScootaloo, .VolumeControl:hover .VolumeCellScootaloo, .VolumeControl:active .VolumeCellScootaloo, .ArrowUpScootaloo, .ArrowDownScootaloo, .VolumeBar1Scootaloo, .VolumeBar2Scootaloo, .VolumeBar3Scootaloo, .VolumeBar4Scootaloo, .VolumeBar5Scootaloo, .VolumeArcScootaloo { border-color: rgb(251,186,100); }
 			.ContentShadeScootaloo, .PlayerSectionScootaloo, input[type=button].PlayButtonsScootaloo, .SongListScootaloo, .SongInformationScootaloo, .SelectThemeScootaloo  { background: linear-gradient(270deg, rgb(171,73,129), rgb(191,93,149), rgb(171,73,129)); color: rgb(251,186,100); }
 			.PlayerLinkScootaloo { color: rgb(191,93,149); }
@@ -211,7 +217,7 @@
 		/* Media Player Theme - Starlight Glimmer */
 	
 			.MediaPlayerSectionStarlight_Glimmer, .RangeLengthStarlight_Glimmer { background: linear-gradient(rgb(222,173,233), rgb(238,190,243), rgb(222,173,233)); box-shadow: 0px 0px 2px rgb(238,190,243); border-color: rgb(189,136,209); }
-			.VolumeBodyStarlight_Glimmer, .PlayerTextStarlight_Glimmer { background-color: rgb(238,190,243); color: rgb(238,190,243); }
+			.VolumeBodyStarlight_Glimmer, .ScrollBarStarlight_Glimmer, .ScrollRangeStarlight_Glimmer, .PlayerTextStarlight_Glimmer { background-color: rgb(238,190,243); color: rgb(238,190,243); }
 			.PlayTimeCurrentStarlight_Glimmer, .PlayTimeTotalStarlight_Glimmer, .VolumeControl:hover .VolumeCellStarlight_Glimmer, .VolumeControl:active .VolumeCellStarlight_Glimmer, .ArrowUpStarlight_Glimmer, .ArrowDownStarlight_Glimmer, .VolumeBar1Starlight_Glimmer, .VolumeBar2Starlight_Glimmer, .VolumeBar3Starlight_Glimmer, .VolumeBar4Starlight_Glimmer, .VolumeBar5Starlight_Glimmer, .VolumeArcStarlight_Glimmer { border-color: rgb(238,190,243); }
 			.ContentShadeStarlight_Glimmer, .PlayerSectionStarlight_Glimmer, input[type=button].PlayButtonsStarlight_Glimmer, .SongListStarlight_Glimmer, .SongInformationStarlight_Glimmer, .SelectThemeStarlight_Glimmer  { background: linear-gradient(270deg, rgb(98,38,136), rgb(127,47,172), rgb(98,38,136)); color: rgb(159,242,217); }
 			.PlayerLinkStarlight_Glimmer { color: rgb(127,47,172); }
@@ -222,7 +228,7 @@
 		/* Media Player Theme - Sunset Shimmer */
 	
 			.MediaPlayerSectionSunset_Shimmer, .RangeLengthSunset_Shimmer { background: linear-gradient(rgb(251,217,107), rgb(252,224,135), rgb(251,217,107)); box-shadow: 0px 0px 2px rgb(252,224,135); border-color: rgb(223,185,45); }
-			.VolumeBodySunset_Shimmer, .PlayerTextSunset_Shimmer { background-color: rgb(252,224,135); color: rgb(252,224,135); }
+			.VolumeBodySunset_Shimmer, .ScrollBarSunset_Shimmer, .ScrollRangeSunset_Shimmer, .PlayerTextSunset_Shimmer { background-color: rgb(252,224,135); color: rgb(252,224,135); }
 			.PlayTimeCurrentSunset_Shimmer, .PlayTimeTotalSunset_Shimmer, .VolumeControl:hover .VolumeCellSunset_Shimmer, .VolumeControl:active .VolumeCellSunset_Shimmer, .ArrowUpSunset_Shimmer, .ArrowDownSunset_Shimmer, .VolumeBar1Sunset_Shimmer, .VolumeBar2Sunset_Shimmer, .VolumeBar3Sunset_Shimmer, .VolumeBar4Sunset_Shimmer, .VolumeBar5Sunset_Shimmer, .VolumeArcSunset_Shimmer { border-color: rgb(252,224,135); }
 			.ContentShadeSunset_Shimmer, .PlayerSectionSunset_Shimmer, input[type=button].PlayButtonsSunset_Shimmer, .SongListSunset_Shimmer, .SongInformationSunset_Shimmer, .SelectThemeSunset_Shimmer  { background: linear-gradient(270deg, rgb(209,0,56), rgb(219,0,66), rgb(209,0,66)); color: rgb(252,224,135); }
 			.PlayerLinkSunset_Shimmer { color: rgb(219,0,66); }
@@ -233,7 +239,7 @@
 		/* Media Player Theme - Sweetie Belle */
 	
 			.MediaPlayerSectionSweetie_Belle, .RangeLengthSweetie_Belle { background: linear-gradient(rgb(219,217,218), rgb(239,237,238), rgb(219,217,218)); box-shadow: 0px 0px 2px rgb(239,237,238); border-color: rgb(207,200,209); }
-			.VolumeBodySweetie_Belle, .PlayerTextSweetie_Belle { background-color: rgb(239,237,238); color: rgb(239,237,238); }
+			.VolumeBodySweetie_Belle, .ScrollBarSweetie_Belle, .ScrollRangeSweetie_Belle, .PlayerTextSweetie_Belle { background-color: rgb(239,237,238); color: rgb(239,237,238); }
 			.PlayTimeCurrentSweetie_Belle, .PlayTimeTotalSweetie_Belle, .VolumeControl:hover .VolumeCellSweetie_Belle, .VolumeControl:active .VolumeCellSweetie_Belle, .ArrowUpSweetie_Belle, .ArrowDownSweetie_Belle, .VolumeBar1Sweetie_Belle, .VolumeBar2Sweetie_Belle, .VolumeBar3Sweetie_Belle, .VolumeBar4Sweetie_Belle, .VolumeBar5Sweetie_Belle, .VolumeArcSweetie_Belle { border-color: rgb(239,237,238); }
 			.ContentShadeSweetie_Belle, .PlayerSectionSweetie_Belle, input[type=button].PlayButtonsSweetie_Belle, .SongListSweetie_Belle, .SongInformationSweetie_Belle, .SelectThemeSweetie_Belle  { background: linear-gradient(270deg, rgb(246,184,210), rgb(226,164,190), rgb(246,184,190)); color: rgb(178,141,192); }
 			.PlayerLinkSweetie_Belle { color: rgb(178,141,192); }
@@ -246,7 +252,7 @@
 		/* Media Player Theme - Trixie */
 	
 			.MediaPlayerSectionTrixie, .RangeLengthTrixie { background: linear-gradient(rgb(102,176,232), rgb(113,184,239), rgb(102,176,232)); box-shadow: 0px 0px 2px rgb(113,184,239); border-color: rgb(57,145,202); }
-			.VolumeBodyTrixie, .PlayerTextTrixie { background-color: rgb(113,184,239); color: rgb(113,184,239); }
+			.VolumeBodyTrixie, .ScrollBarTrixie, .ScrollRangeTrixie, .PlayerTextTrixie { background-color: rgb(113,184,239); color: rgb(113,184,239); }
 			.PlayTimeCurrentTrixie, .PlayTimeTotalTrixie, .VolumeControl:hover .VolumeCellTrixie, .VolumeControl:active .VolumeCellTrixie, .ArrowUpTrixie, .ArrowDownTrixie, .VolumeBar1Trixie, .VolumeBar2Trixie, .VolumeBar3Trixie, .VolumeBar4Trixie, .VolumeBar5Trixie, .VolumeArcTrixie { border-color: rgb(113,184,239); }
 			.ContentShadeTrixie, .PlayerSectionTrixie, input[type=button].PlayButtonsTrixie, .SongListTrixie, .SongInformationTrixie, .SelectThemeTrixie  { background: linear-gradient(270deg, rgb(184,224,242), rgb(194,234,252), rgb(184,224,242)); color: rgb(113,184,239); }
 			.PlayerLinkTrixie { color: rgb(194,234,252); }
@@ -257,7 +263,7 @@
 		/* Media Player Theme - Twilight Sparkle */
 	
 			.MediaPlayerSectionTwilight_Sparkle, .RangeLengthTwilight_Sparkle { background: linear-gradient(rgb(209,159,227), rgb(182,137,200), rgb(209,159,227)); box-shadow: 0px 0px 2px rgb(182,137,200); border-color: rgb(167,107,194); }
-			.VolumeBodyTwilight_Sparkle, .PlayerTextTwilight_Sparkle { background-color: rgb(182,137,200); color: rgb(182,137,200); }
+			.VolumeBodyTwilight_Sparkle, .ScrollBarTwilight_Sparkle, .ScrollRangeTwilight_Sparkle, .PlayerTextTwilight_Sparkle { background-color: rgb(182,137,200); color: rgb(182,137,200); }
 			.PlayTimeCurrentTwilight_Sparkle, .PlayTimeTotalTwilight_Sparkle, .VolumeControl:hover .VolumeCellTwilight_Sparkle, .VolumeControl:active .VolumeCellTwilight_Sparkle, .ArrowUpTwilight_Sparkle, .ArrowDownTwilight_Sparkle, .VolumeBar1Twilight_Sparkle, .VolumeBar2Twilight_Sparkle, .VolumeBar3Twilight_Sparkle, .VolumeBar4Twilight_Sparkle, .VolumeBar5Twilight_Sparkle, .VolumeArcTwilight_Sparkle { border-color: rgb(182,137,200); }
 			.ContentShadeTwilight_Sparkle, .PlayerSectionTwilight_Sparkle, input[type=button].PlayButtonsTwilight_Sparkle, .SongListTwilight_Sparkle, .SongInformationTwilight_Sparkle, .SelectThemeTwilight_Sparkle  { background: linear-gradient(270deg, rgb(48,65,125), rgb(38,55,115), rgb(48,65,135)); color: rgb(237,67,138); }
 			.PlayerLinkTwilight_Sparkle { color: rgb(38,55,115); }

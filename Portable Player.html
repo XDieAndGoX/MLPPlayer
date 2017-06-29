@@ -105,7 +105,7 @@
 							</TR>
 							<TR>
 								<TD class="Loop">
-										&nbsp;&nbsp;&nbsp;Loop:
+										Loop:
 								</TD>
 								<TD class="CheckboxInput">
 									<input type="checkbox" id="LoopModeCheck" accesskey="O"><label for="LoopModeCheck"></label>
@@ -113,7 +113,7 @@
 							</TR>
 							<TR>
 								<TD class="Theme">
-										&nbsp;&nbsp;&nbsp;Theme:
+										Theme:
 								</TD>
 								<TD class="CheckboxInput">
 									<input type="checkbox" id="ThemeModeCheck" accesskey="T"><label for="ThemeModeCheck"></label>
@@ -139,13 +139,18 @@
 							Currently Playing
 						</span>
 						<div class="SongListContainer" id="SongListContainer">
-							<div id="SongCategory">
+							<div id="SongInformation">
 							</div>
 							<div id="SongSelection">
 							</div>
-							<div class="Scrollable">
-								<div class="ArrowUp" id="ArrowUp">
+							<div class="Scrollable" id="Scrollable">
+								<div id="ArrowUp">
 								</div>
+								<div id="ScrollBar">
+								</div>
+								<div id="ScrollRange">
+								</div>
+								<input type=range step="0.01" id="SongListTrack" class="SongListTrack" value="0">
 								<div class="ArrowDown" id="ArrowDown">
 								</div>
 							</div>
