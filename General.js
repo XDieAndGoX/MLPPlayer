@@ -118,35 +118,29 @@
 		var PlaySecondDown;
 		var PlayMinuteDowm;
 		var PlayMinuteCounter;
-		var PlayEnd;
+		var PlayDuration;
 		var PlayTime;
-		var PlayTilEnd;
+		var PlayTimeLeft;
 		var PlayEndTime;
+		var SeekMusic;
 		var SongDuration;
 		var SongTime;
 		var SongSelectorID;
 		var SongOption;
 		var MouseOverSong;
+		var PlayTrackMouseDown;
 		var LastSong;
-		var VolumeOver;
 		var ThemeCount;
 		var SongInfoFunction;
 		var SongScrollUpFunction;
 		var SongScrollDownnFunction;
+		var MusicSeekFunction;
+		var TransitionSpeedFunction;
+		var TransitionVolumeFunction;
 		
 	/* HTML Preview */
 	
 		var HTMLEditBox = document.getElementById('HTMLEditBox');
-		
-	/* F-List Icon Search */
-	
-		var SearchInput = document.getElementById("SearchField");
-		var Icon = document.getElementById("SearchIcon");
-		var IconLink = document.getElementById("ProfileLink");
-		var EiconLink = document.getElementById("EiconLink");
-		var Eicon = document.getElementById("SearchEicon");
-		var IconMatch = document.getElementById("IconMatchResults");
-		var EiconMatch = document.getElementById("EiconMatchResults");
 		
 function initialSetup()
 	{
@@ -172,6 +166,7 @@ function initialSetup()
 		preliminaryChecks();
 		changeTheme();
 		setSong(0);
+		musicSeek();
 		SongInformation.textContent = document.getElementById(SongName).dataset.series;
 		SongInfoNumber = 2;
 		initialSongInfo();
@@ -192,18 +187,25 @@ function scrollSongListDown()
 	{
 		SongScrollDownFunction = setInterval(scrollDown, 0200);
 	}
+	
+function musicSeek()
+	{
+		MusicSeekFunction = setInterval(getPlayTime, 1000);
+	}
 		
 function assignEvents()
 	{
 		/* Main & Portable Player */
 		
+			MusicPlayer.addEventListener("canplay", function() { getPlayTime(1); });
 			ContentShade.addEventListener("click", resetPlayerSize);
-			PlayTrack.addEventListener("change", seekMusic);
-			PlayTrack.addEventListener("input", seekMusic);
+			PlayTrack.addEventListener("change", function() { setTimeout(seekMusic, 0300); });
+			PlayTrack.addEventListener("input", function() { setTimeout(seekMusic, 0300); });
+			PlayTrack.addEventListener("mousedown", function() { PlayTrackMouseDown = 1; });
+			PlayTrack.addEventListener("mouseup", function() { PlayTrackMouseDown = 0; });
 			SongListTrack.addEventListener("change", scrollSongList);
 			SongListTrack.addEventListener("input", scrollSongList);
-			VolumeControlTable.addEventListener("mouseover", function() { setVolumeWidth(1); VolumeOver = 1; });
-			VolumeControlTable.addEventListener("mouseout", function() { VolumeOver = 0; });
+			VolumeControlTable.addEventListener("mouseover", function() { setVolumeWidth(); });
 			VolumeSlider.addEventListener("change", setVolume);
 			VolumeSlider.addEventListener("input", setVolume);
 			PreviousSong.addEventListener("click", playPreviousSong);
@@ -218,22 +220,20 @@ function assignEvents()
 			ScaleLinkx2.addEventListener("click", function() { scalePlayer(2) });
 			ScaleLinkx3.addEventListener("click", function() { scalePlayer(3) });
 			ScaleLinkx4.addEventListener("click", function() { scalePlayer(4) });
-			SongListContainer.addEventListener("mouseover", function() { SongInformation.style.opacity = "0"; clearTimeout(SongInfoFunction); }); 
+			SongListContainer.addEventListener("mouseover", function() { SongInformation.style.opacity = "0"; clearInterval(SongInfoFunction); }); 
 			SongListContainer.addEventListener("mouseleave", initialSongInfo); 
 			SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); });
 			SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6); }, 0100); }); 
 			SongSelection.addEventListener("scroll", scrollBar);
 			ArrowUp.addEventListener ("click", scrollUp);
 			ArrowUp.addEventListener ("mousedown", scrollSongListUp);
-			ArrowUp.addEventListener ("mouseup", function() { clearTimeout(SongScrollUpFunction); });
-			ArrowUp.addEventListener ("mouseleave", function() { clearTimeout(SongScrollUpFunction); });
+			ArrowUp.addEventListener ("mouseup", function() { clearInterval(SongScrollUpFunction); });
+			ArrowUp.addEventListener ("mouseleave", function() { clearInterval(SongScrollUpFunction); });
 			ArrowDown.addEventListener ("click", scrollDown);
 			ArrowDown.addEventListener ("mousedown", scrollSongListDown);
-			ArrowDown.addEventListener ("mouseup", function() { clearTimeout(SongScrollDownFunction); });
-			ArrowDown.addEventListener ("mouseleave", function() { clearTimeout(SongScrollDownFunction); });
+			ArrowDown.addEventListener ("mouseup", function() { clearInterval(SongScrollDownFunction); });
+			ArrowDown.addEventListener ("mouseleave", function() { clearInterval(SongScrollDownFunction); });
 			MusicPlayer.addEventListener("error", function() { checkError(1); });
-			MusicPlayer.addEventListener("loadstart", loading);
-			MusicPlayer.addEventListener("timeupdate", getPlayTime);
 			MusicPlayer.addEventListener("ended", musicEnded);
 			ThemeSelection.addEventListener("mouseleave", function() { this.scrollTop = 0; });
 
@@ -320,6 +320,13 @@ initialSetup();
 				localStorage.setItem("SongList", MusicPlayer.innerHTML);
 			}
 			
+	function lowerTransitionSpeed(Speed)
+			{
+				PlayTrackFill.style.transition = Speed;
+				PlayTrackThumb.style.transition = Speed;
+				TransitionSpeedFunction = setTimeout(function() { PlayTrackFill.style.transition = null; PlayTrackThumb.style.transition = null; }, 1000);
+			}
+			
 	function buildSongList()
 			{				
 				for (Song = 0; Song < LastSong; Song++)
@@ -360,20 +367,17 @@ initialSetup();
 			
 	function setSong(NewSongCheck)
 		{
+			lowerTransitionSpeed("0.3s");
 			SongName = Playlist[PlaylistCount];
 			SongID = document.getElementById(SongName);
 			
 			if (NewSongCheck == 1)
 				{
 					resetPlayTime();
-					MusicPlayer.removeEventListener("loadeddata", setPlayTime);
-					MusicPlayer.addEventListener("loadeddata", getPlayTime);
 				}
 			else
 				{
-					MusicPlayer.removeEventListener("loadeddata", getPlayTime);
-					MusicPlayer.addEventListener("loadeddata", setPlayTime);
-					MusicPlayer.addEventListener("loadeddata", getPlayTime);
+					setPlayTime();
 				}
 				
 			MusicPlayer.src = SongID.src;
@@ -424,14 +428,6 @@ initialSetup();
 		
 	function checkControls()
 		{
-			if (PlaylistCount == 0)
-				{
-					PreviousSong.disabled = true;
-				}
-			else
-				{
-					PreviousSong.disabled = false;
-				}
 			if (PlaylistCount == Playlist.length-1)
 				{
 					NextSong.value = ">>+";
@@ -529,7 +525,11 @@ initialSetup();
 		
 	function resetPlayTime()
 		{
-			MusicPlayer.currentTime = 0;
+			if (CurrentPlayback.textContent != "ERR" && TotalPlayback.textContent != "OR!")
+				{
+					MusicPlayer.currentTime = 0;
+				}
+				
 			localStorage.setItem("SongPlaybackTime", MusicPlayer.currentTime);
 		}
 		
@@ -566,13 +566,17 @@ initialSetup();
 	
 	function playPreviousSong()
 		{
-			if (PlaylistCount != 0)
+			if (MusicPlayer.currentTime > (MusicPlayer.duration * .15) || PlaylistCount == 0)
+				{
+					MusicPlayer.currentTime = 0;
+				}
+			else
 				{
 					PlaylistCount--;
+					localStorage.setItem("PlaylistCounter", PlaylistCount);
+					setSong(1);
+					checkControls();
 				}
-			localStorage.setItem("PlaylistCounter", PlaylistCount);
-			setSong(1);
-			checkControls();
 		}
 		
 	function songNumber()
@@ -660,23 +664,7 @@ initialSetup();
 			var GetVolume = VolumeSlider.value;
 			localStorage.setItem("CurrentVolume", GetVolume);
 			GetCurrentVolume = localStorage.getItem("CurrentVolume");
-			if (VolumeSlider.value == 100)
-				{
-					GetVolume = "1.0";
-				}
-			else if (VolumeSlider.value < 10)
-				{
-					GetVolume = "0.0"+VolumeSlider.value;
-				}
-			else if (VolumeSlider.value == 0)
-				{
-					GetVolume = 0;
-				}
-			else
-				{
-					GetVolume = "0."+VolumeSlider.value;
-				}
-				
+
 			if (VolumeSlider.value == 100)
 				{
 					VolumeBar5.style.visibility = "visible";
@@ -733,18 +721,13 @@ initialSetup();
 					VolumeX.textContent = "X";
 				} 
 				
-			MusicPlayer.volume = GetVolume;
-			setVolumeWidth(0);
+			MusicPlayer.volume = (GetVolume/100);
+			setVolumeWidth();
 			VolumeNumber.textContent = VolumeSlider.value;
 		}
 		
-	function setVolumeWidth(Animated)
+	function setVolumeWidth()
 		{
-			if (Animated == 0)
-				{
-					VolumeFill.style.transition = "width 0s";
-					VolumeThumb.style.transition = "left 0s";
-				}
 			VolumeFill.style.width = VolumeSlider.value+"%";
 			VolumeThumb.style.left = VolumeSlider.value+"%";
 		}
@@ -757,42 +740,67 @@ initialSetup();
 			PlayTrackThumb.style.left = "0%";
 		}
 		
-	function getPlayTime()
+	function getPlayTime(Exception)
 		{	
-			if (ErrorCheck == 0)
-				{	
-					localStorage.setItem("SongPlaybackTime", MusicPlayer.currentTime);
-					PlayTime = parseInt(MusicPlayer.currentTime);
-					PlayEnd = parseInt(MusicPlayer.duration);
-					PlayTilEnd = PlayEnd - PlayTime;
-					PlaySecondDown = PlayTilEnd % 60;
-					PlayMinuteDown = Math.floor(PlayTilEnd / 60) % 60;
-					PlaySecondDown = (PlaySecondDown < 10) ? "0"+PlaySecondDown: PlaySecondDown;
-					TotalPlayback.textContent = "-"+PlayMinuteDown+":"+PlaySecondDown;
-					PlaySecondUp = parseInt(PlayTime % 60);
-					PlayMinuteUp = parseInt((PlayTime / 60) % 60);
-					PlaySecondUp = (PlaySecondUp < 10) ? "0"+PlaySecondUp: PlaySecondUp;
-					CurrentPlayback.textContent = PlayMinuteUp+":"+PlaySecondUp;
-				
-					if (CheckInput == 0)
-						{
-							PlayTrack.value = (100 / PlayEnd) * PlayTime;
-							PlayTrackFill.style.width = PlayTrack.value+"%";
-							PlayTrackThumb.style.left = PlayTrack.value+"%";
+			if (!MusicPlayer.paused || Exception == 1)
+				{
+					if (ErrorCheck == 0)
+						{	
+							localStorage.setItem("SongPlaybackTime", MusicPlayer.currentTime);
+							PlayTime = MusicPlayer.currentTime;
+							PlayDuration = MusicPlayer.duration;
+							IfNumber = isNaN(PlayDuration);
+					
+						if (IfNumber == true)
+							{
+								loading();
+							}
+						else
+							{
+								TimeLeft = PlayDuration - PlayTime;
+					
+								PlaySecondDown = Math.floor(TimeLeft % 60);
+								PlayMinuteDown = Math.floor(TimeLeft / 60);
+								PlaySecondDown = (PlaySecondDown < 10) ? "0"+PlaySecondDown: PlaySecondDown;
+								TotalPlayback.textContent = "-"+PlayMinuteDown+":"+PlaySecondDown;
+					
+								PlaySecondUp = Math.floor(PlayTime % 60);
+								PlayMinuteUp = Math.floor(PlayTime / 60);
+								PlaySecondUp = (PlaySecondUp < 10) ? "0"+PlaySecondUp: PlaySecondUp;
+								CurrentPlayback.textContent = PlayMinuteUp+":"+PlaySecondUp;
+								PlayTrack.value = (100 / PlayDuration) * PlayTime;
+								PlayTrackFill.style.width = PlayTrack.value+"%";
+								PlayTrackThumb.style.left = PlayTrack.value+"%";
+							}
 						}
-
-			CheckInput = 0;
+						
+					if (MusicPlayer.currentTime < (MusicPlayer.duration * .15) && PlaylistCount != 0)
+						{
+							PreviousSong.value = "|<<"
+						}
+					else
+						{
+							PreviousSong.value = "|<"
+						}
 				}
 		}
 	
 	function seekMusic()
 		{
-			CheckInput = 1;
-			PlayTime = Math.round(MusicPlayer.currentTime);
-			PlayEndTime = PlayEnd / 100;
+			if (PlayTrackMouseDown == 1)
+				{
+					lowerTransitionSpeed("0s");
+				}
+			else
+				{
+					lowerTransitionSpeed("0.3s");
+				}
+				
+			PlayEndTime = PlayDuration / 100;
 			MusicPlayer.currentTime = PlayTrack.value * PlayEndTime;
 			PlayTrackThumb.style.left = PlayTrack.value+"%";
 			PlayTrackFill.style.width = PlayTrack.value+"%";
+			getPlayTime(1);
 		}
 		
 	function clearPlaylist()
@@ -1211,26 +1219,6 @@ initialSetup();
 				
 			}
 
-
-/* F-List Icon Search */
-	
-	function searchIcon()
-		{
-			
-			Icon.src = "https://static.f-list.net/images/avatar/" + SearchInput.value.toLowerCase() + ".png";
-			IconLink.href = "https://www.f-list.net/c/" + SearchInput.value;
-			EiconLink.href = "https://static.f-list.net/images/eicon/" + SearchInput.value + ".gif";
-			Eicon.src = "https://static.f-list.net/images/eicon/" + SearchInput.value.toLowerCase() + ".gif";
-			IconMatch.textContent = "[icon]" + SearchInput.value + "[/icon]";
-			EiconMatch.textContent = "[eicon]" + SearchInput.value + "[/eicon]";
-		}
-		
-	function fListIconSearch ()
-		{
-			window.open("F-List Icon Search.html", "", "directories = no, menubar = no, scrollbars = no, status = no, toolbar = no, location = no, width = 491, height = 343, left = 330, top = 325");
-		}
-		
-		
 /* HTML Preview */
 	
 	
