@@ -1,4 +1,4 @@
-/* Use Find & Replace to change the values below. Change /*PONY_NAME*/ to the name of your pony with spaces separated by an underscore (_) */
+/* Use Find & Replace to change the values below. Change PONY_NAME to the name of your pony with spaces separated by an underscore (_) */
 /* Please use RGB values for colors and, whenever you see something like "color -10", just substract 10 from its Red, Green, and Blue. e.g. rgb(210,100,50) -10 = rgb(200,90,40) */
 
 			.MediaPlayerSection/*PONY_NAME*/, .RangeLength/*PONY_NAME*/ { background: linear-gradient(/*COAT -10*/, /*COAT*/, /*COAT -10*/); box-shadow: 0px 0px 2px rgb(/*COAT*/); border-color: rgb(/*STROKE*/); }
