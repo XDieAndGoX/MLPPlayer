@@ -1,6 +1,6 @@
 The media player was created for the enjoynment of myself and others. The controls should be self explanatory as they are in any other media player.  
 
-If you would like to make your own theme for the media player, please follow the template in: [PlayerThemeTemplate.css](https://github.com/XDieAndGoX/MLPPlayer/blob/master/PlayerThemeTemplate.css)
+If you would like to make your own theme for the media player, please follow the template in: [PlayerThemeTemplate.css](https://github.com/XDieAndGoX/MLPPlayer/blob/master/PlayerThemeTemplate.css) Once you have done this, send me an [e-mail](mailto:eternitytrials@gmail.com) or contact me through any other methods you know so I can review it and add it.
 
  # FEATURES:  
     1. The media player was configured to use localStorage to save its settings and remember them when the page is reloaded or visited.  
