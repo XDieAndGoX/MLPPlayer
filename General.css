@@ -19,10 +19,12 @@
 	input:not([type=range]):not([type=button]):not([type=submit]):disabled {background-color: rgb(90,90,90); color: rgb(120,120,120); transition: 2s;}
 	input:not([type=range]):not([type=button]):not([type=submit]):disabled:hover {background-color: rgb(20,20,20); color: rgb(30,30,30); transition: 2s; border-radius: 20px;}
 	input[type=range] { opacity: 0; position: absolute; width: 100%; z-index: 2; left: 0; top: -8px; }
+	::-ms-tooltip { display: none; }
+	::-moz-focus-inner { border: 0; }
 
 /* Main Page & Portable Player */
 
-	div#MediaPlayerContainer { width: 270px; margin: 0 auto 0 auto; position: relative; user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-user-select: none; }
+	div#MediaPlayerContainer { width: 270px; margin: 0 auto 0 auto; position: relative; -moz-user-select: none; -ms-user-select: none; -webkit-user-select: none; }
 	Table.MediaPlayerSection { margin: 0 auto 0 auto; border-radius: 6px; position: fixed; font-size: 7pt; display: block; top: 10px; padding: 2px; border-collapse: collapse; transition: transform 1s, top 1s; z-index: 2; border-style: solid; border-width: 3px; }
 	Table.MediaPlayerSection A { font-size: 6pt; font-weight: bold; cursor: pointer; }
 	Table.MediaPlayerSection A:hover { filter: brightness(140%); }
@@ -41,8 +43,9 @@
 	span.PlaybackContainer { width: 100%; display: block; height: 2px; position: relative; }
 	span.RangeTotalLength { width: 94%; display: block; position: relative; height: 2px;}
 	span.RangeLength { display: inherit; width: 106%; height: 2px; border-radius: 20px; position: absolute; border: 0; left: 0; transition: 1s; }
-	span.RangeFill { border-radius: 20px; position: absolute; left: 0; height: 2px; width: 0px; }
-	span.RangeThumb { position: absolute; left: 0; width: 13px; height: 13px; border-radius: 20px; bottom: -5px; margin-left: -2px; }
+	span.RangeFill { border-radius: 20px; position: absolute; left: 0; height: 2px; width: 0px; transition: 1s linear; }
+	span.RangeThumb { position: absolute; width: 13px; height: 13px; border-radius: 20px; bottom: -5px; margin-left: -2px; transition: 1s linear; }
+	span:active span.RangeThumb, span:active span.RangeFill { transition: 0s; }
 	span.PlayerLinks { position: relative; opacity: 1; width: 130px; margin: 0 auto 0 auto; left: 4px; display: block; white-space: nowrap; }
 	Span.PlayerLink + Span { font-weight: bolder; }
 	input[type=checkbox]#RepeatModeCheck + label, input[type=checkbox]#ShuffleModeCheck + label, input[type=checkbox]#LoopModeCheck + label, input[type=checkbox]#ThemeModeCheck + label { position: absolute; bottom: 2px; left: 5px; }
@@ -96,7 +99,7 @@
 	input.SongListTrack { position: absolute; left: -15px; top: 20.5px; transform: rotate(90deg); width: 40px; }
 	div#ScrollBar { position: absolute; width: 10px; height: 9px; top: 30%; z-index: 2; border-radius: 3px; opacity: 0; transition: opacity 0.1s; border: none; box-shadow: none; }
 	div#ScrollRange { position: absolute; width: 4px; left: 3px; height: 0px; opacity: 0; top: 32%; border-radius: 20px; border: none; box-shadow: none; transition: opacity 0.1s 1s, height 1s; filter: brightness(90%); }
-	div.ArrowDown { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top-width: 7px; border-top-style: solid; transition: 1s; top: 10px; position: absolute; user-select: none; }
+	div.ArrowDown { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top-width: 7px; border-top-style: solid; transition: 1s; top: 10px; position: absolute; }
 	div.ArrowUp:hover, div.ArrowDown:hover { cursor: pointer; }
 	div.SongListContainer { position: relative; margin-top: 2px; overflow: hidden; border-radius: 8px; }
 	div.SongList { height: 19px; width: 107%; position: relative; overflow: hidden; transition: 1s; scroll-behavior: smooth; border-radius: 8px; }
@@ -107,11 +110,11 @@
 	div.SongListContainer:hover div#ScrollBar, div.SongListContainer:active div#ScrollBar { transition: opacity 1s 0.8s; opacity: 1; }
 	div.SongListContainer:hover div#ScrollRange, div.SongListContainer:active div#ScrollRange { transition: opacity 0.2s, height 1s; height: 38px; opacity: 1; }
 	div.SongListContainer:hover > div.SongList, div.SongList:hover, div.SongList:active, div.SongListContainer:active > div.SongList { height: 60px; transition: height 1s; overflow: auto; }
-	div.SongListContainer:hover > div.SongList span { padding-bottom: 5px; margin-left: -1%; }
+	div.SongListContainer:hover > div.SongList span { padding-bottom: 5px; margin-left: 4%; }
 	div.SongListContainer:hover > div.SongInformation { opacity: 0; z-index: -1; transition: opacity 0.1s, z-index 0s 0.1s; }
 	span.CurrentlyPlaying { font-size: 10pt; font-weight: bolder; display: block; margin: 0 auto 0 auto; border-radius: 3px; }
 	#CurrentlyPlaying, #PlayerSize { text-shadow: 0px 0px 3px rgb(100,100,100); background-color: transparent; }
-	div.SongList span { font-size: 10px; display: block; padding-bottom: 12px; text-shadow: 0px 0px 1px rgb(100,100,100); transition: color 1s, text-shadow 1s, filter 1s; margin-left: -7%; }
+	div.SongList span { font-size: 10px; display: block; padding-bottom: 12px; text-shadow: 0px 0px 1px rgb(100,100,100); transition: color 1s, text-shadow 1s, filter 1s; margin-right: 7%; }
 	div.SongList span:hover { cursor: pointer; transition: color 1s, text-shadow 1s, filter 1s; filter: brightness(150%); }
 	div.SongInformation { position: absolute; margin: 0 auto 0 auto; z-index: 3; top: -5%; width: 100%; font-weight: bolder; font-size: 5pt; opacity: 1; transition: opacity 1s; }
 	div.ContentShade { opacity: 0; transition: opacity 1s, z-index 0s 1s; position: absolute; overflow: hidden; z-index: 0; width: 100%; height: 100%; }
