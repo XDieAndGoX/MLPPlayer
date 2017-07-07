@@ -137,9 +137,25 @@
 				</TR>
 				<TR>
 					<TD class="CurrentlyPlayingList">
+						<div id="TroubleshootContainer">
+							<div id="Troubleshoot">
+								?
+							</div>
+							<div id="TroubleshootMessage" class="TroubleshootMessage"></div>
+						</div>
 						<span id="CurrentlyPlaying">
 							Currently Playing
 						</span>
+						<div id="ShareContainer">
+							<div id="ShareIcon">
+								<div id="ShareCircle1"></div>
+								<div id="ConnectingLine1"></div>
+								<div id="ShareCircle2"></div>
+								<div id="ConnectingLine2"></div>
+								<div id="ShareCircle3"></div>
+							</div>
+							<div id="CopiedTextMessage"></div>
+						</div>
 						<div class="SongListContainer" id="SongListContainer">
 							<div id="SongInformation">
 							</div>
@@ -308,6 +324,7 @@
 				<source src="You%20Gotta%20Share.mp3" type="audio/mp3" title="You Gotta Share" data-artist="Pinkie Pie" data-featuredin="S01E21 - Over a Barrel">
 				<source src="You'll%20Play%20Your%20Part.mp3" type="audio/mp3" title="You'll Play Your Part">
 			</audio>
+		<div id="HiddenShareText"></div>
 		</span>
 		<script>
 			var IsPortable = 0;
