@@ -78,7 +78,7 @@
 				<TR>
 					<TD class="PlayButtonsCell">
 						<span class="PlayButtonsSection">
-							<input type="button" id="PreviousSong" value="|<<" disabled accesskey=",">
+							<input type="button" id="PreviousSong" value="|<<" accesskey=",">
 							<input type="button" id="PlayButton" Value="Play" accesskey="P">
 							<input type="button" id="NextSong" value=">>|" accesskey=".">
 						</span>
@@ -135,9 +135,25 @@
 				</TR>
 				<TR>
 					<TD class="CurrentlyPlayingList">
+						<div id="TroubleshootContainer">
+							<div id="Troubleshoot">
+								?
+							</div>
+							<div id="TroubleshootMessage" class="TroubleshootMessage"></div>
+						</div>
 						<span id="CurrentlyPlaying">
 							Currently Playing
 						</span>
+						<div id="ShareContainer">
+							<div id="ShareIcon">
+								<div id="ShareCircle1"></div>
+								<div id="ConnectingLine1"></div>
+								<div id="ShareCircle2"></div>
+								<div id="ConnectingLine2"></div>
+								<div id="ShareCircle3"></div>
+							</div>
+							<div id="CopiedTextMessage"></div>
+						</div>
 						<div class="SongListContainer" id="SongListContainer">
 							<div id="SongInformation">
 							</div>
