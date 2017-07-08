@@ -158,6 +158,7 @@
 			var NewText = "NEW";
 			var CurrentURL = window.location.href.substr(window.location.href.lastIndexOf('/')+1).toLowerCase();
 			var FullURL = window.location.href;
+			var AlbumLinks;
 			
 		/* HTML Preview */
 		
@@ -228,7 +229,7 @@
 			changeTheme();
 			setSong();
 			history.replaceState(null, null, CurrentURL.substring(0, CurrentURL.indexOf("?")));
-			setTimeout(function() { scrollToPlaying(6); }, 1000);
+			setTimeout(function() { scrollToPlaying(6, 1); }, 1000);
 			musicSeek();
 			SongInformation.textContent = document.getElementById(SongName).dataset.series;
 			TroubleshootMessage.textContent = "Something is not working as it should? Click this icon to reset everything back to default. Keep in mind that this will clear your playlist!! The page is going to be reloaded as well."
@@ -288,7 +289,7 @@
 				ScaleLinkx4.addEventListener("click", function() { scalePlayer(4) });
 				SongListContainer.addEventListener("mouseenter", checkIfNotChangeStyle); 
 				SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); });
-				SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6); }, 0100); }); 
+				SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6, 1); }, 0100); }); 
 				SongSelection.addEventListener("scroll", scrollBar);
 				ArrowUp.addEventListener ("click", scrollUp);
 				ArrowUp.addEventListener ("mousedown", scrollSongListUp);
@@ -564,7 +565,7 @@
 				SongNumber = TotalSongs.indexOf(SongName);
 				ShareContainer.removeEventListener("click", copySongURL);
 				ShareContainer.addEventListener("click", copySongURL);
-				setTimeout(function() { scrollToPlaying(6); }, 0300); 
+				setTimeout(function() { scrollToPlaying(6, 1); }, 0300); 
 				if (SongSelectorID.innerHTML.search(NewHTML) != -1)
 					{
 						UpdatedSongText = SongSelectorID.innerHTML.substring(0, SongSelectorID.innerHTML.lastIndexOf(" "));
@@ -1226,7 +1227,8 @@
 			
 		function checkIfNotChangeStyle()
 			{
-				if (SongInfoNumber != 8)
+
+				if (SongInformation.innerHTML.search("<a href") == -1)
 					{
 						SongInformation.style.opacity = "0";
 						SongListContainer.className = "SongListContainer";
@@ -1236,13 +1238,14 @@
 					{
 						SongListContainer.className = "SongListContainerNoHover";
 						SongSelection.className = "SongListNoHover SongList"+CurrentTheme;
+						setTimeout(function() { scrollToPlaying(0); }, 100);
+						setTimeout(checkIfNotChangeStyle, 0001);
 					}
 			}
 			
 		function setSongInformation()
 			{	
 				SongInformation.style.opacity = "0";
-
 				setTimeout(checkSongInformation, 1000);
 				setTimeout(songInfoVisible, 1000);
 			}
@@ -1250,6 +1253,7 @@
 				
 		function checkSongInformation()
 			{	
+
 				if (SongInfoNumber == 1)
 					{
 						if (SongID.dataset.series != null)
@@ -1314,7 +1318,8 @@
 					{
 						if (SongID.dataset.album != null)
 							{
-								SongInformation.textContent = SongID.dataset.album;
+								AlbumLinks = SongID.dataset.album.replace("SFM", "<a href=\"http://mlp.wikia.com/wiki/Songs_of_Friendship_and_Magic\" target=\"_blank\">SFM</a>").replace("SP", "<a href=\"http://mlp.wikia.com/wiki/Songs_of_Ponyville\" target=\"_blank\">SP</a>").replace("RRs", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls:_Rainbow_Rocks_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">RRs</a>").replace("MFT", "<a href=\"http://mlp.wikia.com/wiki/Magical_Friendship_Tour\" target=\"_blank\">MFT</a>").replace("EGs", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">EGs</a>").replace("RRcd", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls_-_Rainbow_Rocks_CD\" target=\"_blank\">RRcd</a>").replace("EGcd", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls_CD\" target=\"_blank\">EGcd</a>").replace("SH", "<a href=\"http://mlp.wikia.com/wiki/Songs_of_Harmony\" target=\"_blank\">SH</a>").replace("FMR", "<a href=\"http://mlp.wikia.com/wiki/Friendship_is_Magic_Remixed\" target=\"_blank\">FMR</a>").replace("CC", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_2015_Convention_Collection\" target=\"_blank\">CC</a>").replace("FGs", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls:_Friendship_Games_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">FGs</a>").replace("Xmas", "<a href=\"http://mlp.wikia.com/wiki/It%27s_a_Pony_Kind_of_Christmas\" target=\"_blank\">Xmas</a>").replace("FIMc", "<a href=\"http://mlp.wikia.com/wiki/Friendship_is_Magic_Collection\" target=\"_blank\">FIMc</a>").replace("EGC", "<a href=\"http://mlp.wikia.com/wiki/Equestria_Girls_Collection\" target=\"_blank\">EGC</a>").replace("PP", "<a href=\"http://mlp.wikia.com/wiki/Pinkie_Pie%27s_Party_Playlist\" target=\"_blank\">PP</a>").replace("LoE", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls:_Legend_of_Everfree_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">LoE</a>").replace("EE", "<a href=\"http://mlp.wikia.com/wiki/Explore_Equestria:_Greatest_Hits\" target=\"_blank\">EE</a>").replace("MR", "<a href=\"http://en.wikipedia.org/wiki/Squeeze_Box:_The_Complete_Works_of_%22Weird_al%22_Yankovic#Medium_Rarities_.282017.29\" target=\"_blank\">MR</a>");
+								SongInformation.innerHTML = AlbumLinks;
 							}
 
 						SongInfoNumber++;
@@ -1380,10 +1385,10 @@
 				SongInformation.style.opacity = "1";
 			}			
 			
-		function scrollToPlaying(OffSet)
+		function scrollToPlaying(OffSet, Exception)
 			{
 				SongSelectorID = document.getElementById(Playlist[PlaylistCount]+"-Selected");
-				if (SongInfoNumber != 8)
+				if (SongInformation.innerHTML.search("<a href") == -1 || Exception == 1)
 					{
 						SongSelection.scrollTop = SongSelectorID.offsetTop - OffSet;
 					}
