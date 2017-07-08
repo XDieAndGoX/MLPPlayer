@@ -22,6 +22,8 @@
 	input[type=range] { opacity: 0; position: absolute; width: 100%; z-index: 2; left: 0; top: -8px; }
 	::-ms-tooltip { display: none; }
 	::-moz-focus-inner { border: 0; }
+	::-webkit-scrollbar { width: 0%; }
+	div.SongList::-webkit-scrollbar { width: 12px; }
 
 /* Main Page & Portable Player */
 
@@ -47,7 +49,7 @@
 	span.RangeFill { border-radius: 20px; position: absolute; left: 0; height: 2px; width: 0px; transition: 1s linear; }
 	span.RangeThumb { position: absolute; width: 13px; height: 13px; border-radius: 20px; bottom: -5px; margin-left: -2px; transition: 1s linear; }
 	span:active span.RangeThumb, span:active span.RangeFill { transition: 0s; }
-	span.PlayerLinks { position: relative; width: 130px; margin: 0 auto 0 auto; left: 4px; display: block; white-space: nowrap; }
+	div.PlayerLinks { position: relative; width: 130px; margin: 0 auto 0 auto; left: 4px; white-space: nowrap; }
 	Span.PlayerLink + Span { font-weight: bolder; }
 	input[type=checkbox]#RepeatModeCheck + label, input[type=checkbox]#ShuffleModeCheck + label, input[type=checkbox]#LoopModeCheck + label, input[type=checkbox]#ThemeModeCheck + label { position: absolute; bottom: 2px; left: 5px; }
 	Table.CheckboxesSection { position: absolute; left: 78.5%; top: 24px; border-collapse: collapse; border-spacing: 0px; border-radius: 7px; }
@@ -83,37 +85,45 @@
 	span.PlayButtonsSection input[type=button]:first-child { margin-left: 2px; }
 	span.PlayButtonsSection input[type=button] { font-size: 7.5pt; font-weight: bold; width: 40px; }
 	div.SongCount { padding: 1px 3px 1px 3px; width: 52px; border-radius: 7px; position: absolute; top: 25px; left: 1px; font-weight: bold; font-size: 5pt; opacity: 1; }
-	span.ThemeSelectionContainer { position: relative; padding-left: 45px; }
-	div.ThemeSelection { display: block; height: 8px; width: 40px; position: absolute; bottom: 0; padding: 1px; left: 0; border-radius: 10px; scroll-behavior: smooth; font-size: 4pt; transition: 1s; overflow: hidden; }
+	div.ThemeSelectionContainer { position: relative; display: inline-block; padding-left: 45px; width: 20px; bottom: 4px; }
+	div.ThemeSelectionOuter { height: 8px; width: 48px; left: 0; z-index: 3; margin-bottom: 6px; position: absolute; border-radius: 5px; font-size: 4pt; transition: 1s; overflow: hidden; }
+	div.ThemeSelection { width: 150%; overflow: hidden; padding-right: 50%; scroll-behavior: smooth; }
 	div.ThemeSelection sup { font-size: 2pt; }
-	div.ThemeSelection:hover { height: 20px; width: 65px; overflow: hidden; transition: 1s; overflow-y: scroll; }
-	div.ThemeOption { transition: 1s; }
-	div.ThemeSelection div:first-child { margin-bottom: 3px; font-weight: bolder; }
+	div.ThemeSelectionContainer:hover div.ThemeSelection, div.ThemeSelectionContainer:active div.ThemeSelection, div.ThemeSelectionContainer:hover div.ThemeSelectionOuter, div.ThemeSelectionContainer:active div.ThemeSelectionOuter { height: 26px; transition: 1s; }
+	div.ThemeSelectionContainer:hover div.ThemeSelection { overflow-y: scroll; -ms-overflow-style: none; }
+	div.ThemeSelectionContainer:hover div.ThemeArrowDown { top: 21px; transition: 1s; }
+	div.ThemeOption, div#SelectTheme { transition: filter 1s; margin-right: 35%; font-size: 3.5pt; }
+	div.ThemeSelectionContainer:hover div#SelectTheme, div.ThemeSelectionContainer:hover div.ThemeOption { margin-right: 35%; }
+	div.ThemeSelection div:first-child { margin-bottom: 3px; margin-top: 1px; font-weight: bolder; }
+	div.ThemeSelection div:last-child { padding-bottom: 1px; }
 	div.ThemeSelection div:not(:first-child) { text-shadow: 0px 0px 1px rgb(100,100,100); }
 	div.ThemeSelection div:hover:not(:first-child) { filter: brightness(130%); }
 	div.ThemeOption:hover { transition: 1s; cursor: pointer; }
-	div.ThemeSelection:hover { height: 20px; overflow: hidden; transition: 1s; overflow-y: scroll; }
+	div.ThemeScrollable { position: relative; right: 2.5px; top: 1px; z-index: 5; }
+	div.ThemeArrowUp { width: 0; height: 0; border-left: 2px solid transparent; border-right: 2px solid transparent; border-bottom-width: 3px; border-bottom-style: solid; }
+	div.ThemeArrowDown { width: 0; height: 0; border-left: 2px solid transparent; border-right: 2px solid transparent; border-top-width: 3px; border-top-style: solid; transition: 1s; top: 3.5px; position: absolute; transition: 1s; }
+	div.ThemeArrowUp:hover, div.ThemeArrowDown:hover { cursor: pointer; }
 	span#PlayerLinks span:not(#PlayerSize) { text-shadow: none; }
 	#SelectTheme, #SongInformation { background: none; box-shadow: none; }
 	span.PlayerSize { font-size: 7pt; font-weight: bolder; }
 	span.CurrentlyPlaying { font-size: 10pt; font-weight: bolder; display: block; margin: 0 auto 0 auto; border-radius: 3px; }
 	#CurrentlyPlaying, #PlayerSize { text-shadow: 0px 0px 3px rgb(100,100,100); background-color: transparent; }
-	div.Scrollable { position: absolute; top: 0; padding-top: 1.5px; right: 3px; height: 30px; }
-	div.ArrowUp { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom-width: 7px; border-bottom-style: solid; }
+	div.SongScrollable { position: absolute; top: 0; padding-top: 1.5px; right: 3px; height: 30px; }
+	div.SongArrowUp { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom-width: 7px; border-bottom-style: solid; }
 	input.SongListTrack { position: absolute; left: -15px; top: 20.5px; transform: rotate(90deg); width: 40px; }
-	div#ScrollBar { position: absolute; width: 10px; height: 9px; top: 30%; z-index: 2; border-radius: 3px; opacity: 0; transition: opacity 0.1s; border: none; box-shadow: none; }
-	div#ScrollRange { position: absolute; width: 4px; left: 3px; height: 0px; opacity: 0; top: 32%; border-radius: 20px; border: none; box-shadow: none; transition: opacity 0.1s 1s, height 1s; filter: brightness(90%); }
-	div.ArrowDown { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top-width: 7px; border-top-style: solid; transition: 1s; top: 10px; position: absolute; }
-	div.ArrowUp:hover, div.ArrowDown:hover { cursor: pointer; }
+	div#ScrollSongBar { position: absolute; width: 10px; height: 9px; top: 30%; z-index: 2; border-radius: 3px; opacity: 0; transition: opacity 0.1s; border: none; box-shadow: none; }
+	div#ScrollSongRange { position: absolute; width: 4px; left: 3px; height: 0px; opacity: 0; top: 32%; border-radius: 20px; border: none; box-shadow: none; transition: opacity 0.1s 1s, height 1s; filter: brightness(90%); }
+	div.SongArrowDown { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top-width: 7px; border-top-style: solid; transition: 1s; top: 10px; position: absolute; }
+	div.SongArrowUp:hover, div.SongArrowDown:hover { cursor: pointer; }
 	div.SongListContainer, div.SongListContainerNoHover { position: relative; margin-top: 2px; overflow: hidden; border-radius: 8px; }
 	div.SongList, div.SongListNoHover { height: 19px; width: 107%; position: relative; overflow: hidden; transition: 1s; scroll-behavior: smooth; border-radius: 8px; }
 	div > div.SongList span:first-child, div > div.SongListNoHover span:first-child { padding-top: 6px; }
 	div > div.SongList span:last-child, div > div.SongListNoHover span:last-child { padding-bottom: 40px; }
 	div.SongListContainer:hover > div.SongList span:first-child { padding-top: 0px; }
-	div.SongListContainer:hover div.ArrowDown, div.SongListContainer:active div.ArrowDown { top: 50px; transition: 1s; }
-	div.SongListContainer:hover div#ScrollBar, div.SongListContainer:active div#ScrollBar { transition: opacity 1s 0.8s; opacity: 1; }
-	div.SongListContainer:hover div#ScrollRange, div.SongListContainer:active div#ScrollRange { transition: opacity 0.2s, height 1s; height: 38px; opacity: 1; }
-	div.SongListContainer:hover > div.SongList, div.SongList:hover, div.SongList:active, div.SongListContainer:active > div.SongList { height: 60px; transition: height 1s; overflow: auto; }
+	div.SongListContainer:hover div.SongArrowDown, div.SongListContainer:active div.SongArrowDown { top: 50px; transition: 1s; }
+	div.SongListContainer:hover div#ScrollSongBar, div.SongListContainer:active div#ScrollSongBar { transition: opacity 1s 0.8s; opacity: 1; }
+	div.SongListContainer:hover div#ScrollSongRange, div.SongListContainer:active div#ScrollSongRange { transition: opacity 0.2s, height 1s; height: 38px; opacity: 1; }
+	div.SongListContainer:hover > div.SongList, div.SongList:hover, div.SongList:active, div.SongListContainer:active > div.SongList { height: 60px; transition: height 1s; overflow: auto; -ms-overflow-style: none; }
 	div.SongListContainer:hover > div.SongList span { padding-bottom: 5px; margin-left: 4%; }
 	div.SongListContainer:hover > div.SongInformation { opacity: 0; visibility: hidden; z-index: -1; transition: opacity 0.1s, z-index 0s 0.1s; }
 	div.SongList span, div.SongListNoHover span { font-size: 10px; display: block; padding-bottom: 12px; text-shadow: 0px 0px 1px rgb(100,100,100); transition: color 1s, text-shadow 1s, filter 1s; margin-right: 7%; }
