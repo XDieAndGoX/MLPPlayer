@@ -34,11 +34,11 @@
 			var ThemeModeCheck = document.getElementById("ThemeModeCheck");
 			var SongSelection = document.getElementById("SongSelection");
 			var SongInformation = document.getElementById("SongInformation");
-			var Scrollable = document.getElementById("Scrollable");		
-			var ArrowUp = document.getElementById("ArrowUp");
-			var ScrollBar = document.getElementById("ScrollBar");
-			var ScrollRange = document.getElementById("ScrollRange");
-			var ArrowDown = document.getElementById("ArrowDown");
+			var SongScrollable = document.getElementById("SongScrollable");		
+			var SongArrowUp = document.getElementById("SongArrowUp");
+			var ScrollSongBar = document.getElementById("ScrollSongBar");
+			var ScrollSongRange = document.getElementById("ScrollSongRange");
+			var SongArrowDown = document.getElementById("SongArrowDown");
 			var PlayTrackFill = document.getElementById("PlayTrackFill");
 			var PlayTrackThumb = document.getElementById("PlayTrackThumb");
 			var VolumeControlTable = document.getElementById("VolumeControlTable");
@@ -62,7 +62,11 @@
 			var ListenedSongs = document.getElementById("ListenedSongs");
 			var MainContent = document.getElementById("MainContent");
 			var ContentShade = document.getElementById("ContentShade");
+			var ThemeSelectionContainer = document.getElementById("ThemeSelectionContainer");
+			var ThemeSelectionOuter = document.getElementById("ThemeSelectionOuter");
 			var ThemeSelection = document.getElementById("ThemeSelection");
+			var ThemeArrowUp = document.getElementById("ThemeArrowUp");
+			var ThemeArrowDown = document.getElementById("ThemeArrowDown");
 			var GetSongPlaybackTime = localStorage.getItem("SongPlaybackTime");
 			var GetSavedPlaylist = localStorage.getItem("PlaylistStorage");
 			var GetSavedSongDates = JSON.parse(localStorage.getItem("SavedSongDates"));
@@ -150,6 +154,8 @@
 			var SongInfoNumber = 2;
 			var SongScrollUpFunction;
 			var SongScrollDownnFunction;
+			var ThemeScrollUpFunction;
+			var ThemeScrollDownnFunction;
 			var MusicSeekFunction;
 			var TransitionSpeedFunction;
 			var TransitionVolumeFunction;
@@ -246,12 +252,22 @@
 		
 	function scrollSongListUp()
 		{
-			SongScrollUpFunction = setInterval(scrollUp, 0200);
+			SongScrollUpFunction = setInterval(scrollSongUp, 0001);
 		}
 		
 	function scrollSongListDown()
 		{
-			SongScrollDownFunction = setInterval(scrollDown, 0200);
+			SongScrollDownFunction = setInterval(scrollSongDown, 0001);
+		}
+		
+	function scrollThemeListUp()
+		{
+			ThemeScrollUpFunction = setInterval(scrollThemeUp, 0050);
+		}
+		
+	function scrollThemeListDown()
+		{
+			ThemeScrollDownFunction = setInterval(scrollThemeDown, 0050);
 		}
 		
 	function musicSeek()
@@ -291,18 +307,26 @@
 				SongListContainer.addEventListener("mouseenter", checkIfNotChangeStyle); 
 				SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); MouseOverSongList = 1; });
 				SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6, 1); }, 0100); MouseOverSongList = 0; }); 
-				SongSelection.addEventListener("scroll", scrollBar);
-				ArrowUp.addEventListener ("click", scrollUp);
-				ArrowUp.addEventListener ("mousedown", scrollSongListUp);
-				ArrowUp.addEventListener ("mouseup", function() { clearInterval(SongScrollUpFunction); });
-				ArrowUp.addEventListener ("mouseleave", function() { clearInterval(SongScrollUpFunction); });
-				ArrowDown.addEventListener ("click", scrollDown);
-				ArrowDown.addEventListener ("mousedown", scrollSongListDown);
-				ArrowDown.addEventListener ("mouseup", function() { clearInterval(SongScrollDownFunction); });
-				ArrowDown.addEventListener ("mouseleave", function() { clearInterval(SongScrollDownFunction); });
+				SongSelection.addEventListener("scroll", scrollSongBar);
+				SongArrowUp.addEventListener ("click", scrollSongUp);
+				SongArrowUp.addEventListener ("mousedown", scrollSongListUp);
+				SongArrowUp.addEventListener ("mouseup", function() { clearInterval(SongScrollUpFunction); });
+				SongArrowUp.addEventListener ("mouseleave", function() { clearInterval(SongScrollUpFunction); });
+				SongArrowDown.addEventListener ("click", scrollSongDown);
+				SongArrowDown.addEventListener ("mousedown", scrollSongListDown);
+				SongArrowDown.addEventListener ("mouseup", function() { clearInterval(SongScrollDownFunction); });
+				SongArrowDown.addEventListener ("mouseleave", function() { clearInterval(SongScrollDownFunction); });
 				MusicPlayer.addEventListener("error", function() { checkError(1); });
 				MusicPlayer.addEventListener("ended", musicEnded);
-				ThemeSelection.addEventListener("mouseleave", function() { this.scrollTop = 0; });
+				ThemeSelectionContainer.addEventListener("mouseleave", function() { setTimeout(function() { ThemeSelection.scrollTop = 0; }, 0001);});
+				ThemeArrowUp.addEventListener ("click", scrollThemeUp);
+				ThemeArrowUp.addEventListener ("mousedown", scrollThemeListUp);
+				ThemeArrowUp.addEventListener ("mouseup", function() { clearInterval(ThemeScrollUpFunction); });
+				ThemeArrowUp.addEventListener ("mouseleave", function() { clearInterval(ThemeScrollUpFunction); });
+				ThemeArrowDown.addEventListener ("click", scrollThemeDown);
+				ThemeArrowDown.addEventListener ("mousedown", scrollThemeListDown);
+				ThemeArrowDown.addEventListener ("mouseup", function() { clearInterval(ThemeScrollDownFunction); });
+				ThemeArrowDown.addEventListener ("mouseleave", function() { clearInterval(ThemeScrollDownFunction); });
 
 				for (count = 0; count < Themes.length; count++)
 					{
@@ -1398,30 +1422,38 @@
 					}
 			}
 			
-		function scrollUp()
+		function scrollSongUp()
 			{
-				var ScrollNumber = SongSelection.scrollTop;
-				SongSelection.scrollTop = ScrollNumber - 20;
-				scrollBar();
+				SongSelection.scrollTop -= 1;
+				scrollSongBar();
 			}
 			
-		function scrollDown()
+		function scrollSongDown()
 			{
-				var ScrollNumber = SongSelection.scrollTop;
-				SongSelection.scrollTop = ScrollNumber + 20;
-				scrollBar();
+				SongSelection.scrollTop += 1;
+				scrollSongBar();
 			}
 			
-		function scrollBar()
+		function scrollThemeUp()
+			{
+				ThemeSelection.scrollTop -= 1;
+			}
+			
+		function scrollThemeDown()
+			{
+				ThemeSelection.scrollTop += 1;
+			}
+			
+		function scrollSongBar()
 			{
 				SongListTrack.value = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop;
-				ScrollBar.style.top = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop + 30.5 + "%";
+				ScrollSongBar.style.top = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop + 30.5 + "%";
 			}
 			
 		function scrollSongList()
 			{
 				SongSelection.scrollTop = (SongSelection.scrollHeight / 100) * SongListTrack.value;
-				ScrollBar.style.top = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop + 30.5 + "%";
+				ScrollSongBar.style.top = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop + 30.5 + "%";
 				
 			}
 			
@@ -1499,11 +1531,13 @@
 					VolumeCell.className = "VolumeCell VolumeCell"+CurrentTheme;
 					SongSelection.className = "SongList SongList"+CurrentTheme;
 					SongInformation.className = "SongInformation SongInformation"+CurrentTheme;
-					ArrowUp.className = "ArrowUp ArrowUp"+CurrentTheme;
-					ScrollBar.className = "ScrollBar ScrollBar"+CurrentTheme;
-					ScrollRange.className = "ScrollRange ScrollRange"+CurrentTheme;
-					ArrowDown.className = "ArrowDown ArrowDown"+CurrentTheme;
+					SongArrowUp.className = "SongArrowUp ArrowUp"+CurrentTheme;
+					ScrollSongBar.className = "ScrollSongBar ScrollBar"+CurrentTheme;
+					ScrollSongRange.className = "ScrollSongRange ScrollRange"+CurrentTheme;
+					SongArrowDown.className = "SongArrowDown ArrowDown"+CurrentTheme;
 					ThemeSelection.className = "ThemeSelection SongList"+CurrentTheme;
+					ThemeArrowUp.className = "ThemeArrowUp ArrowUp"+CurrentTheme;
+					ThemeArrowDown.className = "ThemeArrowDown ArrowDown"+CurrentTheme;
 					SelectTheme.className = "SelectTheme"+CurrentTheme;
 					
 					for (count = 0; count < Themes.length; count++)
