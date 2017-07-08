@@ -159,6 +159,7 @@
 			var CurrentURL = window.location.href.substr(window.location.href.lastIndexOf('/')+1).toLowerCase();
 			var FullURL = window.location.href;
 			var AlbumLinks;
+			var MouseOverSongList;
 			
 		/* HTML Preview */
 		
@@ -288,8 +289,8 @@
 				ScaleLinkx3.addEventListener("click", function() { scalePlayer(3) });
 				ScaleLinkx4.addEventListener("click", function() { scalePlayer(4) });
 				SongListContainer.addEventListener("mouseenter", checkIfNotChangeStyle); 
-				SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); });
-				SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6, 1); }, 0100); }); 
+				SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); MouseOverSongList = 1; });
+				SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6, 1); }, 0100); MouseOverSongList = 0; }); 
 				SongSelection.addEventListener("scroll", scrollBar);
 				ArrowUp.addEventListener ("click", scrollUp);
 				ArrowUp.addEventListener ("mousedown", scrollSongListUp);
@@ -1228,7 +1229,7 @@
 		function checkIfNotChangeStyle()
 			{
 
-				if (SongInformation.innerHTML.search("<a href") == -1)
+				if (SongInformation.innerHTML.search("<a href") == -1 & MouseOverSongList == 1)
 					{
 						SongInformation.style.opacity = "0";
 						SongListContainer.className = "SongListContainer";
@@ -1238,7 +1239,10 @@
 					{
 						SongListContainer.className = "SongListContainerNoHover";
 						SongSelection.className = "SongListNoHover SongList"+CurrentTheme;
-						setTimeout(function() { scrollToPlaying(0); }, 100);
+						if (MouseOverSongList == 1)
+							{
+								setTimeout(function() { scrollToPlaying(0); }, 100);
+							}
 						setTimeout(checkIfNotChangeStyle, 0001);
 					}
 			}
