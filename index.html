@@ -126,13 +126,21 @@
 				</TR>
 				<TR>
 					<TD>
-						<Span class="PlayerLinks" id="PlayerLinks">
+						<div class="PlayerLinks" id="PlayerLinks">
 							<A id="PortablePlayerLink" accesskey="W">[Portable Player]</A> <span>-</span> <A id="ClearPlaylistLink" accesskey="C">[Clear Playlist]</A><br><span id="PlayerSize">Size:</span> <A id="ScaleLinkx1" accesskey="1">x1</A> <span>-</span> <A id="ScaleLinkx2" accesskey="2">x2</A> <span>-</span> <A id="ScaleLinkx3" accesskey="3">x3</A> <span>-</span> <A id="ScaleLinkx4" accesskey="4">x4</A> <span>|</span>
-							<span class="ThemeSelectionContainer">
-								<div id="ThemeSelection">
+							<div class="ThemeSelectionContainer" id="ThemeSelectionContainer">
+								<div class="ThemeSelectionOuter" id="ThemeSelectionOuter">
+									<div id="ThemeSelection">
+									</div>
 								</div>
-							</span>
-						</span>
+								<div class="ThemeScrollable" id="ThemeScrollable">
+									<div id="ThemeArrowUp">
+									</div>
+									<div class="ThemeArrowDown" id="ThemeArrowDown">
+									</div>
+								</div>
+							</div>
+						</div>
 					</TD>
 				</TR>
 				<TR>
@@ -161,15 +169,15 @@
 							</div>
 							<div id="SongSelection">
 							</div>
-							<div class="Scrollable" id="Scrollable">
-								<div id="ArrowUp">
+							<div class="SongScrollable" id="SongScrollable">
+								<div id="SongArrowUp">
 								</div>
-								<div id="ScrollBar">
+								<div id="ScrollSongBar">
 								</div>
-								<div id="ScrollRange">
+								<div id="ScrollSongRange">
 								</div>
 								<input type=range step="0.01" id="SongListTrack" class="SongListTrack" value="0">
-								<div class="ArrowDown" id="ArrowDown">
+								<div class="SongArrowDown" id="SongArrowDown">
 								</div>
 							</div>
 						</div>
@@ -209,10 +217,10 @@
 		</div>
 		<span id="HiddenPlayerContainer">
 			<audio id="BackgroundMusic" class="BackgroundMusic">
+				<source src="ACADECA.mp3" type="audio/mp3" title="ACADECA">
 				<source src="A%20Changeling%20Can%20Change.mp3" type="audio/mp3" title="A Changeling Can Change" data-artist="Spike" data-featuredin="S06E16 - Times They Are A Changeling">
 				<source src="A%20Friend%20For%20Life.mp3" type="audio/mp3" title="A Friend For Life">
 				<source src="A%20True,%20True%20Friend.mp3" type="audio/mp3" title="A True, True Friend">				
-				<source src="ACADECA.mp3" type="audio/mp3" title="ACADECA">
 				<source src="Apples%20to%20the%20Core.mp3" type="audio/mp3" title="Apples to the Core">
 				<source src="Art%20of%20the%20Dress%20%28Reprise%29.mp3" type="audio/mp3" title="Art of the Dress (Reprise)" data-artist="Rarity" data-featuredin="S01E14 - Suited for Success" data-contributingartist="Mane Six">
 				<source src="Art%20of%20the%20Dress.mp3" type="audio/mp3" title="Art of the Dress" data-artist="Rarity" data-featuredin="S01E14 - Suited for Success" data-album="SFM, MFT, FIMc">
