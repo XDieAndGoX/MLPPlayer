@@ -28,9 +28,14 @@
 			var PlayTrack = document.getElementById('PlayTrack');
 			var PlayTimeTotal = document.getElementById('PlayTimeTotal');
 			var TotalPlayback = document.getElementById('TotalPlayback');
+			var OptionInfo = document.getElementById("OptionInfo");
+			var ShuffleOption = document.getElementById("ShuffleOption");
 			var ShuffleModeCheck = document.getElementById("ShuffleModeCheck");
+			var RepeatOption = document.getElementById("RepeatOption");
 			var RepeatModeCheck = document.getElementById("RepeatModeCheck");
+			var LoopOption = document.getElementById("LoopOption");
 			var LoopModeCheck = document.getElementById("LoopModeCheck");
+			var ThemeOption = document.getElementById("ThemeOption");
 			var ThemeModeCheck = document.getElementById("ThemeModeCheck");
 			var SongSelection = document.getElementById("SongSelection");
 			var SongInformation = document.getElementById("SongInformation");
@@ -195,7 +200,7 @@
 			
 			for (count = -1; count < Themes.length; count++)
 				{
-					ThemeOption = document.createElement('div');
+					var ThemeOption = document.createElement('div');
 					if (count == -1)
 						{
 							ThemeOption.setAttribute("ID", "SelectTheme");
@@ -295,9 +300,13 @@
 				PreviousSong.addEventListener("click", playPreviousSong);
 				PlayButton.addEventListener("click", playMusic);
 				NextSong.addEventListener("click", playNextSong);
+				RepeatOption.addEventListener ("mouseover", function() { moreInfo("Repeat"); });
 				RepeatModeCheck.addEventListener("click", repeatMode);
+				ShuffleOption.addEventListener ("mouseover", function() { moreInfo("Shuffle"); });
 				ShuffleModeCheck.addEventListener("click", shuffleMode);
+				LoopOption.addEventListener ("mouseover", function() { moreInfo("Loop"); });
 				LoopModeCheck.addEventListener("click", loopMode); 
+				ThemeOption.addEventListener ("mouseover", function() { moreInfo("Theme"); });
 				ThemeModeCheck.addEventListener("click", themeMode); 
 				ClearPlaylistLink.addEventListener("click", clearPlaylist);
 				ScaleLinkx1.addEventListener("click", function() { scalePlayer(1) });
@@ -1153,6 +1162,30 @@
 					}
 			}
 
+		function moreInfo(OptionName)
+			{
+				if (OptionName == "Repeat")
+					{
+						OptionInfo.textContent = "Repeat the current playing song over and over indefinitively.";
+						OptionInfo.style.bottom = "60px";
+					}
+				if (OptionName == "Shuffle")
+					{
+						OptionInfo.textContent = "Play a random song when the current song ends playing.";
+						OptionInfo.style.bottom = "50px";
+					}
+				if (OptionName == "Loop")
+					{
+						OptionInfo.textContent = "Loop through all of the songs regardless if you have listened to them or not already. The player skips songs you have already listened to by default.";
+						OptionInfo.style.bottom = "23px";
+					}
+				if (OptionName == "Theme")
+					{
+						OptionInfo.textContent = "Change the current theme to a random one whenever a new song starts playing.";
+						OptionInfo.style.bottom = "22px";
+					}
+			}
+			
 		function loopMode(LogToConsole)
 			{
 				if (LoopModeCheck.checked == true)
@@ -1493,12 +1526,12 @@
 					CheckboxesSection.className = "CheckboxesSection PlayerSection"+CurrentTheme;
 					PlayerSize.className = "PlayerSize PlayerText"+CurrentTheme;
 					CurrentlyPlaying.className = "CurrentlyPlaying PlayerText"+CurrentTheme;
-					TroubleshootContainer.className = "TroubleshootContainer TroubleshootContainer"+CurrentTheme;
+					TroubleshootContainer.className = "TroubleshootContainer MoreInfo"+CurrentTheme;
 					Troubleshoot.className = "Troubleshoot";
 					TroubleshootMessage.className = "TroubleshootMessage";
-					ShareContainer.className = "ShareContainer ShareContainer"+CurrentTheme;
+					ShareContainer.className = "ShareContainer MoreInfo"+CurrentTheme;
 					ShareIcon.className = "ShareIcon";
-					CopiedTextMessage.className = "CopiedTextMessage CopiedTextMessage"+CurrentTheme;
+					CopiedTextMessage.className = "CopiedTextMessage MoreInfo"+CurrentTheme;
 					PlayTimeCurrent.className = "PlayTimeCurrent PlayTimeCurrent"+CurrentTheme;
 					PlayTimeTotal.className = "PlayTimeCurrent PlayTimeTotal"+CurrentTheme;
 					PlayTrackLength.className = "RangeLength RangeLength"+CurrentTheme;
@@ -1518,6 +1551,7 @@
 					PreviousSong.className = "PlayButtons"+CurrentTheme;
 					PlayButton.className = "PlayButtons"+CurrentTheme;
 					NextSong.className = "PlayButtons"+CurrentTheme;
+					OptionInfo.className = "OptionInfo MoreInfo"+CurrentTheme;
 					RepeatModeCheck.className = "PlayerCheckboxes"+CurrentTheme;
 					ShuffleModeCheck.className = "PlayerCheckboxes"+CurrentTheme;
 					LoopModeCheck.className = "PlayerCheckboxes"+CurrentTheme;
