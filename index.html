@@ -9,187 +9,189 @@
 	<Body>
 		<div class="ContentShade" id="ContentShade">
 		</div>
-		<div id="MediaPlayerContainer">
-			<table id="MediaPlayerSection">
-				<TR>
-					<TD>
-						<Table id="SongTrack">
-							<TR>
-								<TD id="PlayTimeCurrent">
-									<span id="CurrentPlayback">
-										0:00
-									</span>
-								</TD>
-								<TD class="PlayTrackCell">
-									<span class="PlaybackContainer">
-										<span class="RangeTotalLength">
-											<span id="PlayTrackLength">
-												<span id="PlayTrackFill">&nbsp;</span>
-											</span>
+		<div id="MediaPlayerWrap">
+			<div id="MediaPlayerContainer">
+				<table id="MediaPlayerSection">
+					<TR>
+						<TD>
+							<Table id="SongTrack">
+								<TR>
+									<TD id="PlayTimeCurrent">
+										<span id="CurrentPlayback">
+											0:00
+										</span>
+									</TD>
+									<TD class="PlayTrackCell">
+										<span class="PlaybackContainer">
+											<span class="RangeTotalLength">
+												<span id="PlayTrackLength">
+													<span id="PlayTrackFill">&nbsp;</span>
+												</span>
 												<span id="PlayTrackThumb">&nbsp;</span>
+											</span>
+											<input type=range step="0.01" id="PlayTrack" value="0">
 										</span>
-										<input type=range step="0.01" id="PlayTrack" value="0">
-									</span>
-								</TD>
-								<TD id="PlayTimeTotal">
-									<span id="TotalPlayback">
-										-0:00
-									</span>
-								</TD>
-							</TR>
-						</Table>
-					</TD>
-				</TR>
-				<TR>
-					<TD class="VolumeControlCell">
-						<Table id="VolumeControlTable">
-							<TR>
-								<TD id="VolumeCell">
-									<span class="AudioImage">
-										<div class="VolumeBody" id="VolumeBody"></div>
-										<div class="VolumeArc" id="VolumeArc"></div>
-										<div class="VolumeBar1" id="VolumeBar1"></div>
-										<div class="VolumeBar2" id="VolumeBar2"></div>
-										<div class="VolumeBar3" id="VolumeBar3"></div>
-										<div class="VolumeBar4" id="VolumeBar4"></div>
-										<div class="VolumeBar5" id="VolumeBar5"></div>
-										<div class="VolumeX" id="VolumeX"></div>
-									</span>
-									<span id="VolumeNumber">
-										100
-									</span>
-								</TD>
-								<TD class="VolumeTrackCell">
-									<span class="RangeTotalLength">
-										<span id="VolumeLength">
-											<span id="VolumeFill">&nbsp;</span>
+									</TD>
+									<TD id="PlayTimeTotal">
+										<span id="TotalPlayback">
+											-0:00
 										</span>
-										<span id="VolumeThumb">&nbsp;</span>
-										<input class="VolumeControl" value="100" accesskey="X" id="VolumeSlider" type=range>
-									</span>
-								</TD>
-							</TR>
-						</Table>
-						<div id="SongCount">
-							Listened to<br><span id="ListenedSongs"></span> out of <span id="NumberOfSongs"></span> Available Songs
-						</div>
-					</TD>
-				</TR>
-				<TR>
-					<TD class="PlayButtonsCell">
-						<span class="PlayButtonsSection">
-							<input type="button" id="PreviousSong" value="|<<" accesskey=",">
-							<input type="button" id="PlayButton" Value="Play" accesskey="P">
-							<input type="button" id="NextSong" value=">>|" accesskey=".">
-						</span>
-					</TD>
-				</TR>
-				<TR>
-					<TD class="CheckboxesCell">
-						<div class="CheckboxTableContainer">
-							<Table id="CheckboxesSection">
-								<TR id="RepeatOption">
-									<TD>
-											Repeat:
-									</TD>
-									<TD class="CheckboxInput">
-										<input type="checkbox" id="RepeatModeCheck" accesskey="R"><label for="RepeatModeCheck"></label>
-									</TD>
-								</TR>
-								<TR id="ShuffleOption">
-									<TD>
-											Shuffle:
-									</TD>
-									<TD class="CheckboxInput">
-										<input type="checkbox" id="ShuffleModeCheck" accesskey="S"><label for="ShuffleModeCheck"></label>
-									</TD>
-								</TR>
-								<TR id="LoopOption">
-									<TD>
-											Loop:
-									</TD>
-									<TD class="CheckboxInput">
-										<input type="checkbox" id="LoopModeCheck" accesskey="O"><label for="LoopModeCheck"></label>
-									</TD>
-								</TR>
-								<TR id="ThemeOption">
-									<TD>
-											Theme:
-									</TD>
-									<TD class="CheckboxInput">
-										<input type="checkbox" id="ThemeModeCheck" accesskey="T"><label for="ThemeModeCheck"></label>
 									</TD>
 								</TR>
 							</Table>
-							<div id="OptionInfo">
+						</TD>
+					</TR>
+					<TR>
+						<TD class="VolumeControlCell">
+							<Table id="VolumeControlTable">
+								<TR>
+									<TD id="VolumeCell">
+										<span class="AudioImage">
+											<div class="VolumeBody" id="VolumeBody"></div>
+											<div class="VolumeArc" id="VolumeArc"></div>
+											<div class="VolumeBar1" id="VolumeBar1"></div>
+											<div class="VolumeBar2" id="VolumeBar2"></div>
+											<div class="VolumeBar3" id="VolumeBar3"></div>
+											<div class="VolumeBar4" id="VolumeBar4"></div>
+											<div class="VolumeBar5" id="VolumeBar5"></div>
+											<div class="VolumeX" id="VolumeX"></div>
+										</span>
+										<span id="VolumeNumber">
+											100
+										</span>
+									</TD>
+									<TD class="VolumeTrackCell">
+										<span class="RangeTotalLength">
+											<span id="VolumeLength">
+												<span id="VolumeFill">&nbsp;</span>
+											</span>
+											<span id="VolumeThumb">&nbsp;</span>
+											<input class="VolumeControl" value="100" accesskey="X" id="VolumeSlider" type=range>
+										</span>
+									</TD>
+								</TR>
+							</Table>
+							<div id="SongCount">
+								Listened to<br><span id="ListenedSongs"></span> out of <span id="NumberOfSongs"></span> Available Songs
 							</div>
-						</div>
-					</TD>
-				</TR>
-				<TR>
-					<TD>
-						<div class="PlayerLinks" id="PlayerLinks">
-							<A id="PortablePlayerLink" accesskey="W">[Portable Player]</A> <span>-</span> <A id="ClearPlaylistLink" accesskey="C">[Clear Playlist]</A><br><span id="PlayerSize">Size:</span> <A id="ScaleLinkx1" accesskey="1">x1</A> <span>-</span> <A id="ScaleLinkx2" accesskey="2">x2</A> <span>-</span> <A id="ScaleLinkx3" accesskey="3">x3</A> <span>-</span> <A id="ScaleLinkx4" accesskey="4">x4</A> <span>|</span>
-							<div class="ThemeSelectionContainer" id="ThemeSelectionContainer">
-								<div class="ThemeSelectionOuter" id="ThemeSelectionOuter">
-									<div id="ThemeSelection">
+						</TD>
+					</TR>
+					<TR>
+						<TD class="PlayButtonsCell">
+							<span class="PlayButtonsSection">
+								<input type="button" id="PreviousSong" value="|<<" accesskey=",">
+								<input type="button" id="PlayButton" Value="Play" accesskey="P">
+								<input type="button" id="NextSong" value=">>|" accesskey=".">
+							</span>
+						</TD>
+					</TR>
+					<TR>
+						<TD class="CheckboxesCell">
+							<div class="CheckboxTableContainer">
+								<Table id="CheckboxesSection">
+									<TR id="RepeatOption">
+										<TD>
+											Repeat:
+										</TD>
+										<TD class="CheckboxInput">
+											<input type="checkbox" id="RepeatModeCheck" accesskey="R"><label for="RepeatModeCheck"></label>
+										</TD>
+									</TR>
+									<TR id="ShuffleOption">
+										<TD>
+											Shuffle:
+										</TD>
+										<TD class="CheckboxInput">
+											<input type="checkbox" id="ShuffleModeCheck" accesskey="S"><label for="ShuffleModeCheck"></label>
+										</TD>
+									</TR>
+									<TR id="LoopOption">
+										<TD>
+											Loop:
+										</TD>
+										<TD class="CheckboxInput">
+											<input type="checkbox" id="LoopModeCheck" accesskey="O"><label for="LoopModeCheck"></label>
+										</TD>
+									</TR>
+									<TR id="ThemeOption">
+										<TD>
+											Theme:
+										</TD>
+										<TD class="CheckboxInput">
+											<input type="checkbox" id="ThemeModeCheck" accesskey="T"><label for="ThemeModeCheck"></label>
+										</TD>
+									</TR>
+								</Table>
+								<div id="OptionInfo">
+								</div>
+							</div>
+						</TD>
+					</TR>
+					<TR>
+						<TD>
+							<div class="PlayerLinks" id="PlayerLinks">
+								<A id="PortablePlayerLink" accesskey="W">[Portable Player]</A> <span>-</span> <A id="ClearPlaylistLink" accesskey="C">[Clear Playlist]</A><br><span id="PlayerSize">Size:</span> <A id="ScaleLinkx1" accesskey="1">x1</A> <span>-</span> <A id="ScaleLinkx2" accesskey="2">x2</A> <span>-</span> <A id="ScaleLinkx3" accesskey="3">x3</A> <span>-</span> <A id="ScaleLinkx4" accesskey="4">x4</A> <span>|</span>
+								<div class="ThemeSelectionContainer" id="ThemeSelectionContainer">
+									<div class="ThemeSelectionOuter" id="ThemeSelectionOuter">
+										<div id="ThemeSelection">
+										</div>
+									</div>
+									<div class="ThemeScrollable" id="ThemeScrollable">
+										<div id="ThemeArrowUp">
+										</div>
+										<div class="ThemeArrowDown" id="ThemeArrowDown">
+										</div>
 									</div>
 								</div>
-								<div class="ThemeScrollable" id="ThemeScrollable">
-									<div id="ThemeArrowUp">
+							</div>
+						</TD>
+					</TR>
+					<TR>
+						<TD class="CurrentlyPlayingList">
+							<div id="TroubleshootContainer">
+								<div id="Troubleshoot">
+									?
+								</div>
+								<div id="TroubleshootMessage" class="TroubleshootMessage"></div>
+							</div>
+							<span id="CurrentlyPlaying">
+								Currently Playing
+							</span>
+							<div id="ShareContainer">
+								<div id="ShareIcon">
+									<div id="ShareCircle1"></div>
+									<div id="ConnectingLine1"></div>
+									<div id="ShareCircle2"></div>
+									<div id="ConnectingLine2"></div>
+									<div id="ShareCircle3"></div>
+								</div>
+								<div id="CopiedTextMessage"></div>
+							</div>
+							<div class="SongListContainer" id="SongListContainer">
+								<div id="SongInformation">
+								</div>
+								<div id="SongSelection">
+								</div>
+								<div class="SongScrollable" id="SongScrollable">
+									<div id="SongArrowUp">
 									</div>
-									<div class="ThemeArrowDown" id="ThemeArrowDown">
+									<div id="ScrollSongBar">
+									</div>
+									<div id="ScrollSongRange">
+									</div>
+									<input type=range step="0.01" id="SongListTrack" class="SongListTrack" value="0">
+									<div class="SongArrowDown" id="SongArrowDown">
 									</div>
 								</div>
 							</div>
-						</div>
-					</TD>
-				</TR>
-				<TR>
-					<TD class="CurrentlyPlayingList">
-						<div id="TroubleshootContainer">
-							<div id="Troubleshoot">
-								?
-							</div>
-							<div id="TroubleshootMessage" class="TroubleshootMessage"></div>
-						</div>
-						<span id="CurrentlyPlaying">
-							Currently Playing
-						</span>
-						<div id="ShareContainer">
-							<div id="ShareIcon">
-								<div id="ShareCircle1"></div>
-								<div id="ConnectingLine1"></div>
-								<div id="ShareCircle2"></div>
-								<div id="ConnectingLine2"></div>
-								<div id="ShareCircle3"></div>
-							</div>
-							<div id="CopiedTextMessage"></div>
-						</div>
-						<div class="SongListContainer" id="SongListContainer">
-							<div id="SongInformation">
-							</div>
-							<div id="SongSelection">
-							</div>
-							<div class="SongScrollable" id="SongScrollable">
-								<div id="SongArrowUp">
-								</div>
-								<div id="ScrollSongBar">
-								</div>
-								<div id="ScrollSongRange">
-								</div>
-								<input type=range step="0.01" id="SongListTrack" class="SongListTrack" value="0">
-								<div class="SongArrowDown" id="SongArrowDown">
-								</div>
-							</div>
-						</div>
-					</TD>
-				</TR>
-			</Table>
+						</TD>
+					</TR>
+				</Table>
+			</div>
 		</div>
 		<div class="MainContent" id="MainContent">
-			<div class="Introduction">
-				I am well aware that this is empty, dull, unexciting, and whatever else you come up with to call this site, but I was never planning on doing anything big and flashy... <sub>for now.</sub><br>
+				<div class="Introduction">
+					I am well aware that this is empty, dull, unexciting, and whatever else you come up with to call this site, but I was never planning on doing anything big and flashy... <sub>for now.</sub><br>
 				For the time being however, you will only find links to useful tools and whatever random pages I feel like making (You are all at the mercy of my whimsical cravings), so come check this page once in a while for links to new exciting things!<br>
 				Oh yeah! If you want to choose the song you want to listen to, just hover your mouse over its title to expand the list and select the song you want!
 			</div>

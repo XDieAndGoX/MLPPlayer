@@ -1,5 +1,6 @@
 	/* Variables */
 		/* Main Page & Portable Player */
+			var MediaPlayerContainer = document.getElementById("MediaPlayerContainer");
 			var MediaPlayerSection = document.getElementById("MediaPlayerSection");
 			var SongTrack = document.getElementById("SongTrack");
 			var SongListTrack = document.getElementById("SongListTrack");
@@ -247,7 +248,7 @@
 			TroubleshootMessage.textContent = "Something is not working as it should? Click this icon to reset everything back to default. Keep in mind that this will clear your playlist!! The page is going to be reloaded as well."
 			initialSongInfo();
 			checkControls();
-			setTimeout (function() { MediaPlayerSection.style.transition = "transform 1s, top 1s, opacity 2s"; MediaPlayerSection.style.opacity = "1"; }, 700);
+			setTimeout (function() { MediaPlayerSection.style.transition = "opacity 2s"; MediaPlayerSection.style.opacity = "1"; }, 700);
 		}
 		
 	function initialSongInfo()
@@ -1063,7 +1064,7 @@
 				
 				if (Scale == 1)
 					{
-						MediaPlayerSection.className = "MediaPlayerSection MediaPlayerSection"+CurrentTheme;
+						MediaPlayerContainer.className = "MediaPlayerContainer MediaPlayerContainerScaledx1";
 						ContentShade.className = "ContentShade ContentShade"+CurrentTheme;
 						ScaleLinkx1.style.textDecoration = TextDecoration;
 				
@@ -1086,7 +1087,7 @@
 
 				if (Scale == 2)
 					{
-						MediaPlayerSection.className = "MediaPlayerSection MediaPlayerSection"+CurrentTheme+" MediaPlayerSectionScaledx2";
+						MediaPlayerContainer.className = "MediaPlayerContainer MediaPlayerContainerScaledx2";
 						ContentShade.className = "ContentShade ContentShade"+CurrentTheme+" ContentShadeActivex2";
 						ScaleLinkx2.style.textDecoration = TextDecoration;
 				
@@ -1109,7 +1110,7 @@
 					
 				if (Scale == 3)
 					{
-						MediaPlayerSection.className = "MediaPlayerSection MediaPlayerSection"+CurrentTheme+" MediaPlayerSectionScaledx3";
+						MediaPlayerContainer.className = "MediaPlayerContainer MediaPlayerContainerScaledx3";
 						ContentShade.className = "ContentShade ContentShade"+CurrentTheme+" ContentShadeActivex3";
 						ScaleLinkx3.style.textDecoration = TextDecoration;
 				
@@ -1132,7 +1133,7 @@
 
 				if (Scale == 4)
 					{
-						MediaPlayerSection.className = "MediaPlayerSection MediaPlayerSection"+CurrentTheme+" MediaPlayerSectionScaledx4";
+						MediaPlayerContainer.className = "MediaPlayerContainer MediaPlayerContainerScaledx4";
 						ContentShade.className = "ContentShade ContentShade"+CurrentTheme+" ContentShadeActivex4";
 						ScaleLinkx4.style.textDecoration = TextDecoration;
 				
@@ -1494,7 +1495,7 @@
 			{
 				window.open("Portable Player.html", "", "directories = no, menubar = no, scrollbars = no, status = no, toolbar = no, location = no");
 				document.getElementById("HiddenPlayerContainer").innerHTML = "";
-				document.getElementById("MediaPlayerContainer").innerHTML = "Please refresh the page to get the media player back here!!";
+				document.getElementById("MediaPlayerWrap").innerHTML = "Please refresh the page to get the media player back here!!";
 				ContentShade.className = "ContentShade";
 				
 			}
@@ -1520,6 +1521,7 @@
 						}
 					localStorage.setItem("SavedTheme", CurrentTheme);
 					scalePlayer(ScaleNumber, 1);
+					MediaPlayerSection.className = "MediaPlayerSection MediaPlayerSection"+CurrentTheme;
 					SongTrack.className = "SongTrack SongTrack"+CurrentTheme+" PlayerSection"+CurrentTheme;
 					VolumeControlTable.className = "VolumeControl PlayerSection"+CurrentTheme;
 					SongCount.className = "SongCount PlayerSection"+CurrentTheme;

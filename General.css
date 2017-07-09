@@ -27,16 +27,18 @@
 
 /* Main Page & Portable Player */
 
-	div#MediaPlayerContainer { width: 270px; margin: 0 auto 0 auto; position: relative; -moz-user-select: none; -ms-user-select: none; -webkit-user-select: none; }
-	Table.MediaPlayerSection { margin: 0 auto 0 auto; border-radius: 6px; position: fixed; font-size: 7pt; display: block; top: 10px; padding: 2px; border-collapse: collapse; transition: transform 1s, top 1s; z-index: 2; opacity: 0; border-style: solid; border-width: 3px; background-color: black; }
+	div#MediaPlayerWrap { width: 270px; margin: 0 auto 0 auto; position: relative; -moz-user-select: none; -ms-user-select: none; -webkit-user-select: none; }
+	div.MediaPlayerContainer { width: 260px; position: absolute; margin: 0 auto 0 auto; transform: scale(1,1); transition: 1s; }
+	div.MediaPlayerContainerScaledx1 { transform: scale(1,1); top: 10px; z-index: 3; }
+	div.MediaPlayerContainerScaledx2 { transform: scale(2,2); top: 20px; z-index: 3; }
+	div.MediaPlayerContainerScaledx3 { transform: scale(3,3); top: 30px; z-index: 3; }
+	div.MediaPlayerContainerScaledx4 { transform: scale(4,4); top: 50px; z-index: 3; }
+	Table.MediaPlayerSection { position: absolute; font-size: 7pt; display: block; padding: 2px; border-radius: 6px; border-collapse: collapse; opacity: 0; border-style: solid; border-width: 3px; background-color: black; }
 	Table.MediaPlayerSection A { font-size: 6pt; font-weight: bold; cursor: pointer; }
 	Table.MediaPlayerSection A:hover { filter: brightness(140%); }
-	Table.MediaPlayerSectionScaledx2 { transform: scale(2,2); top: 85px; z-index: 3; }
-	Table.MediaPlayerSectionScaledx3 { transform: scale(3,3); top: 165px; z-index: 3; }
-	Table.MediaPlayerSectionScaledx4 { transform: scale(4,4); top: 240px; z-index: 3; }
 	Table.MediaPlayerSection TD { text-align: center; }
-	Table.SongTrack { border-collapse: collapse; width: 250px; margin-bottom: 2px; font-size: 10pt; font-weight: bold; border-radius: 8px; }
-	.PlayTimeCurrent, .PlayTimeTotal { width: 30px; padding: 1px 3px 1px 3px;}
+	Table.SongTrack { border-collapse: collapse; margin-bottom: 2px; font-size: 10pt; font-weight: bold; border-radius: 8px; }
+	.PlayTimeCurrent, .PlayTimeTotal { padding: 1px 3px 1px 3px;}
 	#PlayTimeCurrent { border-left: 0; border-bottom: 0; border-top: 0; border-right-style: solid; border-right-width: 2px; background: none; box-shadow: none; }
 	#PlayTimeTotal { border-right: 0; border-bottom: 0; border-top: 0; border-left-style: solid; border-left-width: 2px; background: none; box-shadow: none; }
 	#PlayTrackLength, #VolumeLength { box-shadow: none; }
@@ -54,7 +56,7 @@
 	div.OptionInfo { position: absolute; padding: 2px; width: 40px; z-index: 6; left: 200px; border-radius: 6px; font-size: 3pt; opacity: 0; visibility: hidden; transition: 0.3s, bottom 0.4s; }
 	input[type=checkbox]#RepeatModeCheck + label, input[type=checkbox]#ShuffleModeCheck + label, input[type=checkbox]#LoopModeCheck + label, input[type=checkbox]#ThemeModeCheck + label { position: absolute; bottom: 2px; left: 5px; }
 	Table.CheckboxesSection { position: absolute; left: 78.5%; top: 24px; border-collapse: collapse; z-index: 7; border-spacing: 0px; border-radius: 7px; }
-	Table.CheckboxesSection:hover + div.OptionInfo { left: 154px; visibility: visible; opacity: 0.9; transition: 0.3s 5s, bottom 0.3s 0s; }
+	Table.CheckboxesSection:hover + div.OptionInfo { left: 154px; visibility: visible; opacity: 0.9; transition: 0.3s 3s, bottom 0.3s 0s; }
 	Table.CheckboxesSection TD:not(.CheckboxInput) { padding: 1.7px 0 1.7px 4px; font-size: 6pt; text-align: right; position: relative; }
 	Table.CheckboxesSection TD.CheckboxInput { position: relative; width: 20px; text-align: center; }
 	TD.VolumeControlCell { position: relative; }
@@ -134,7 +136,7 @@
 	div.Troubleshoot { position: absolute; border-radius: 20pt; background: inherit; left: 60px; top: 5px; width: 8px; height: 8px; padding: 1px; font-size: 5pt; font-weight: bold; z-index: 2; transition: filter 1s; }
 	div.Troubleshoot:hover + div.TroubleshootMessage { visibility: visible; opacity: 0.9; transition: 0.5s; left: 29%; }
 	div.TroubleshootMessage { opacity: 0; visibility: hidden; background: inherit; bottom: -15px; position: absolute; border-radius: 6px; padding: 1px; left: 0px; font-size: 5px; transition: 0.5s; width: 70px; }
-	div.ShareContainer { position: relative; left: 188px; }
+	div.ShareContainer { position: relative; left: 186px; }
 	div.ShareIcon { position: relative; background: inherit; z-index: 2; transition: 1s; }
 	div.ShareIcon:hover, div.Troubleshoot:hover { filter: brightness(130%); transition: 1s; cursor: pointer; }
 	div.ShareIcon:hover + div.CopiedTextMessage { visibility: visible; opacity: 0.9; transition: 0.5s; left: -31%; }
