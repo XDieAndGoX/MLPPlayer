@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <HTML lang="en">
 	<head>
-		<Title>Portable Player</Title>
+		<Title>My Little Player - Portable</Title>
 		<meta charset="UTF-8">
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-		<Link rel="stylesheet" type="text/css" href="General.css">
+		<Link rel="stylesheet" type="text/css" href="MLPlayer.css">
 	</head>
 	<Body>
 		<div class="ContentShade" id="ContentShade">
@@ -46,7 +46,7 @@
 							<Table id="VolumeControlTable">
 								<TR>
 									<TD id="VolumeCell">
-										<span class="AudioImage">
+										<span class="AudioIcon">
 											<div class="VolumeBody" id="VolumeBody"></div>
 											<div class="VolumeArc" id="VolumeArc"></div>
 											<div class="VolumeBar1" id="VolumeBar1"></div>
@@ -160,12 +160,12 @@
 							<div id="ShareContainer">
 								<div id="ShareIcon">
 									<div id="ShareCircle1"></div>
-									<div id="ConnectingLine1"></div>
+									<div id="ShareConnectingLine1"></div>
 									<div id="ShareCircle2"></div>
-									<div id="ConnectingLine2"></div>
+									<div id="ShareConnectingLine2"></div>
 									<div id="ShareCircle3"></div>
 								</div>
-								<div id="CopiedTextMessage"></div>
+								<div id="ShareMessage"></div>
 							</div>
 							<div class="SongListContainer" id="SongListContainer">
 								<div id="SongInformation">
@@ -191,13 +191,11 @@
 		</div>
 		<div class="MainContent" id="MainContent">
 		</div>
-		<span id="HiddenPlayerContainer">
-			<audio id="BackgroundMusic" class="BackgroundMusic">
+		<div id="HiddenShareText"></div>
+		<div id="HiddenPlayerContainer">
+			<audio id="BackgroundMusic">
 			</audio>
-		</span>
-		<Script language="JavaScript">
-			var IsPortable = 1;
-		</Script>
-		<Script language="JavaScript" src="General.js"></Script>
+		</div>
+		<Script language="JavaScript" src="MLPlayer.js"></Script>
 	</Body>
 </HTML>
