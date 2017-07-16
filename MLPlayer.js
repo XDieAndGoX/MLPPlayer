@@ -182,7 +182,7 @@
 				{
 					var IsMain = 1;
 				}
-			else if (CurrentURL.search("portable%20player.html") != -1)
+			else if (CurrentURL.search("portable.html") != -1)
 				{
 					var IsPortable = 1;
 				}
@@ -1385,14 +1385,14 @@
 					}
 				if (OptionName == "Shuffle")
 					{
-						OptionInfo.textContent = "Play a random song when the current song ends playing.";
+						OptionInfo.textContent = "Play a random song after the current song ends playing. [Only works if at the end of playlist. Next Button has to be \">>+\"]";
 						if (IsMobile != 1)
 							{
-								OptionInfo.style.bottom = "50px";
+								OptionInfo.style.bottom = "40px";
 							}
 						else
 							{
-								OptionInfo.style.top = "45px";
+								OptionInfo.style.top = "5px";
 							}
 					}
 				if (OptionName == "Loop")
