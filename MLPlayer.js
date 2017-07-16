@@ -2,6 +2,7 @@
 		/* Main Page & Portable Player */
 			var MediaPlayerContainer = document.getElementById("MediaPlayerContainer");
 			var MediaPlayerSection = document.getElementById("MediaPlayerSection");
+			var MediaPlayerRefresh = document.getElementById("MediaPlayerRefresh");
 			var SongTrack = document.getElementById("SongTrack");
 			var SongListTrack = document.getElementById("SongListTrack");
 			var MusicPlayer = document.getElementById("BackgroundMusic");
@@ -11,15 +12,24 @@
 			var CurrentlyPlaying = document.getElementById("CurrentlyPlaying");
 			var TroubleshootContainer = document.getElementById("TroubleshootContainer");
 			var Troubleshoot = document.getElementById("Troubleshoot");
+			var ClearPlaylistContainer = document.getElementById("ClearPlaylistContainer");
 			var TroubleshootMessage = document.getElementById("TroubleshootMessage");
+			var ClearPlaylistMessage = document.getElementById("ClearPlaylistMessage");
 			var ShareContainer = document.getElementById("ShareContainer");
+			var ShareCircle1 = document.getElementById("ShareCircle1");
+			var ShareConnectingLine1 = document.getElementById("ShareConnectingLine1");
+			var ShareCircle2 = document.getElementById("ShareCircle2");
+			var ShareConnectingLine2 = document.getElementById("ShareConnectingLine2");
+			var ShareCircle3 = document.getElementById("ShareCircle3");
 			var ShareIcon = document.getElementById("ShareIcon");
 			var HiddenShareText = document.getElementById("HiddenShareText");
-			var CopiedTextMessage = document.getElementById("CopiedTextMessage");
+			var ShareMessage = document.getElementById("ShareMessage");
 			var PlayButton = document.getElementById("PlayButton");
 			var NextSong = document.getElementById('NextSong');
 			var PreviousSong = document.getElementById('PreviousSong');
 			var VolumeCell = document.getElementById('VolumeCell');
+			var SongListCellMobile = document.getElementById("SongListCellMobile");
+			var SongListRowMobile = document.getElementById("SongListRowMobile");
 			var SongListContainer = document.getElementById('SongListContainer');
 			var SongSelection = document.getElementById('SongSelection');
 			var VolumeSlider = document.getElementById('VolumeSlider');
@@ -38,7 +48,8 @@
 			var LoopModeCheck = document.getElementById("LoopModeCheck");
 			var ThemeOption = document.getElementById("ThemeOption");
 			var ThemeModeCheck = document.getElementById("ThemeModeCheck");
-			var SongSelection = document.getElementById("SongSelection");
+			var CurrentSongContainer = document.getElementById("CurrentSongContainer");
+			var CurrentSong = document.getElementById("CurrentSong");
 			var SongInformation = document.getElementById("SongInformation");
 			var SongScrollable = document.getElementById("SongScrollable");		
 			var SongArrowUp = document.getElementById("SongArrowUp");
@@ -89,15 +100,10 @@
 			var CurrentTheme = localStorage.getItem("SavedTheme");
 			var GetSavedUsedThemes = localStorage.getItem("SavedUsedThemes");
 			var ScaleNumber = localStorage.getItem("SavedScale");
-			
-		/* MainPage */
-				
-			var StopwatchLink = document.getElementById("StopwatchLink");
-			var HTMLPreviewLink = document.getElementById("HTMLPreviewLink");
 
 		/* JavaScript */
 		
-			var HostURL = "http://eternitytrials.000webhostapp.com/Media/";
+			var HostURL = "http://mlplayer.000webhostapp.com/Media/";
 			var PlaylistCount;
 			var IsSongPlaying;
 			var LoopMode;
@@ -161,7 +167,7 @@
 			var SongScrollUpFunction;
 			var SongScrollDownnFunction;
 			var ThemeScrollUpFunction;
-			var ThemeScrollDownnFunction;
+			var ThemeScrollDownFunction;
 			var MusicSeekFunction;
 			var TransitionSpeedFunction;
 			var TransitionVolumeFunction;
@@ -172,14 +178,26 @@
 			var FullURL = window.location.href;
 			var AlbumLinks;
 			var MouseOverSongList;
-			
-		/* HTML Preview */
-		
-			var HTMLEditBox = document.getElementById('HTMLEditBox');
+			if (CurrentURL.search("index.html") != -1 || CurrentURL == "")
+				{
+					var IsMain = 1;
+				}
+			else if (CurrentURL.search("portable%20player.html") != -1)
+				{
+					var IsPortable = 1;
+				}
+			else if (CurrentURL.search("mobile.html") != -1)
+				{
+					var IsMobile = 1;
+					IsMain = 0;
+				}
 			
 	function initialSetup()
 		{
+			if (IsMain == 1)
+				{
 			localStorage.setItem("SongList", MusicPlayer.innerHTML);
+				}
 			
 			if (GetSavedUsedThemes != null)
 				{
@@ -239,16 +257,36 @@
 				}
 			assignEvents();
 			preliminaryChecks();
+			if (IsMain == 1 && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+				{
+					window.location = "Mobile.html";
+				}
 			changeTheme();
 			setSong();
 			history.replaceState(null, null, CurrentURL.substring(0, CurrentURL.indexOf("?")));
 			setTimeout(function() { scrollToPlaying(6, 1); }, 1000);
 			musicSeek();
 			SongInformation.textContent = document.getElementById(SongName).dataset.series;
-			TroubleshootMessage.textContent = "Something is not working as it should? Click this icon to reset everything back to default. Keep in mind that this will clear your playlist!! The page is going to be reloaded as well."
+
+			if (IsMobile == 1)
+				{
+					ClearPlaylistMessage.textContent = "Clear the playlist. To cancel, move your finger away and let go."
+					TroubleshootMessage.textContent = "Something is not working as it should? Tap this icon to reset everything back to default. Keep in mind that this will clear your playlist!! The page is going to be reloaded as well. To cancel, move your finger away and let go."
+					ShareMessage.textContent = "Copy song URL to clipboard. To cancel, move your finger away and let go.";
+					changeSongAndThemeHeight();
+				}
+			else
+				{
+					TroubleshootMessage.textContent = "Something is not working as it should? Click this icon to reset everything back to default. Keep in mind that this will clear your playlist!! The page is going to be reloaded as well."
+					ShareMessage.textContent = "Copy song URL to clipboard.";
+				}
+				
 			initialSongInfo();
 			checkControls();
-			setTimeout (function() { MediaPlayerSection.style.transition = "opacity 2s"; MediaPlayerSection.style.opacity = "1"; }, 700);
+			if (IsMobile != 1)
+				{
+					setTimeout (function() { MediaPlayerSection.style.transition = "opacity 2s"; MediaPlayerSection.style.opacity = "1"; }, 700);
+				}
 		}
 		
 	function initialSongInfo()
@@ -284,70 +322,113 @@
 	function assignEvents()
 		{
 			/* Main & Portable Player */
-			
-				MusicPlayer.addEventListener("canplay", function() { getPlayTime(1); });
-				ContentShade.addEventListener("click", resetPlayerSize);
-				PlayTrack.addEventListener("change", function() { setTimeout(seekMusic, 0300); });
-				PlayTrack.addEventListener("input", function() { setTimeout(seekMusic, 0300); });
-				PlayTrack.addEventListener("mousedown", function() { PlayTrackMouseDown = 1; });
-				PlayTrack.addEventListener("mouseup", function() { PlayTrackMouseDown = 0; });
-				Troubleshoot.addEventListener("click", resetEverything);
-				ShareIcon.addEventListener("mouseover", resetCopiedMessageOpacity);
-				SongListTrack.addEventListener("change", scrollSongList);
-				SongListTrack.addEventListener("input", scrollSongList);
-				VolumeControlTable.addEventListener("mouseover", function() { setVolumeWidth(); });
-				VolumeSlider.addEventListener("change", setVolume);
-				VolumeSlider.addEventListener("input", setVolume);
-				PreviousSong.addEventListener("click", playPreviousSong);
-				PlayButton.addEventListener("click", playMusic);
-				NextSong.addEventListener("click", playNextSong);
-				RepeatOption.addEventListener ("mouseover", function() { moreInfo("Repeat"); });
-				RepeatModeCheck.addEventListener("click", repeatMode);
-				ShuffleOption.addEventListener ("mouseover", function() { moreInfo("Shuffle"); });
-				ShuffleModeCheck.addEventListener("click", shuffleMode);
-				LoopOption.addEventListener ("mouseover", function() { moreInfo("Loop"); });
-				LoopModeCheck.addEventListener("click", loopMode); 
-				ThemeOption.addEventListener ("mouseover", function() { moreInfo("Theme"); });
-				ThemeModeCheck.addEventListener("click", themeMode); 
-				ClearPlaylistLink.addEventListener("click", clearPlaylist);
-				ScaleLinkx1.addEventListener("click", function() { scalePlayer(1) });
-				ScaleLinkx2.addEventListener("click", function() { scalePlayer(2) });
-				ScaleLinkx3.addEventListener("click", function() { scalePlayer(3) });
-				ScaleLinkx4.addEventListener("click", function() { scalePlayer(4) });
-				SongListContainer.addEventListener("mouseenter", checkIfNotChangeStyle); 
-				SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); MouseOverSongList = 1; });
-				SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6, 1); }, 0100); MouseOverSongList = 0; }); 
+				
+				if (IsMobile != 1)
+					{
+						RepeatOption.addEventListener ("mouseover", function() { moreInfo("Repeat"); });
+						ShuffleOption.addEventListener ("mouseover", function() { moreInfo("Shuffle"); });
+						LoopOption.addEventListener ("mouseover", function() { moreInfo("Loop"); });
+						ThemeOption.addEventListener ("mouseover", function() { moreInfo("Theme"); });
+						RepeatModeCheck.addEventListener("click", repeatMode);
+						ShuffleModeCheck.addEventListener("click", shuffleMode);
+						LoopModeCheck.addEventListener("click", loopMode); 
+						ThemeModeCheck.addEventListener("click", themeMode); 
+						ClearPlaylistLink.addEventListener("click", clearPlaylist);
+						ScaleLinkx1.addEventListener("click", function() { scalePlayer(1) });
+						ScaleLinkx2.addEventListener("click", function() { scalePlayer(2) });
+						ScaleLinkx3.addEventListener("click", function() { scalePlayer(3) });
+						ScaleLinkx4.addEventListener("click", function() { scalePlayer(4) });
+						SongListContainer.addEventListener("mouseenter", checkIfNotChangeStyle); 
+						SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); MouseOverSongList = 1; });
+						SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6, 1); }, 0100); MouseOverSongList = 0; });
+						SongListTrack.addEventListener("change", scrollSongList);
+						SongListTrack.addEventListener("input", scrollSongList);
+						PlayTrack.addEventListener("mousedown", function() { PlayTrackMouseDown = 1; });
+						PlayTrack.addEventListener("mouseup", function() { PlayTrackMouseDown = 0; });
+						PreviousSong.addEventListener("click", playPreviousSong);
+						PlayButton.addEventListener("click", playMusic);
+						NextSong.addEventListener("click", playNextSong);
+						SongArrowUp.addEventListener ("click", scrollSongUp);
+						SongArrowUp.addEventListener ("mousedown", scrollSongListUp);
+						SongArrowUp.addEventListener ("mouseup", function() { clearInterval(SongScrollUpFunction); });
+						SongArrowUp.addEventListener ("mouseleave", function() { clearInterval(SongScrollUpFunction); });
+						SongArrowDown.addEventListener ("click", scrollSongDown);
+						SongArrowDown.addEventListener ("mousedown", scrollSongListDown);
+						SongArrowDown.addEventListener ("mouseup", function() { clearInterval(SongScrollDownFunction); });
+						SongArrowDown.addEventListener ("mouseleave", function() { clearInterval(SongScrollDownFunction); });
+						ThemeSelectionContainer.addEventListener("mouseleave", function() { setTimeout(function() { ThemeSelection.scrollTop = 0; }, 0001);});
+						ThemeArrowUp.addEventListener ("click", scrollThemeUp);
+						ThemeArrowUp.addEventListener ("mousedown", scrollThemeListUp);
+						ThemeArrowUp.addEventListener ("mouseup", function() { clearInterval(ThemeScrollUpFunction); });
+						ThemeArrowUp.addEventListener ("mouseleave", function() { clearInterval(ThemeScrollUpFunction); });
+						ThemeArrowDown.addEventListener ("click", scrollThemeDown);
+						ThemeArrowDown.addEventListener ("mousedown", scrollThemeListDown);
+						ThemeArrowDown.addEventListener ("mouseup", function() { clearInterval(ThemeScrollDownFunction); });
+						ThemeArrowDown.addEventListener ("mouseleave", function() { clearInterval(ThemeScrollDownFunction); });
+						Troubleshoot.addEventListener("click", resetEverything);
+						ShareIcon.addEventListener("mouseover", resetShareMessage);
+						VolumeControlTable.addEventListener("mouseover", function() { setVolumeWidth(); });
+					}
+				else
+					{
+						var MatchOrientation = window.matchMedia("(orientation: landscape)");
+						MatchOrientation.addListener(function() { SongSelection.style.transition = "0s"; SongSelection.style.height = "0px"; setTimeout(changeSongAndThemeHeight, 400); });
+						RepeatOption.addEventListener ("touchstart", function() { moreInfo("Repeat"); });
+						ShuffleOption.addEventListener ("touchstart", function() { moreInfo("Shuffle"); });
+						LoopOption.addEventListener ("touchstart", function() { moreInfo("Loop"); });
+						ThemeOption.addEventListener ("touchstart", function() { moreInfo("Theme"); });
+						RepeatOption.addEventListener ("touchend", resetOptionFunctionStyle);
+						ShuffleOption.addEventListener ("touchend", resetOptionFunctionStyle);
+						LoopOption.addEventListener ("touchend", resetOptionFunctionStyle);
+						ThemeOption.addEventListener ("touchend", resetOptionFunctionStyle);
+						RepeatModeCheck.addEventListener("click", repeatMode);
+						ShuffleModeCheck.addEventListener("click", shuffleMode);
+						LoopModeCheck.addEventListener("click", loopMode); 
+						ThemeModeCheck.addEventListener("click", themeMode);
+						PlayTrack.addEventListener("touchstart", function() { PlayTrackMouseDown = 1; });
+						PlayTrack.addEventListener("touchend", function() { PlayTrackMouseDown = 0; });
+						PreviousSong.addEventListener("touchend", playPreviousSong);
+						PlayButton.addEventListener("touchend", playMusic);
+						NextSong.addEventListener("touchend", playNextSong);
+						SongArrowUp.addEventListener ("touchstart", scrollSongListUp);
+						SongArrowUp.addEventListener ("touchend", function() { clearInterval(SongScrollUpFunction); });
+						SongArrowDown.addEventListener ("touchstart", scrollSongListDown);
+						SongArrowDown.addEventListener ("touchend", function() { clearInterval(SongScrollDownFunction); });
+						ThemeArrowUp.addEventListener ("touchstart", scrollThemeListUp);
+						ThemeArrowUp.addEventListener ("touchend", function() { clearInterval(ThemeScrollUpFunction); });
+						ThemeArrowDown.addEventListener ("touchstart", scrollThemeListDown);
+						ThemeArrowDown.addEventListener ("touchend", function() { clearInterval(ThemeScrollDownFunction); });
+						Troubleshoot.addEventListener("touchstart", function () { showTroubleshootMessage(); Troubleshoot.addEventListener("touchend", resetEverything); });
+						Troubleshoot.addEventListener("touchend", hideTroubleshootMessage);
+						Troubleshoot.addEventListener("touchmove", hideTroubleshootMessage);
+						Troubleshoot.addEventListener("touchmove", function() { Troubleshoot.removeEventListener("touchend", resetEverything); });
+						ClearPlaylistContainer.addEventListener("touchstart", function () { showClearPlaylistMessage(); ClearPlaylistContainer.addEventListener("touchend", clearPlaylist); });
+						ClearPlaylistContainer.addEventListener("touchend", hideClearPlaylistMessage);
+						ClearPlaylistContainer.addEventListener("touchmove", hideClearPlaylistMessage);
+						ClearPlaylistContainer.addEventListener("touchmove", function() { ClearPlaylistContainer.removeEventListener("touchend", clearPlaylist); });
+						ShareIcon.addEventListener("touchstart", function() { ShareIcon.addEventListener("touchend", copySongURL);showShareMessage(); });
+						ShareIcon.addEventListener("touchend", function() { setTimeout(hideShareMessageTimeout, 0001) });
+						ShareIcon.addEventListener("touchmove", hideShareMessageTimeout);
+						ShareIcon.addEventListener("touchmove", function() { ShareIcon.removeEventListener("touchend", copySongURL); });
+					}
+					
 				SongSelection.addEventListener("scroll", scrollSongBar);
-				SongArrowUp.addEventListener ("click", scrollSongUp);
-				SongArrowUp.addEventListener ("mousedown", scrollSongListUp);
-				SongArrowUp.addEventListener ("mouseup", function() { clearInterval(SongScrollUpFunction); });
-				SongArrowUp.addEventListener ("mouseleave", function() { clearInterval(SongScrollUpFunction); });
-				SongArrowDown.addEventListener ("click", scrollSongDown);
-				SongArrowDown.addEventListener ("mousedown", scrollSongListDown);
-				SongArrowDown.addEventListener ("mouseup", function() { clearInterval(SongScrollDownFunction); });
-				SongArrowDown.addEventListener ("mouseleave", function() { clearInterval(SongScrollDownFunction); });
 				MusicPlayer.addEventListener("error", function() { checkError(1); });
 				MusicPlayer.addEventListener("ended", musicEnded);
-				ThemeSelectionContainer.addEventListener("mouseleave", function() { setTimeout(function() { ThemeSelection.scrollTop = 0; }, 0001);});
-				ThemeArrowUp.addEventListener ("click", scrollThemeUp);
-				ThemeArrowUp.addEventListener ("mousedown", scrollThemeListUp);
-				ThemeArrowUp.addEventListener ("mouseup", function() { clearInterval(ThemeScrollUpFunction); });
-				ThemeArrowUp.addEventListener ("mouseleave", function() { clearInterval(ThemeScrollUpFunction); });
-				ThemeArrowDown.addEventListener ("click", scrollThemeDown);
-				ThemeArrowDown.addEventListener ("mousedown", scrollThemeListDown);
-				ThemeArrowDown.addEventListener ("mouseup", function() { clearInterval(ThemeScrollDownFunction); });
-				ThemeArrowDown.addEventListener ("mouseleave", function() { clearInterval(ThemeScrollDownFunction); });
+				MusicPlayer.addEventListener("canplay", function() { getPlayTime(1); });
+				PlayTrack.addEventListener("change", function() { setTimeout(seekMusic, 0300); });
+				PlayTrack.addEventListener("input", function() { setTimeout(seekMusic, 0300); });
+				VolumeSlider.addEventListener("change", setVolume);
+				VolumeSlider.addEventListener("input", setVolume);
 
 				for (count = 0; count < Themes.length; count++)
 					{
 						document.getElementById(Themes[count].replace(' ', '_')).addEventListener("click", function() { CurrentTheme = this.id; changeTheme(); });
 					}
 					
-				if (IsPortable == 0)
+				if (IsMain == 1)
 					{
 						PortablePlayerLink.addEventListener("click", portableMode);
-						HTMLPreviewLink.addEventListener("click", hTMLPreview); 
-						StopwatchLink.addEventListener("click", stopWatch);
 					}
 				
 				if (IsPortable == 1)
@@ -375,7 +456,7 @@
 						ScaleNumber = localStorage.getItem("SavedScale");
 					}
 					
-				if (IsPortable == 1)
+				if (IsPortable == 1 || IsMobile == 1)
 					{
 						MusicPlayer.innerHTML = GetSongList;
 					}
@@ -513,9 +594,7 @@
 					{	
 						SongName = MusicPlayer.children[Song].title.replace(/ /g, '_').replace(/,/g, '');
 						MusicPlayer.children[Song].setAttribute("id", SongName);
-						MusicPlayer.children[Song].setAttribute("data-series", "My Little Pony: Friendship is Magic");
-						MusicPlayer.children[Song].setAttribute("data-composer", "Composed by: Daniel Ingram");
-						MusicPlayer.children[Song].setAttribute("data-copyright", "Copyright \u00A9 Hasbro. All Rights Reserved."); 
+						
 						if (GetSavedSongDates[SongName] != null)
 							{
 								MusicPlayer.children[Song].setAttribute("data-dateadded", GetSavedSongDates[SongName]);
@@ -525,22 +604,20 @@
 								MusicPlayer.children[Song].setAttribute("data-dateadded", Date());
 								SongDates[SongName] = MusicPlayer.children[Song].dataset.dateadded;
 							}
-						if (MusicPlayer.children[Song].dataset.artist != null)
+							
+						if (MusicPlayer.children[Song].dataset.series == null)
 							{
-								MusicPlayer.children[Song].dataset.artist = "Lead Singer(s): " + MusicPlayer.children[Song].dataset.artist;
+								MusicPlayer.children[Song].setAttribute("data-series", "My Little Pony: Friendship is Magic");
 							}
-						if (MusicPlayer.children[Song].dataset.featuredin != null)
+						if (MusicPlayer.children[Song].dataset.composer == null)
 							{
-								MusicPlayer.children[Song].dataset.featuredin = "Featured in: " + MusicPlayer.children[Song].dataset.featuredin;
+								MusicPlayer.children[Song].setAttribute("data-composer", "Daniel Ingram");
 							}
-						if (MusicPlayer.children[Song].dataset.album != null)
+						if (MusicPlayer.children[Song].dataset.copyright == null)
 							{
-								MusicPlayer.children[Song].dataset.album = "Album(s): " + MusicPlayer.children[Song].dataset.album;
+								MusicPlayer.children[Song].setAttribute("data-copyright", "Copyright \u00A9 Hasbro. All Rights Reserved.");
 							}
-						if (MusicPlayer.children[Song].dataset.contributingartist != null)
-							{
-								MusicPlayer.children[Song].dataset.contributingartist = "Also Sang by: " + MusicPlayer.children[Song].dataset.contributingartist;
-							}
+							
 						GeneratedID = document.getElementById(MusicPlayer.children[Song].id);
 						GeneratedID.src = HostURL + GeneratedID.src.substr(GeneratedID.src.lastIndexOf('/') + 1);
 						TotalSongs.push(SongName);
@@ -582,7 +659,7 @@
 				SongID = document.getElementById(SongName);
 				SongSelectorID = document.getElementById(SongName+"-Selected");
 				
-			if (NewSongCheck == 1 || CurrentURL.search(/song/i) != -1)
+				if (NewSongCheck == 1 || CurrentURL.search(/song/i) != -1)
 					{
 						MusicPlayer.removeEventListener("loadeddata", setPlayTime);
 						resetPlayTime();
@@ -598,13 +675,25 @@
 								setRandomTheme();
 							}
 				SongNumber = TotalSongs.indexOf(SongName);
-				ShareContainer.removeEventListener("click", copySongURL);
-				ShareContainer.addEventListener("click", copySongURL);
+				if (IsMobile != 1)
+					{
+						ShareContainer.removeEventListener("click", copySongURL);
+						ShareContainer.addEventListener("click", copySongURL);
+					}
+				else
+					{
+						ShareIcon.removeEventListener("touchend", copySongURL);
+						ShareIcon.addEventListener("touchend", copySongURL);
+					}
 				setTimeout(function() { scrollToPlaying(6, 1); }, 0300); 
 				if (SongSelectorID.innerHTML.search(NewHTML) != -1)
 					{
 						UpdatedSongText = SongSelectorID.innerHTML.substring(0, SongSelectorID.innerHTML.lastIndexOf(" "));
 						SongSelectorID.innerHTML = UpdatedSongText;
+					}
+				if (IsMobile == 1)
+					{
+						CurrentSong.textContent = SongSelectorID.textContent;
 					}
 				checkError(0);
 				console.log("Song "+document.getElementById(SongName).title+" (Number "+(PlaylistCount+1)+" in playlist) was set. Updating Playlist: "+localStorage.getItem("PlaylistStorage").replace(/_/g, ' ').replace(/,/g, ', ')+"."+"\n"+"Total Songs in Playlist: "+Playlist.length+".");
@@ -622,6 +711,28 @@
 				changeTheme();
 			}
 			
+		function showShareMessage()
+			{
+				ShareMessage.className = "ShareMessageMobileTap MoreInfo"+CurrentTheme;
+			}
+			
+		function hideShareMessage()
+			{
+				ShareMessage.className = "ShareMessageMobile MoreInfo"+CurrentTheme;
+			}
+			
+		function hideShareMessageTimeout()
+			{
+				if (ShareMessage.textContent.search("copied") != -1)
+					{
+						setTimeout(hideShareMessage, 1500);
+					}
+				else
+					{
+						hideShareMessage();
+					}
+			}
+			
 		function copySongURL()
 			{
 				var Range = document.createRange();
@@ -630,13 +741,20 @@
 				Range.selectNodeContents(HiddenShareText);
 				Selection.addRange(Range);
 				document.execCommand('copy');
-				CopiedTextMessage.textContent = "Song URL copied to clipboard.";
-				setTimeout(resetCopiedMessageOpacity, 2000);
+				ShareMessage.textContent = "Song URL copied to clipboard.";
+				setTimeout(resetShareMessage, 2000);
 			}
 			
-		function resetCopiedMessageOpacity()
+		function resetShareMessage()
 			{
-				CopiedTextMessage.textContent = "Copy song URL to clipboard.";
+				if (IsMobile != 1)
+					{
+						ShareMessage.textContent = "Copy song URL to clipboard.";
+					}
+				else
+					{
+						ShareMessage.textContent = "Copy song URL to clipboard. To cancel, move your finger away and let go.";
+					}
 			}
 			
 		function playMusic()
@@ -646,8 +764,16 @@
 						MusicPlayer.play();
 					}
 				PlayButton.value = "Pause";
-				PlayButton.removeEventListener("click", playMusic);
-				PlayButton.addEventListener("click", pauseMusic);
+				if (IsMobile != 1)
+					{
+						PlayButton.removeEventListener("click", playMusic);
+						PlayButton.addEventListener("click", pauseMusic);
+					}
+				else
+					{
+						PlayButton.removeEventListener("touchend", playMusic);
+						PlayButton.addEventListener("touchend", pauseMusic);
+					}
 				localStorage.setItem("IsPlaying", 1);
 				GetIsPlaying = localStorage.getItem("IsPlaying");
 				console.log("Music is now playing.");
@@ -660,8 +786,16 @@
 						MusicPlayer.pause();
 					}
 				PlayButton.value = "Play";
-				PlayButton.removeEventListener("click", pauseMusic);
-				PlayButton.addEventListener("click", playMusic);
+				if (IsMobile != 1)
+					{
+						PlayButton.removeEventListener("click", pauseMusic);
+						PlayButton.addEventListener("click", playMusic);
+					}
+				else
+					{
+						PlayButton.removeEventListener("touchend", pauseMusic);
+						PlayButton.addEventListener("touchend", playMusic);
+					}
 				localStorage.setItem("IsPlaying", 0);
 				GetIsPlaying = localStorage.getItem("IsPlaying");
 				console.log("Music has been paused.");
@@ -701,6 +835,14 @@
 					{
 						LoopModeCheck.checked = false;
 					}
+				if (PlayedAllSongsStorage.length >= TotalSongs.length)
+					{
+						LoopModeCheck.disabled = true;
+					}
+				else
+					{
+						LoopModeCheck.disabled = false;
+					}
 				if (GetThemeMode == "1")
 					{
 						ThemeModeCheck.checked = true;
@@ -709,7 +851,7 @@
 					{
 						ThemeModeCheck.checked = false;
 					}
-					
+
 				if (CurrentPlayback.textContent == "LOAD" && TotalPlayback.textContent == "ING" || CurrentPlayback.textContent == "ERR" && TotalPlayback.textContent == "OR!")
 					{
 						PlayButton.disabled = true;
@@ -737,15 +879,31 @@
 					{
 						CurrentPlayback.textContent = "ERR";
 						TotalPlayback.textContent = "OR!";
-						PlayTimeCurrent.className = "PlayTimeCurrent"+CurrentTheme+" PlayTimeCurrentError";
-						PlayTimeTotal.className = "PlayTimeTotal"+CurrentTheme+" PlayTimeTotalError";
+						if (IsMobile != 1)
+							{
+								PlayTimeCurrent.className = "PlayTimeCurrent"+CurrentTheme+" PlayTimeCurrentError";
+								PlayTimeTotal.className = "PlayTimeTotal"+CurrentTheme+" PlayTimeTotalError";
+							}
+						else
+							{
+								PlayTimeCurrent.className = "PlayTimeCurrent"+CurrentTheme+" PlayTimeCurrentErrorMobile";
+								PlayTimeTotal.className = "PlayTimeTotal"+CurrentTheme+" PlayTimeTotalErrorMobile";
+							}
 						PlayTrack.value = 0;
 						ErrorCheck = 1;
 					}
 				else
 					{
-						PlayTimeCurrent.className = "PlayTimeCurrent PlayTimeCurrent"+CurrentTheme;
-						PlayTimeTotal.className = "PlayTimeCurrent PlayTimeTotal"+CurrentTheme;
+						if (IsMobile != 1)
+							{
+								PlayTimeCurrent.className = "PlayTimeCurrent PlayTimeCurrent"+CurrentTheme;
+								PlayTimeTotal.className = "PlayTimeTotal PlayTimeTotal"+CurrentTheme;
+							}
+						else
+							{
+								PlayTimeCurrent.className = "PlayTimeCurrentMobile PlayTimeCurrent"+CurrentTheme;
+								PlayTimeTotal.className = "PlayTimeTotalMobile PlayTimeTotal"+CurrentTheme;
+							}
 						ErrorCheck = 0;
 					}
 				checkControls(1);
@@ -828,19 +986,36 @@
 							{
 								if (ShuffleMode == 0)
 									{
-										SongNumber = Playlist.indexOf(PlaylistCount);
-										SongNumber++;
+										SongNumber = TotalSongs.indexOf(Playlist[PlaylistCount]);
+										
+										if (SongNumber < TotalSongs.length-1)
+											{
+												SongNumber++;
+											}
+										else
+											{
+												SongNumber = 0;
+											}
 										SongName = TotalSongs[SongNumber];
 										CheckRepeatedSong = Playlist.indexOf(SongName);
 										checkIfSongNotListened();
 										while (CheckRepeatedSong != -1)
 											{
-												SongNumber++;
+												if (SongNumber < TotalSongs.length-1)
+													{
+														SongNumber++;
+													}
+												else
+													{
+														SongNumber = 0;
+														SongNumber++;
+													}
 												SongName = TotalSongs[SongNumber];
 												CheckRepeatedSong = Playlist.indexOf(SongName);
 												checkIfSongNotListened();
-												if (PlayedAllSongsStorage.length == TotalSongs.length)
+												if (PlayedAllSongsStorage.length >= TotalSongs.length)
 													{
+														var OnlyOnce = 1;
 														break;
 													}
 											}
@@ -860,6 +1035,7 @@
 												checkIfSongNotListened();
 												if (PlayedAllSongsStorage.length == TotalSongs.length)
 													{
+														var OnlyOnce = 1;
 														break;
 													}
 											}
@@ -869,8 +1045,15 @@
 							{
 								if (ShuffleMode == 0)
 									{
-										SongNumber = Playlist.indexOf(PlaylistCount);
-										SongNumber++;
+										SongNumber = TotalSongs.indexOf(Playlist[PlaylistCount]);
+										if (SongNumber < TotalSongs.length-1)
+											{
+												SongNumber++;
+											}
+										else
+											{
+												SongNumber = 0;
+											}
 										SongName = TotalSongs[SongNumber];
 										CheckRepeatedSong = Playlist.indexOf(SongName);
 										checkIfSongNotListened();
@@ -889,6 +1072,14 @@
 					}
 				PlaylistCount++;
 				localStorage.setItem("PlaylistCounter", PlaylistCount);
+				if (PlayedAllSongsStorage.length == TotalSongs.length && OnlyOnce == 1)
+					{
+						LoopModeCheck.checked = true;
+						LoopModeCheck.disabled = true;
+						loopMode();
+						alert("You have listened to all of the songs! From now on, loop mode will remained enabled and cannot be disabled until the playlist is cleared.");
+						OnlyOnce = 0;
+					}
 			}
 			
 		function checkIfSongNotListened()
@@ -1010,8 +1201,8 @@
 									PlaySecondUp = (PlaySecondUp < 10) ? "0"+PlaySecondUp: PlaySecondUp;
 									CurrentPlayback.textContent = PlayMinuteUp+":"+PlaySecondUp;
 									PlayTrack.value = (100 / PlayDuration) * PlayTime;
-									PlayTrackFill.style.width = PlayTrack.value+"%";
 									PlayTrackThumb.style.left = PlayTrack.value+"%";
+									PlayTrackFill.style.width = Number(PlayTrackThumb.style.left.replace("%", ""))+"%";
 								}
 							}
 							
@@ -1044,6 +1235,16 @@
 				getPlayTime(1);
 			}
 			
+		function showClearPlaylistMessage()
+			{
+				ClearPlaylistMessage.className = "ClearPlaylistMessageMobileTap MoreInfo"+CurrentTheme;
+			}
+			
+		function hideClearPlaylistMessage()
+			{
+				ClearPlaylistMessage.className = "ClearPlaylistMessageMobile MoreInfo"+CurrentTheme;
+			}
+			
 		function clearPlaylist()
 			{
 				localStorage.removeItem("PlaylistStorage");
@@ -1064,8 +1265,10 @@
 				
 				if (Scale == 1)
 					{
+						if (IsMobile != 1)
+							{
 						MediaPlayerContainer.className = "MediaPlayerContainer MediaPlayerContainerScaledx1";
-						ContentShade.className = "ContentShade ContentShade"+CurrentTheme;
+							}
 						ScaleLinkx1.style.textDecoration = TextDecoration;
 				
 						if (IsPortable == 1)
@@ -1087,8 +1290,10 @@
 
 				if (Scale == 2)
 					{
+						if (IsMobile != 1)
+							{
 						MediaPlayerContainer.className = "MediaPlayerContainer MediaPlayerContainerScaledx2";
-						ContentShade.className = "ContentShade ContentShade"+CurrentTheme+" ContentShadeActivex2";
+							}
 						ScaleLinkx2.style.textDecoration = TextDecoration;
 				
 						if (IsPortable == 1)
@@ -1110,8 +1315,10 @@
 					
 				if (Scale == 3)
 					{
+						if (IsMobile != 1)
+							{
 						MediaPlayerContainer.className = "MediaPlayerContainer MediaPlayerContainerScaledx3";
-						ContentShade.className = "ContentShade ContentShade"+CurrentTheme+" ContentShadeActivex3";
+							}
 						ScaleLinkx3.style.textDecoration = TextDecoration;
 				
 						if (IsPortable == 1)
@@ -1133,8 +1340,10 @@
 
 				if (Scale == 4)
 					{
+						if (IsMobile != 1)
+							{
 						MediaPlayerContainer.className = "MediaPlayerContainer MediaPlayerContainerScaledx4";
-						ContentShade.className = "ContentShade ContentShade"+CurrentTheme+" ContentShadeActivex4";
+							}
 						ScaleLinkx4.style.textDecoration = TextDecoration;
 				
 						if (IsPortable == 1)
@@ -1155,12 +1364,9 @@
 					}
 			}
 			
-		function resetPlayerSize()
+		function resetOptionFunctionStyle()
 			{
-				if (ScaleNumber != 4 && IsPortable != 1)
-					{
-						scalePlayer(1);
-					}
+				OptionInfo.className = "OptionInfoMobile MoreInfo"+CurrentTheme;
 			}
 
 		function moreInfo(OptionName)
@@ -1168,23 +1374,56 @@
 				if (OptionName == "Repeat")
 					{
 						OptionInfo.textContent = "Repeat the current playing song over and over indefinitively.";
-						OptionInfo.style.bottom = "60px";
+						if (IsMobile != 1)
+							{
+								OptionInfo.style.bottom = "60px";
+							}
+						else
+							{	
+								OptionInfo.style.top = "-10px";
+							}
 					}
 				if (OptionName == "Shuffle")
 					{
 						OptionInfo.textContent = "Play a random song when the current song ends playing.";
-						OptionInfo.style.bottom = "50px";
+						if (IsMobile != 1)
+							{
+								OptionInfo.style.bottom = "50px";
+							}
+						else
+							{
+								OptionInfo.style.top = "45px";
+							}
 					}
 				if (OptionName == "Loop")
 					{
 						OptionInfo.textContent = "Loop through all of the songs regardless if you have listened to them or not already. The player skips songs you have already listened to by default.";
-						OptionInfo.style.bottom = "23px";
+						if (IsMobile != 1)
+							{
+								OptionInfo.style.bottom = "23px";
+							}
+						else
+							{
+								OptionInfo.style.top = "30px";
+							}
 					}
 				if (OptionName == "Theme")
 					{
 						OptionInfo.textContent = "Change the current theme to a random one whenever a new song starts playing.";
-						OptionInfo.style.bottom = "22px";
+						if (IsMobile != 1)
+							{
+								OptionInfo.style.bottom = "22px";
+							}
+						else
+							{
+								OptionInfo.style.top = "140px";
+							}
 					}
+					
+				if (IsMobile == 1)
+					{
+						OptionInfo.className = "OptionInfoMobileTap MoreInfo"+CurrentTheme;
+					}	
 			}
 			
 		function loopMode(LogToConsole)
@@ -1287,16 +1526,32 @@
 		function checkIfNotChangeStyle()
 			{
 
-				if (SongInformation.innerHTML.search("<a href") == -1 & MouseOverSongList == 1)
+				if (SongInformation.innerHTML.search("<a href") == -1 && MouseOverSongList == 1)
 					{
 						SongInformation.style.opacity = "0";
-						SongListContainer.className = "SongListContainer";
-						SongSelection.className = "SongList SongList"+CurrentTheme;
+						if (IsMobile != 1)
+							{
+								SongListContainer.className = "SongListContainer";
+								SongSelection.className = "SongList SongList"+CurrentTheme;
+							}
+						else
+							{
+								SongListContainer.className = "SongListContainerMobile";
+								SongSelection.className = "SongListMobile SongList"+CurrentTheme;
+							}
 					}
 				else
 					{
-						SongListContainer.className = "SongListContainerNoHover";
-						SongSelection.className = "SongListNoHover SongList"+CurrentTheme;
+						if (IsMobile != 1)
+							{
+								SongListContainer.className = "SongListContainerNoHover";
+								SongSelection.className = "SongListNoHover SongList"+CurrentTheme;
+							}
+						else
+							{
+								SongListContainer.className = "SongListContainerNoHoverMobile";
+								SongSelection.className = "SongListNoHoverMobile SongList"+CurrentTheme;
+							}
 						if (MouseOverSongList == 1)
 							{
 								setTimeout(function() { scrollToPlaying(0); }, 100);
@@ -1315,7 +1570,6 @@
 				
 		function checkSongInformation()
 			{	
-
 				if (SongInfoNumber == 1)
 					{
 						if (SongID.dataset.series != null)
@@ -1335,7 +1589,7 @@
 					{
 						if (SongID.dataset.composer != null)
 							{
-								SongInformation.textContent = SongID.dataset.composer;
+								SongInformation.textContent = "Composed By: "+SongID.dataset.composer;
 							}
 							
 						SongInfoNumber++;
@@ -1350,7 +1604,7 @@
 					{
 						if (SongID.dataset.artist != null)
 							{
-								SongInformation.textContent = SongID.dataset.artist;
+								SongInformation.textContent = "Lead Singer(s): "+SongID.dataset.artist;
 							}
 
 						SongInfoNumber++;
@@ -1365,7 +1619,7 @@
 					{
 						if (SongID.dataset.contributingartist != null)
 							{
-								SongInformation.textContent = SongID.dataset.contributingartist;
+								SongInformation.textContent = "Also Sang By: "+SongID.dataset.contributingartist;
 							}
 
 						SongInfoNumber++;
@@ -1380,7 +1634,7 @@
 					{
 						if (SongID.dataset.album != null)
 							{
-								AlbumLinks = SongID.dataset.album.replace("SFM", "<a href=\"http://mlp.wikia.com/wiki/Songs_of_Friendship_and_Magic\" target=\"_blank\">SFM</a>").replace("SP", "<a href=\"http://mlp.wikia.com/wiki/Songs_of_Ponyville\" target=\"_blank\">SP</a>").replace("RRs", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls:_Rainbow_Rocks_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">RRs</a>").replace("MFT", "<a href=\"http://mlp.wikia.com/wiki/Magical_Friendship_Tour\" target=\"_blank\">MFT</a>").replace("EGs", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">EGs</a>").replace("RRcd", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls_-_Rainbow_Rocks_CD\" target=\"_blank\">RRcd</a>").replace("EGcd", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls_CD\" target=\"_blank\">EGcd</a>").replace("SH", "<a href=\"http://mlp.wikia.com/wiki/Songs_of_Harmony\" target=\"_blank\">SH</a>").replace("FMR", "<a href=\"http://mlp.wikia.com/wiki/Friendship_is_Magic_Remixed\" target=\"_blank\">FMR</a>").replace("CC", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_2015_Convention_Collection\" target=\"_blank\">CC</a>").replace("FGs", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls:_Friendship_Games_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">FGs</a>").replace("Xmas", "<a href=\"http://mlp.wikia.com/wiki/It%27s_a_Pony_Kind_of_Christmas\" target=\"_blank\">Xmas</a>").replace("FIMc", "<a href=\"http://mlp.wikia.com/wiki/Friendship_is_Magic_Collection\" target=\"_blank\">FIMc</a>").replace("EGC", "<a href=\"http://mlp.wikia.com/wiki/Equestria_Girls_Collection\" target=\"_blank\">EGC</a>").replace("PP", "<a href=\"http://mlp.wikia.com/wiki/Pinkie_Pie%27s_Party_Playlist\" target=\"_blank\">PP</a>").replace("LoE", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls:_Legend_of_Everfree_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">LoE</a>").replace("EE", "<a href=\"http://mlp.wikia.com/wiki/Explore_Equestria:_Greatest_Hits\" target=\"_blank\">EE</a>").replace("MR", "<a href=\"http://en.wikipedia.org/wiki/Squeeze_Box:_The_Complete_Works_of_%22Weird_al%22_Yankovic#Medium_Rarities_.282017.29\" target=\"_blank\">MR</a>");
+								AlbumLinks = "Album(s): "+SongID.dataset.album.replace("SFM", "<a href=\"http://mlp.wikia.com/wiki/Songs_of_Friendship_and_Magic\" target=\"_blank\">SFM</a>").replace("SP", "<a href=\"http://mlp.wikia.com/wiki/Songs_of_Ponyville\" target=\"_blank\">SP</a>").replace("RRs", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls:_Rainbow_Rocks_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">RRs</a>").replace("MFT", "<a href=\"http://mlp.wikia.com/wiki/Magical_Friendship_Tour\" target=\"_blank\">MFT</a>").replace("EGs", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">EGs</a>").replace("RRcd", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls_-_Rainbow_Rocks_CD\" target=\"_blank\">RRcd</a>").replace("EGcd", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls_CD\" target=\"_blank\">EGcd</a>").replace("SH", "<a href=\"http://mlp.wikia.com/wiki/Songs_of_Harmony\" target=\"_blank\">SH</a>").replace("FMR", "<a href=\"http://mlp.wikia.com/wiki/Friendship_is_Magic_Remixed\" target=\"_blank\">FMR</a>").replace("CC", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_2015_Convention_Collection\" target=\"_blank\">CC</a>").replace("FGs", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls:_Friendship_Games_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">FGs</a>").replace("Xmas", "<a href=\"http://mlp.wikia.com/wiki/It%27s_a_Pony_Kind_of_Christmas\" target=\"_blank\">Xmas</a>").replace("FIMc", "<a href=\"http://mlp.wikia.com/wiki/Friendship_is_Magic_Collection\" target=\"_blank\">FIMc</a>").replace("EGC", "<a href=\"http://mlp.wikia.com/wiki/Equestria_Girls_Collection\" target=\"_blank\">EGC</a>").replace("PP", "<a href=\"http://mlp.wikia.com/wiki/Pinkie_Pie%27s_Party_Playlist\" target=\"_blank\">PP</a>").replace("LoE", "<a href=\"http://mlp.wikia.com/wiki/My_Little_Pony_Equestria_Girls:_Legend_of_Everfree_-_Original_Motion_Picture_Soundtrack\" target=\"_blank\">LoE</a>").replace("EE", "<a href=\"http://mlp.wikia.com/wiki/Explore_Equestria:_Greatest_Hits\" target=\"_blank\">EE</a>").replace("MR", "<a href=\"http://en.wikipedia.org/wiki/Squeeze_Box:_The_Complete_Works_of_%22Weird_al%22_Yankovic#Medium_Rarities_.282017.29\" target=\"_blank\">MR</a>");
 								SongInformation.innerHTML = AlbumLinks;
 							}
 
@@ -1396,7 +1650,7 @@
 					{
 						if (SongID.dataset.featuredin != null)
 							{
-								SongInformation.textContent = SongID.dataset.featuredin;
+								SongInformation.textContent = "Featured In: "+SongID.dataset.featuredin;
 							}
 
 						SongInfoNumber++;
@@ -1450,7 +1704,7 @@
 		function scrollToPlaying(OffSet, Exception)
 			{
 				SongSelectorID = document.getElementById(Playlist[PlaylistCount]+"-Selected");
-				if (SongInformation.innerHTML.search("<a href") == -1 || Exception == 1)
+				if (SongInformation.innerHTML.search("<a href") == -1 || Exception == 1 || IsMobile == 1)
 					{
 						SongSelection.scrollTop = SongSelectorID.offsetTop - OffSet;
 					}
@@ -1481,23 +1735,22 @@
 		function scrollSongBar()
 			{
 				SongListTrack.value = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop;
-				ScrollSongBar.style.top = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop + 30.5 + "%";
+				ScrollSongBar.style.top = (ScrollSongRange.clientHeight / SongSelection.scrollHeight) * SongSelection.scrollTop + "px";
 			}
 			
 		function scrollSongList()
 			{
 				SongSelection.scrollTop = (SongSelection.scrollHeight / 100) * SongListTrack.value;
-				ScrollSongBar.style.top = (100 / SongSelection.scrollHeight) * SongSelection.scrollTop + 30.5 + "%";
+				ScrollSongBar.style.top = (ScrollSongRange.clientHeight / SongSelection.scrollHeight) * SongSelection.scrollTop + "px";
 				
 			}
 			
 		function portableMode()
 			{
-				window.open("Portable Player.html", "", "directories = no, menubar = no, scrollbars = no, status = no, toolbar = no, location = no");
+				window.open("Portable.html", "", "directories = no, menubar = no, scrollbars = no, status = no, toolbar = no, location = no");
 				document.getElementById("HiddenPlayerContainer").innerHTML = "";
-				document.getElementById("MediaPlayerWrap").innerHTML = "Please refresh the page to get the media player back here!!";
-				ContentShade.className = "ContentShade";
-				
+				document.getElementById("MediaPlayerContainer").innerHTML = "";
+				document.getElementById("MediaPlayerRefresh").innerHTML = "Please refresh the page to get the media player back here.";
 			}
 			
 		/* Media Player Themes */
@@ -1520,65 +1773,146 @@
 								}
 						}
 					localStorage.setItem("SavedTheme", CurrentTheme);
-					scalePlayer(ScaleNumber, 1);
-					MediaPlayerSection.className = "MediaPlayerSection MediaPlayerSection"+CurrentTheme;
-					SongTrack.className = "SongTrack SongTrack"+CurrentTheme+" PlayerSection"+CurrentTheme;
-					VolumeControlTable.className = "VolumeControl PlayerSection"+CurrentTheme;
-					SongCount.className = "SongCount PlayerSection"+CurrentTheme;
-					CheckboxesSection.className = "CheckboxesSection PlayerSection"+CurrentTheme;
-					PlayerSize.className = "PlayerSize PlayerText"+CurrentTheme;
-					CurrentlyPlaying.className = "CurrentlyPlaying PlayerText"+CurrentTheme;
-					TroubleshootContainer.className = "TroubleshootContainer MoreInfo"+CurrentTheme;
-					Troubleshoot.className = "Troubleshoot";
-					TroubleshootMessage.className = "TroubleshootMessage";
-					ShareContainer.className = "ShareContainer MoreInfo"+CurrentTheme;
-					ShareIcon.className = "ShareIcon";
-					CopiedTextMessage.className = "CopiedTextMessage MoreInfo"+CurrentTheme;
-					PlayTimeCurrent.className = "PlayTimeCurrent PlayTimeCurrent"+CurrentTheme;
-					PlayTimeTotal.className = "PlayTimeCurrent PlayTimeTotal"+CurrentTheme;
-					PlayTrackLength.className = "RangeLength RangeLength"+CurrentTheme;
-					PlayTrackFill.className = "RangeFill RangeFill"+CurrentTheme;
-					PlayTrackThumb.className = "RangeThumb RangeThumb"+CurrentTheme;
-					VolumeLength.className = "RangeLength RangeLength"+CurrentTheme;
-					VolumeFill.className = "RangeFill RangeFill"+CurrentTheme;
-					VolumeThumb.className = "RangeThumb RangeThumb"+CurrentTheme;
-					VolumeBody.className = "VolumeBody VolumeBody"+CurrentTheme;
-					VolumeArc.className = "VolumeArc VolumeArc"+CurrentTheme;
-					VolumeBar1.className = "VolumeBar1 VolumeBar1"+CurrentTheme;
-					VolumeBar2.className = "VolumeBar2 VolumeBar2"+CurrentTheme;
-					VolumeBar3.className = "VolumeBar3 VolumeBar3"+CurrentTheme;
-					VolumeBar4.className = "VolumeBar4 VolumeBar4"+CurrentTheme;
-					VolumeBar5.className = "VolumeBar5 VolumeBar5"+CurrentTheme;
-					VolumeX.className = "VolumeX VolumeX"+CurrentTheme;
-					PreviousSong.className = "PlayButtons"+CurrentTheme;
-					PlayButton.className = "PlayButtons"+CurrentTheme;
-					NextSong.className = "PlayButtons"+CurrentTheme;
-					OptionInfo.className = "OptionInfo MoreInfo"+CurrentTheme;
-					RepeatModeCheck.className = "PlayerCheckboxes"+CurrentTheme;
-					ShuffleModeCheck.className = "PlayerCheckboxes"+CurrentTheme;
-					LoopModeCheck.className = "PlayerCheckboxes"+CurrentTheme;
-					ThemeModeCheck.className = "PlayerCheckboxes"+CurrentTheme;
-					PortablePlayerLink.className = "PlayerLink"+CurrentTheme;
-					ClearPlaylistLink.className = "PlayerLink"+CurrentTheme;
-					ScaleLinkx1.className = "PlayerLink"+CurrentTheme;
-					ScaleLinkx2.className = "PlayerLink"+CurrentTheme;
-					ScaleLinkx3.className = "PlayerLink"+CurrentTheme;
-					ScaleLinkx4.className = "PlayerLink"+CurrentTheme;
-					VolumeCell.className = "VolumeCell VolumeCell"+CurrentTheme;
-					SongSelection.className = "SongList SongList"+CurrentTheme;
-					SongInformation.className = "SongInformation SongInformation"+CurrentTheme;
-					SongArrowUp.className = "SongArrowUp ArrowUp"+CurrentTheme;
-					ScrollSongBar.className = "ScrollSongBar ScrollBar"+CurrentTheme;
-					ScrollSongRange.className = "ScrollSongRange ScrollRange"+CurrentTheme;
-					SongArrowDown.className = "SongArrowDown ArrowDown"+CurrentTheme;
-					ThemeSelection.className = "ThemeSelection SongList"+CurrentTheme;
-					ThemeArrowUp.className = "ThemeArrowUp ArrowUp"+CurrentTheme;
-					ThemeArrowDown.className = "ThemeArrowDown ArrowDown"+CurrentTheme;
-					SelectTheme.className = "SelectTheme"+CurrentTheme;
+					
+					if (IsMobile != 1)
+						{
+							ContentShade.className = "ContentShade ContentShade"+CurrentTheme;
+							MediaPlayerSection.className = "MediaPlayerSection MediaPlayerSection"+CurrentTheme;
+							SongTrack.className = "SongTrack SongTrack"+CurrentTheme+" PlayerSection"+CurrentTheme;
+							scalePlayer(ScaleNumber, 1);
+							ScaleLinkx1.className = "PlayerLink"+CurrentTheme;
+							ScaleLinkx2.className = "PlayerLink"+CurrentTheme;
+							ScaleLinkx3.className = "PlayerLink"+CurrentTheme;
+							ScaleLinkx4.className = "PlayerLink"+CurrentTheme;
+							PortablePlayerLink.className = "PlayerLink"+CurrentTheme;
+							PlayerSize.className = "PlayerSize PlayerText"+CurrentTheme;
+							ClearPlaylistLink.className = "PlayerLink"+CurrentTheme;
+							PlayTrack.className = "PlayTrack";
+							PreviousSong.className = "PlayButtons PlayButtons"+CurrentTheme;
+							PlayButton.className = "PlayButtons PlayButtons"+CurrentTheme;
+							NextSong.className = "PlayButtons PlayButtons"+CurrentTheme;
+							VolumeControlTable.className = "VolumeControlTable PlayerSection"+CurrentTheme;
+							SongCount.className = "SongCount PlayerSection"+CurrentTheme;
+							CheckboxesSection.className = "CheckboxesSection PlayerSection"+CurrentTheme;
+							RepeatModeCheck.className = "RepeatModeCheck PlayerCheckboxes"+CurrentTheme;
+							ShuffleModeCheck.className = "ShuffleModeCheck PlayerCheckboxes"+CurrentTheme;
+							LoopModeCheck.className = "LoopModeCheck PlayerCheckboxes"+CurrentTheme;
+							ThemeModeCheck.className = "ThemeModeCheck PlayerCheckboxes"+CurrentTheme;
+							CurrentlyPlaying.className = "CurrentlyPlaying PlayerText"+CurrentTheme;
+							TroubleshootContainer.className = "TroubleshootContainer MoreInfo"+CurrentTheme;
+							Troubleshoot.className = "Troubleshoot";
+							TroubleshootMessage.className = "TroubleshootMessage";
+							ShareContainer.className = "ShareContainer MoreInfo"+CurrentTheme;
+							ShareCircle1.className = "ShareCircle1";
+							ShareConnectingLine1.className = "ShareConnectingLine1";
+							ShareCircle2.className = "ShareCircle2";
+							ShareConnectingLine2.className = "ShareConnectingLine2";
+							ShareCircle3.className = "ShareCircle3";
+							ShareIcon.className = "ShareIcon";
+							ShareMessage.className = "ShareMessage MoreInfo"+CurrentTheme;
+							PlayTimeCurrent.className = "PlayTimeCurrent PlayTimeCurrent"+CurrentTheme;
+							PlayTimeTotal.className = "PlayTimeTotal PlayTimeTotal"+CurrentTheme;
+							PlayTrackLength.className = "RangeLength RangeLength"+CurrentTheme;
+							PlayTrackFill.className = "RangeFill RangeFill"+CurrentTheme;
+							PlayTrackThumb.className = "RangeThumb RangeThumb"+CurrentTheme;
+							VolumeLength.className = "RangeLength RangeLength"+CurrentTheme;
+							VolumeFill.className = "RangeFill RangeFill"+CurrentTheme;
+							VolumeThumb.className = "RangeThumb VolumeThumb RangeThumb"+CurrentTheme;
+							VolumeBody.className = "VolumeBody VolumeBody"+CurrentTheme;
+							VolumeArc.className = "VolumeArc VolumeArc"+CurrentTheme;
+							VolumeBar1.className = "VolumeBar1 VolumeBar1"+CurrentTheme;
+							VolumeBar2.className = "VolumeBar2 VolumeBar2"+CurrentTheme;
+							VolumeBar3.className = "VolumeBar3 VolumeBar3"+CurrentTheme;
+							VolumeBar4.className = "VolumeBar4 VolumeBar4"+CurrentTheme;
+							VolumeBar5.className = "VolumeBar5 VolumeBar5"+CurrentTheme;
+							VolumeX.className = "VolumeX VolumeX"+CurrentTheme;
+							VolumeNumber.className = "VolumeNumber";
+							OptionInfo.className = "OptionInfo MoreInfo"+CurrentTheme;
+							VolumeCell.className = "VolumeCell VolumeCell"+CurrentTheme;
+							SongSelection.className = "SongList SongList"+CurrentTheme;
+							SongInformation.className = "SongInformation SongInformation"+CurrentTheme;
+							SongArrowUp.className = "SongArrowUp ArrowUp"+CurrentTheme;
+							ScrollSongBar.className = "ScrollSongBar ScrollBar"+CurrentTheme;
+							ScrollSongRange.className = "ScrollSongRange ScrollRange"+CurrentTheme;
+							SongArrowDown.className = "SongArrowDown ArrowDown"+CurrentTheme;
+							ThemeSelection.className = "ThemeSelection SongList"+CurrentTheme;
+							SelectTheme.className = "SelectTheme SelectTheme"+CurrentTheme;
+							ThemeArrowUp.className = "ThemeArrowUp ArrowUp"+CurrentTheme;
+							ThemeArrowDown.className = "ThemeArrowDown ArrowDown"+CurrentTheme;
+						}
+					else
+						{
+							ContentShade.className = "ContentShadeMobile ContentShade"+CurrentTheme;
+							MediaPlayerSection.className = "MediaPlayerSectionMobile MediaPlayerSection"+CurrentTheme;
+							SongTrack.className = "SongTrackMobile SongTrack"+CurrentTheme+" PlayerSection"+CurrentTheme;
+							PlayTrack.className = "PlayTrackMobile";
+							PreviousSong.className = "PlayButtonsMobile PlayButtons"+CurrentTheme;
+							PlayButton.className = "PlayButtonsMobile PlayButtons"+CurrentTheme;
+							NextSong.className = "PlayButtonsMobile PlayButtons"+CurrentTheme;
+							VolumeControlTable.className = "VolumeControlTableMobile PlayerSection"+CurrentTheme;
+							SongCount.className = "SongCountMobile PlayerSection"+CurrentTheme;
+							CheckboxesSection.className = "CheckboxesSectionMobile PlayerSection"+CurrentTheme;
+							RepeatModeCheck.className = "RepeatModeCheckMobile PlayerCheckboxes"+CurrentTheme;
+							ShuffleModeCheck.className = "ShuffleModeCheckMobile PlayerCheckboxes"+CurrentTheme;
+							LoopModeCheck.className = "LoopModeCheckMobile PlayerCheckboxes"+CurrentTheme;
+							ThemeModeCheck.className = "ThemeModeCheckMobile PlayerCheckboxes"+CurrentTheme;
+							CurrentlyPlaying.className = "CurrentlyPlayingMobile PlayerText"+CurrentTheme;
+							TroubleshootContainer.className = "TroubleshootContainerMobile MoreInfo"+CurrentTheme;
+							Troubleshoot.className = "TroubleshootMobile";
+							ClearPlaylistContainer.className = "ClearPlaylistContainerMobile PlayerSection"+CurrentTheme;
+							TroubleshootMessage.className = "TroubleshootMessageMobile MoreInfo"+CurrentTheme;
+							ClearPlaylistMessage.className = "ClearPlaylistMessageMobile MoreInfo"+CurrentTheme;
+							ShareContainer.className = "ShareContainerMobile MoreInfo"+CurrentTheme;
+							ShareIcon.className = "ShareIconMobile";
+							ShareCircle1.className = "ShareCircle1Mobile";
+							ShareConnectingLine1.className = "ShareConnectingLine1Mobile";
+							ShareCircle2.className = "ShareCircle2Mobile";
+							ShareConnectingLine2.className = "ShareConnectingLine2Mobile";
+							ShareCircle3.className = "ShareCircle3Mobile";
+							ShareMessage.className = "ShareMessageMobile MoreInfo"+CurrentTheme;
+							PlayTimeCurrent.className = "PlayTimeCurrentMobile PlayTimeCurrent"+CurrentTheme;
+							PlayTimeTotal.className = "PlayTimeTotalMobile PlayTimeTotal"+CurrentTheme;
+							PlayTrackLength.className = "RangeLengthMobile RangeLength"+CurrentTheme;
+							PlayTrackFill.className = "RangeFillMobile RangeFill"+CurrentTheme;
+							PlayTrackThumb.className = "RangeThumbMobile RangeThumb"+CurrentTheme;
+							VolumeLength.className = "RangeLengthMobile RangeLength"+CurrentTheme;
+							VolumeFill.className = "RangeFillMobile RangeFill"+CurrentTheme;
+							VolumeThumb.className = "RangeThumbMobile VolumeThumbMobile RangeThumb"+CurrentTheme;
+							VolumeBody.className = "VolumeBodyMobile VolumeBody"+CurrentTheme;
+							VolumeArc.className = "VolumeArcMobile VolumeArc"+CurrentTheme;
+							VolumeBar1.className = "VolumeBar1Mobile VolumeBar1"+CurrentTheme;
+							VolumeBar2.className = "VolumeBar2Mobile VolumeBar2"+CurrentTheme;
+							VolumeBar3.className = "VolumeBar3Mobile VolumeBar3"+CurrentTheme;
+							VolumeBar4.className = "VolumeBar4Mobile VolumeBar4"+CurrentTheme;
+							VolumeBar5.className = "VolumeBar5Mobile VolumeBar5"+CurrentTheme;
+							VolumeX.className = "VolumeXMobile VolumeX"+CurrentTheme;
+							VolumeNumber.className = "VolumeNumberMobile";
+							OptionInfo.className = "OptionInfoMobile MoreInfo"+CurrentTheme;
+							VolumeCell.className = "VolumeCellMobile VolumeCell"+CurrentTheme;
+							SongSelection.className = "SongListMobile SongList"+CurrentTheme;
+							CurrentSongContainer.className = "CurrentSongContainerMobile PlayerSection"+CurrentTheme;
+							CurrentSong.className = "CurrentSongMobile"
+							SongInformation.className = "SongInformationMobile PlayerSection"+CurrentTheme;
+							SongArrowUp.className = "SongArrowUpMobile ArrowUp"+CurrentTheme;
+							ScrollSongBar.className = "ScrollSongBarMobile ScrollBar"+CurrentTheme;
+							ScrollSongRange.className = "ScrollSongRangeMobile ScrollRange"+CurrentTheme;
+							SongArrowDown.className = "SongArrowDownMobile ArrowDown"+CurrentTheme;
+							ThemeSelection.className = "ThemeSelectionMobile SongList"+CurrentTheme;
+							SelectTheme.className = "SelectThemeMobile SelectTheme"+CurrentTheme;
+							ThemeArrowUp.className = "ThemeArrowUpMobile ArrowUp"+CurrentTheme;
+							ThemeArrowDown.className = "ThemeArrowDownMobile ArrowDown"+CurrentTheme;
+						}
 					
 					for (count = 0; count < Themes.length; count++)
 						{
-							document.getElementById(Themes[count].replace(' ', '_')).className = "ThemeOption Song"+CurrentTheme;
+							if (IsMobile != 1)
+								{
+									document.getElementById(Themes[count].replace(' ', '_')).className = "ThemeOption Song"+CurrentTheme;
+								}
+							else
+								{
+									document.getElementById(Themes[count].replace(' ', '_')).className = "ThemeOptionMobile Song"+CurrentTheme;
+								}
 						}
 						
 					for (Song = 0; Song < LastSong; Song++)
@@ -1589,6 +1923,16 @@
 					console.log("Theme was set to "+CurrentTheme+".");
 					
 				}
+				
+		function showTroubleshootMessage()
+			{
+				TroubleshootMessage.className = "TroubleshootMessageMobileTap MoreInfo"+CurrentTheme;
+			}
+			
+		function hideTroubleshootMessage()
+			{
+				TroubleshootMessage.className = "TroubleshootMessageMobile MoreInfo"+CurrentTheme;
+			}
 				
 		function resetEverything()
 			{
@@ -1601,23 +1945,14 @@
 				localStorage.setItem("SongList", KeepSongList);
 				location.reload(true);
 			}
-
-	/* HTML Preview */
-		
-		
-		function previewHTML()
-			{		
-				window.frames[0].document.body.innerHTML = HTMLEditBox.value;
-			}
 			
-		function hTMLPreview ()
-			{
-				window.open("HTML Preview.html", "", "directories = no, menubar = no, scrollbars = no, status = no, toolbar = no, location = no, width = 841, height = 471, left = 330, top = 325");
-			}
-			
-	/* Stopwatch */
-
-		function stopWatch ()
-			{
-				window.open("Stopwatch.html", "", "directories = no, menubar = no, scrollbars = no, status = no, toolbar = no, location = no, width = 525, height = 210, left = 330, top = 325");
-			}
+		function changeSongAndThemeHeight()
+		{
+			SongSelection.style.transition = "1s";
+			SongSelection.style.height = SongListRowMobile.offsetHeight+"px";
+			ThemeSelection.style.height = CheckboxesSection.offsetHeight+"px";
+			ScrollSongRange.style.height = Number(SongSelection.style.height.replace("px", "")) - 40+"px";
+			SongArrowDown.style.top = Number(SongSelection.style.height.replace("px", "")) - 20+"px";
+			setTimeout(function() { scrollToPlaying(1, 1); }, 500);
+			setTimeout(scrollSongList, 500);
+		}
