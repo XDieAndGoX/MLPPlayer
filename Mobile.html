@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<HTML lang="en">
+	<head>
+		<Title>My Little Player</Title>
+		<meta charset="UTF-8">
+		<meta content='user-scalable=0' name='viewport' />
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+		<Link rel="stylesheet" type="text/css" href="MLPlayer.css">
+	</head>
+	<Body>
+		<div class="ContentShadeMobile" id="ContentShade">
+			<table id="MediaPlayerSection">
+				<TR>
+					<TD colspan=3>
+						<Table id="SongTrack">
+							<TR>
+								<TD id="PlayTimeCurrent">
+									<span id="CurrentPlayback">
+										0:00
+									</span>
+								</TD>
+								<TD class="PlayTrackCellMobile">
+									<span class="RangeTotalLengthMobile">
+										<span id="PlayTrackLength">
+											<span id="PlayTrackFill">&nbsp;</span>
+										</span>
+										<span id="PlayTrackThumb">&nbsp;</span>
+										<input type=range step="0.01" id="PlayTrack" value="0">
+									</span>
+								</TD>
+								<TD id="PlayTimeTotal">
+									<span id="TotalPlayback">
+										-0:00
+									</span>
+								</TD>
+							</TR>
+						</Table>
+					</TD>
+				</TR>
+				<TR id="SongListRowMobile">
+					<TD colspan=3 class="SongListCellMobile" id="SongListCellMobile">
+						<div class="SongListContainerMobile" id="SongListContainer">
+							<div id="SongSelection">
+							</div>
+							<div class="SongScrollableMobile" id="SongScrollable">
+								<div id="SongArrowUp">
+								</div>
+								<div id="ScrollSongBar">
+								</div>
+								<div id="ScrollSongRange">
+								</div>
+								<input type=range step="0.01" id="SongListTrack" class="SongListTrackMobile" value="0">
+								<div class="SongArrowDownMobile" id="SongArrowDown">
+								</div>
+							</div>
+						</div>
+					</TD>
+				</TR>
+				<TR>
+					<TD class="CheckboxesCellMobile">
+						<div class="CheckboxTableContainerMobile">
+							<Table id="CheckboxesSection">
+								<TR>
+									<TD id="RepeatOption">
+										Repeat:
+									</TD>
+									<TD class="CheckboxInputMobile">
+										<input type="checkbox" id="RepeatModeCheck" accesskey="R"><label for="RepeatModeCheck"></label>
+									</TD>
+								</TR>
+								<TR>
+									<TD id="ShuffleOption">
+										Shuffle:
+									</TD>
+									<TD class="CheckboxInputMobile">
+										<input type="checkbox" id="ShuffleModeCheck" accesskey="S"><label for="ShuffleModeCheck"></label>
+									</TD>
+								</TR>
+								<TR>
+									<TD id="LoopOption">
+										Loop:
+									</TD>
+									<TD class="CheckboxInputMobile">
+										<input type="checkbox" id="LoopModeCheck" accesskey="O"><label for="LoopModeCheck"></label>
+									</TD>
+								</TR>
+								<TR>
+									<TD id="ThemeOption">
+										Theme:
+									</TD>
+									<TD class="CheckboxInputMobile">
+										<input type="checkbox" id="ThemeModeCheck" accesskey="T"><label for="ThemeModeCheck"></label>
+									</TD>
+								</TR>
+							</Table>
+							<div id="OptionInfo">
+							</div>
+						</div>
+					</TD>
+					<TD class="ThemeCell">
+						<div class="ThemeSelectionContainerMobile" id="ThemeSelectionContainer">
+							<div id="ThemeSelection">
+							</div>
+							<div class="ThemeScrollableMobile" id="ThemeScrollable">
+								<div id="ThemeArrowUp">
+								</div>
+								<div class="ThemeArrowDownMobile" id="ThemeArrowDown">
+								</div>
+							</div>
+						</div>
+					</TD>
+					<TD class="CurrentlyPlayingCellMobile">
+						<div id="TroubleshootContainer">
+							<div id="Troubleshoot">
+								?
+							</div>
+						</div>
+						<div id="TroubleshootMessage"></div>
+						<div id="ClearPlaylistContainer">
+							C
+						</div>
+						<div id="ClearPlaylistMessage"></div>
+						<div id="ShareContainer">
+							<div id="ShareIcon">
+								<div id="ShareCircle1"></div>
+								<div id="ShareConnectingLine1"></div>
+								<div id="ShareCircle2"></div>
+								<div id="ShareConnectingLine2"></div>
+								<div id="ShareCircle3"></div>
+							</div>
+						</div>
+						<div id="ShareMessage"></div>
+						<div id="SongCount">
+							Listened to<br><span id="ListenedSongs"></span> out of <span id="NumberOfSongs"></span> Available Songs
+						</div>
+						<div id="CurrentlyPlaying">
+							Currently Playing
+						</div>
+						<div id="CurrentSongContainer">
+							<div id="CurrentSong">
+							</div>
+							<div id="SongInformation">
+							</div>
+						</div>
+					</TD>
+				</TR>
+				<TR>
+					<TD class="PlayButtonsCellMobile" colspan=2>
+						<span class="PlayButtonsSectionMobile">
+							<input type="button" id="PreviousSong" value="|<<" accesskey=",">
+							<input type="button" id="PlayButton" Value="Play" accesskey="P">
+							<input type="button" id="NextSong" value=">>|" accesskey=".">
+						</span>
+					</TD>
+					<TD class="VolumeControlCellMobile">
+						<Table id="VolumeControlTable">
+							<TR>
+								<TD id="VolumeCell">
+									<span class="AudioIconMobile">
+										<div class="VolumeBodyMobile" id="VolumeBody"></div>
+										<div class="VolumeArcMobile" id="VolumeArc"></div>
+										<div class="VolumeBar1Mobile" id="VolumeBar1"></div>
+										<div class="VolumeBar2Mobile" id="VolumeBar2"></div>
+										<div class="VolumeBar3Mobile" id="VolumeBar3"></div>
+										<div class="VolumeBar4Mobile" id="VolumeBar4"></div>
+										<div class="VolumeBar5Mobile" id="VolumeBar5"></div>
+										<div class="VolumeXMobile" id="VolumeX"></div>
+									</span>
+									<span id="VolumeNumber">
+										100
+									</span>
+								</TD>
+								<TD class="VolumeTrackCellMobile">
+									<span class="RangeTotalLengthMobile">
+										<span id="VolumeLength">
+											<span id="VolumeFill">&nbsp;</span>
+										</span>
+										<span id="VolumeThumb">&nbsp;</span>
+										<input class="VolumeControlMobile" value="100" accesskey="X" id="VolumeSlider" type=range>
+									</span>
+								</TD>
+							</TR>
+						</Table>
+					</TD>
+				</TR>
+			</Table>
+		</div>
+		<audio id="BackgroundMusic" class="BackgroundMusicMobile">
+		</audio>
+		<div id="HiddenShareText"></div>
+	</Body>
+	<Script src="MLPlayer.js"></Script>
+</HTML>
