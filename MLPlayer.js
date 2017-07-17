@@ -1077,7 +1077,6 @@
 						LoopModeCheck.checked = true;
 						LoopModeCheck.disabled = true;
 						loopMode();
-						alert("You have listened to all of the songs! From now on, loop mode will remained enabled and cannot be disabled until the playlist is cleared.");
 						OnlyOnce = 0;
 					}
 			}
@@ -1397,14 +1396,14 @@
 					}
 				if (OptionName == "Loop")
 					{
-						OptionInfo.textContent = "Loop through all of the songs regardless if you have listened to them or not already. The player skips songs you have already listened to by default.";
+						OptionInfo.textContent = "Loop through all of the songs whether or not you have listened to them already. The player skips songs you have listened to by default. When all of the available songs have been listened to, this option will be enabled automatically and cannot be disabled until the playlist is cleared.";
 						if (IsMobile != 1)
 							{
-								OptionInfo.style.bottom = "23px";
+								OptionInfo.style.bottom = "22px";
 							}
 						else
 							{
-								OptionInfo.style.top = "30px";
+								OptionInfo.style.top = "10px";
 							}
 					}
 				if (OptionName == "Theme")
