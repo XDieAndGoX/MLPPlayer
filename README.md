@@ -1,6 +1,6 @@
 The media player was created for the enjoynment of myself and others. The controls should be self explanatory as they are in any other media player.  
 
-If you would like to make your own theme for the media player, please follow the template in: [PlayerThemeTemplate.css](https://github.com/XDieAndGoX/MLPPlayer/blob/master/PlayerThemeTemplate.css) Once you have done this, send me an e-mail to eternitytrials@gmail.com or contact me through any other methods you know so I can review it and add it.
+If you would like to make your own theme for the media player, please follow the template in: [MLPlayerThemeTemplate.css](https://github.com/XDieAndGoX/MLPPlayer/blob/master/MLPlayerThemeTemplate.css) Once you have done this, send me an e-mail to eternitytrials@gmail.com or contact me through any other methods you know so I can review it and add it.
 
  # Usage
 **1.** *The media player was configured to use localStorage to save its settings and remember them when the page is reloaded or visited.*  
@@ -54,6 +54,6 @@ If you would like to make your own theme for the media player, please follow the
    
    **\*** Use the left and right arrow keys on your keyboard to control the volume.
     
-[Media Player](http://eternitytrials.000webhostapp.com/) - [(Mirror 1)](http://eternitytrials.x10host.com/)
+[Media Player](http://mlplayer.000webhostapp.com/)
 
 **Note** The files have additional code completely unrelated to the player itself! Although you can see what the other code does by using the links above, focus is not placed on these other tools, so.
