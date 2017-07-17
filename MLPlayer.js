@@ -103,7 +103,7 @@
 
 		/* JavaScript */
 		
-			var HostURL = "http://mlplayer.000webhostapp.com/Media/";
+			var HostURL = "http://mlplayer.000webhostapp.com/";
 			var PlaylistCount;
 			var IsSongPlaying;
 			var LoopMode;
@@ -257,15 +257,15 @@
 				}
 			assignEvents();
 			preliminaryChecks();
-			if (IsMain == 1 && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
-				{
-					window.location = "Mobile.html";
-				}
 			changeTheme();
 			setSong();
 			history.replaceState(null, null, CurrentURL.substring(0, CurrentURL.indexOf("?")));
 			setTimeout(function() { scrollToPlaying(6, 1); }, 1000);
 			musicSeek();
+			if (IsMain == 1 && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+				{
+					window.location = "Mobile.html";
+				}
 			SongInformation.textContent = document.getElementById(SongName).dataset.series;
 
 			if (IsMobile == 1)
@@ -619,7 +619,7 @@
 							}
 							
 						GeneratedID = document.getElementById(MusicPlayer.children[Song].id);
-						GeneratedID.src = HostURL + GeneratedID.src.substr(GeneratedID.src.lastIndexOf('/') + 1);
+						GeneratedID.src = HostURL + "Media/" + GeneratedID.src.substr(GeneratedID.src.lastIndexOf('/') + 1);
 						TotalSongs.push(SongName);
 					}
 					
@@ -737,7 +737,7 @@
 			{
 				var Range = document.createRange();
 				Selection = window.getSelection();
-				HiddenShareText.textContent = FullURL+"?Song="+SongName+"&Theme="+CurrentTheme;
+				HiddenShareText.textContent = HostURL+"index.html?Song="+SongName+"&Theme="+CurrentTheme;
 				Range.selectNodeContents(HiddenShareText);
 				Selection.addRange(Range);
 				document.execCommand('copy');
