@@ -386,7 +386,7 @@
 				else
 					{
 						var MatchOrientation = window.matchMedia("(orientation: landscape)");
-						MatchOrientation.addListener(function() { SongSelection.style.transition = "0s"; SongSelection.style.height = "0px"; setTimeout(changeSongAndThemeHeight, 400); });
+						MatchOrientation.addListener(function() { SongSelection.style.height = "0"; changeSongAndThemeHeight(); });
 						RepeatOption.addEventListener ("touchstart", function() { moreInfo("Repeat"); });
 						ShuffleOption.addEventListener ("touchstart", function() { moreInfo("Shuffle"); });
 						LoopOption.addEventListener ("touchstart", function() { moreInfo("Loop"); });
@@ -2050,7 +2050,6 @@
 			
 		function changeSongAndThemeHeight()
 		{
-			SongSelection.style.transition = "1s";
 			SongSelection.style.height = SongListRowMobile.offsetHeight+"px";
 			ThemeSelection.style.height = CheckboxesSection.offsetHeight+"px";
 			ScrollSongRange.style.height = Number(SongSelection.style.height.replace("px", "")) - 40+"px";
