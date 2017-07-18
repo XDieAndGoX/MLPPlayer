@@ -333,7 +333,7 @@
 					{
 						if (IsMain == 1)
 							{
-								window.addEventListener("load", function() { PortableWindow.close(); });
+								window.addEventListener("load", function() { if (PortableWindow != null) { PortableWindow.close(); } });
 							}
 						RepeatOption.addEventListener ("mouseover", function() { moreInfo("Repeat"); });
 						ShuffleOption.addEventListener ("mouseover", function() { moreInfo("Shuffle"); });
@@ -427,7 +427,6 @@
 						SearchIcon.addEventListener("touchend", focusSongSearchField);
 						SongSearch.addEventListener("input", searchSong);
 						SongSearch.addEventListener("keypress", checkSearchKey);
-						SongSearch.addEventListener("blur", blurSongSearchField);
 					}
 					
 				SongSelection.addEventListener("scroll", scrollSongBar);
@@ -756,14 +755,14 @@
 						if (Focus == 1)
 							{
 								SongSearch.className = "SongSearchMobileTap SongSearch"+CurrentTheme;
-								setTimeout(function() { SongSearch.focus(); }, 1000);
+								setTimeout(function() { SongSearch.focus(); }, 0001);
 								SearchIcon.removeEventListener("touchend", focusSongSearchField);
 								SearchIcon.addEventListener("touchend", blurSongSearchField);
 							}
 						else
 							{
 								SongSearch.className = "SongSearchMobile SongSearch"+CurrentTheme;
-								SongSearch.blur();
+								setTimeout(function() { SongSearch.blur(); }, 0001);
 								SongSearch.textContent = null;
 								searchSong();
 								SearchIcon.removeEventListener("touchend", blurSongSearchField);
@@ -778,8 +777,30 @@
 				
 				if (KeyPressed == 13)
 					{
-						SongSearch.textContent = null;
-						searchSong();
+						var SearchString = SongSearch.textContent.replace(/\s/g, "_").replace(/,/g, "").toLowerCase();
+						
+						for (Song = 0; Song < TotalSongs.length; Song++)
+							{
+								var CurrentSongSearch = TotalSongs[Song].toLowerCase();
+								
+								if (CurrentSongSearch.search(SearchString) != -1)
+									{
+										SongName = TotalSongs[Song];
+										SongNumber = TotalSongs.indexOf(SongName);
+										CheckRepeatedSong = Playlist.indexOf(SongName);
+										checkIfSongNotListened();
+										Playlist.push(SongName);
+										localStorage.setItem("PlaylistStorage", Playlist);
+										PlaylistCount = Playlist.length-1;
+										localStorage.setItem("PlaylistCounter", PlaylistCount);
+										setSong(1);
+										checkControls();
+										break;
+									}
+							}
+							
+					SongSearch.textContent = null;
+					searchSong();
 					}
 			}
 		function focusSongSearchField()
@@ -1035,6 +1056,7 @@
 				PlaylistCount = Playlist.length-1;
 				localStorage.setItem("PlaylistCounter", PlaylistCount);
 				setSong(1);
+				blurSongSearchField();
 				checkError(0);
 				checkControls();
 			}
@@ -1472,7 +1494,7 @@
 							}
 						else
 							{	
-								OptionInfo.style.top = "-10px";
+								OptionInfo.style.top = "-3px";
 							}
 					}
 				if (OptionName == "Shuffle")
@@ -1496,7 +1518,7 @@
 							}
 						else
 							{
-								OptionInfo.style.top = "10px";
+								OptionInfo.style.top = "-3px";
 							}
 					}
 				if (OptionName == "Theme")
