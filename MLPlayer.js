@@ -333,7 +333,7 @@
 					{
 						if (IsMain == 1)
 							{
-								window.addEventListener("beforeunload", function() { PortableWindow.close(); });
+								window.addEventListener("load", function() { PortableWindow.close(); });
 							}
 						RepeatOption.addEventListener ("mouseover", function() { moreInfo("Repeat"); });
 						ShuffleOption.addEventListener ("mouseover", function() { moreInfo("Shuffle"); });
@@ -719,7 +719,8 @@
 			
 		function searchSong()
 			{
-				var SearchString = SongSearch.textContent.replace(/ /g, "_").replace(/,/g, "").toLowerCase();
+				var SearchString = SongSearch.textContent.replace(/\s/g, "_").replace(/,/g, "").toLowerCase();
+				
 				for (Song = 0; Song < TotalSongs.length; Song++)
 					{
 						if (TotalSongs[Song].toLowerCase().search(SearchString) == -1)
