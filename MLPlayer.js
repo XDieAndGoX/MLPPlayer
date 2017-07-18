@@ -32,6 +32,11 @@
 			var SongListRowMobile = document.getElementById("SongListRowMobile");
 			var SongListContainer = document.getElementById('SongListContainer');
 			var SongSelection = document.getElementById('SongSelection');
+			var SearchContainer = document.getElementById('SearchContainer');
+			var SearchIcon = document.getElementById('SearchIcon');
+			var SearchHandle = document.getElementById('SearchHandle');
+			var SearchCircle = document.getElementById('SearchCircle');
+			var SongSearch = document.getElementById('SongSearch');
 			var VolumeSlider = document.getElementById('VolumeSlider');
 			var VolumeNumber = document.getElementById('VolumeNumber');
 			var PlayTimeCurrent = document.getElementById('PlayTimeCurrent');
@@ -340,7 +345,11 @@
 						ScaleLinkx4.addEventListener("click", function() { scalePlayer(4) });
 						SongListContainer.addEventListener("mouseenter", checkIfNotChangeStyle); 
 						SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); MouseOverSongList = 1; });
-						SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6, 1); }, 0100); MouseOverSongList = 0; });
+						SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6, 1); }, 0100); MouseOverSongList = 0; SongSearch.textContent = null; SongSearch.blur(); searchSong(); });
+						SearchIcon.addEventListener("click", focusSongSearchField);
+						SearchContainer.addEventListener("mouseenter", function() { setTimeout(focusSongSearchField, 1000); });
+						SongSearch.addEventListener("input", searchSong);
+						SongSearch.addEventListener("keypress", checkSearchKey);
 						SongListTrack.addEventListener("change", scrollSongList);
 						SongListTrack.addEventListener("input", scrollSongList);
 						PlayTrack.addEventListener("mousedown", function() { PlayTrackMouseDown = 1; });
@@ -410,6 +419,10 @@
 						ShareIcon.addEventListener("touchend", function() { setTimeout(hideShareMessageTimeout, 0001) });
 						ShareIcon.addEventListener("touchmove", hideShareMessageTimeout);
 						ShareIcon.addEventListener("touchmove", function() { ShareIcon.removeEventListener("touchend", copySongURL); });
+						SearchIcon.addEventListener("touchend", focusSongSearchField);
+						SongSearch.addEventListener("input", searchSong);
+						SongSearch.addEventListener("keypress", checkSearchKey);
+						SongSearch.addEventListener("blur", blurSongSearchField);
 					}
 					
 				SongSelection.addEventListener("scroll", scrollSongBar);
@@ -697,6 +710,80 @@
 					}
 				checkError(0);
 				console.log("Song "+document.getElementById(SongName).title+" (Number "+(PlaylistCount+1)+" in playlist) was set. Updating Playlist: "+localStorage.getItem("PlaylistStorage").replace(/_/g, ' ').replace(/,/g, ', ')+"."+"\n"+"Total Songs in Playlist: "+Playlist.length+".");
+			}
+			
+		function searchSong()
+			{
+				var SearchString = SongSearch.textContent.replace(/ /g, "_").replace(/,/g, "").toLowerCase();
+				for (Song = 0; Song < TotalSongs.length; Song++)
+					{
+						if (TotalSongs[Song].toLowerCase().search(SearchString) == -1)
+							{
+								document.getElementById(TotalSongs[Song]+"-Selected").style.display = "none";
+							}
+						else
+							{
+								document.getElementById(TotalSongs[Song]+"-Selected").style.display = null;
+							}
+					}
+			}
+			
+		function focusSearchField(Focus)
+			{
+				if (IsMobile != 1)
+					{
+						if (Focus == 1)
+							{
+								SongSearch.focus();
+								SearchIcon.removeEventListener("click", focusSongSearchField);
+								SearchIcon.addEventListener("click", blurSongSearchField);
+							}
+						else
+							{
+								SongSearch.blur();
+								SearchIcon.removeEventListener("click", blurSongSearchField);
+								SearchIcon.addEventListener("click", focusSongSearchField);
+							}
+					}
+				else
+					{
+						if (Focus == 1)
+							{
+								SongSearch.className = "SongSearchMobileTap SongSearch"+CurrentTheme;
+								setTimeout(function() { SongSearch.focus(); }, 1000);
+								SearchIcon.removeEventListener("touchend", focusSongSearchField);
+								SearchIcon.addEventListener("touchend", blurSongSearchField);
+							}
+						else
+							{
+								SongSearch.className = "SongSearchMobile SongSearch"+CurrentTheme;
+								SongSearch.blur();
+								SongSearch.textContent = null;
+								searchSong();
+								SearchIcon.removeEventListener("touchend", blurSongSearchField);
+								SearchIcon.addEventListener("touchend", focusSongSearchField);
+							}
+					}
+			}
+			
+		function checkSearchKey(e)
+			{
+				var KeyPressed = e.keyCode;
+				
+				if (KeyPressed == 13)
+					{
+						SongSearch.textContent = null;
+						searchSong();
+					}
+			}
+		function focusSongSearchField()
+			{
+				focusSearchField(1);
+			}
+		
+		function blurSongSearchField()
+			{
+				focusSearchField(0);
 			}
 			
 		function setRandomTheme()
@@ -1829,6 +1916,11 @@
 							OptionInfo.className = "OptionInfo MoreInfo"+CurrentTheme;
 							VolumeCell.className = "VolumeCell VolumeCell"+CurrentTheme;
 							SongSelection.className = "SongList SongList"+CurrentTheme;
+							SearchContainer.className = "SearchContainer MediaPlayerSection"+CurrentTheme;
+							SearchIcon.className = "SearchIcon";
+							SearchHandle.className = "SearchHandle";
+							SearchCircle.className = "SearchCircle SearchCircle"+CurrentTheme;
+							SongSearch.className = "SongSearch SongSearch"+CurrentTheme;
 							SongInformation.className = "SongInformation SongInformation"+CurrentTheme;
 							SongArrowUp.className = "SongArrowUp ArrowUp"+CurrentTheme;
 							ScrollSongBar.className = "ScrollSongBar ScrollBar"+CurrentTheme;
@@ -1889,6 +1981,11 @@
 							OptionInfo.className = "OptionInfoMobile MoreInfo"+CurrentTheme;
 							VolumeCell.className = "VolumeCellMobile VolumeCell"+CurrentTheme;
 							SongSelection.className = "SongListMobile SongList"+CurrentTheme;
+							SearchContainer.className = "SearchContainerMobile MediaPlayerSection"+CurrentTheme;
+							SearchIcon.className = "SearchIconMobile";
+							SearchHandle.className = "SearchHandleMobile";
+							SearchCircle.className = "SearchCircleMobile SearchCircle"+CurrentTheme;
+							SongSearch.className = "SongSearchMobile SongSearch"+CurrentTheme;
 							CurrentSongContainer.className = "CurrentSongContainerMobile PlayerSection"+CurrentTheme;
 							CurrentSong.className = "CurrentSongMobile"
 							SongInformation.className = "SongInformationMobile PlayerSection"+CurrentTheme;

@@ -3,10 +3,10 @@
 
 			.MediaPlayerSection/*PONY_NAME*/, .RangeLength/*PONY_NAME*/ { background: linear-gradient(/*COAT -10*/, /*COAT*/, /*COAT -10*/); box-shadow: 0px 0px 2px /*COAT*/; border-color: /*STROKE*/; }
 			.VolumeBody/*PONY_NAME*/, .ScrollBar/*PONY_NAME*/, .ScrollRange/*PONY_NAME*/, .PlayerText/*PONY_NAME*/ { background-color: /*COAT*/; color: /*COAT*/; }
-			.PlayerText/*PONY_NAME*/ { text-shadow: -1px 1px /*STROKE*/ }
-			.PlayTimeCurrent/*PONY_NAME*/, .PlayTimeTotal/*PONY_NAME*/, .VolumeControl:hover .VolumeCell/*PONY_NAME*/, .VolumeControl:active .VolumeCell/*PONY_NAME*/, .ArrowUp/*PONY_NAME*/, .ArrowDown/*PONY_NAME*/, .VolumeBar1/*PONY_NAME*/, .VolumeBar2/*PONY_NAME*/, .VolumeBar3/*PONY_NAME*/, .VolumeBar4/*PONY_NAME*/, .VolumeBar5/*PONY_NAME*/, .VolumeArc/*PONY_NAME*/ { border-color: /*COAT*/; }
+			.PlayerText/*PONY_NAME*/ { text-shadow: -0.09em 0.09em /*STROKE*/ }
+			.PlayTimeCurrent/*PONY_NAME*/, .PlayTimeTotal/*PONY_NAME*/, .VolumeControl:hover .VolumeCell/*PONY_NAME*/, .VolumeControl:active .VolumeCell/*PONY_NAME*/, .ArrowUp/*PONY_NAME*/, .ArrowDown/*PONY_NAME*/, .VolumeBar1/*PONY_NAME*/, .VolumeBar2/*PONY_NAME*/, .VolumeBar3/*PONY_NAME*/, .VolumeBar4/*PONY_NAME*/, .VolumeBar5/*PONY_NAME*/, .VolumeArc/*PONY_NAME*/, .SearchCircle/*PONY_NAME*/, .SongSearch/*PONY_NAME*/ { border-color: /*COAT*/; }
 			.ContentShade/*PONY_NAME*/, .PlayerSection/*PONY_NAME*/, input[type=button].PlayButtons/*PONY_NAME*/, .SongList/*PONY_NAME*/, .SongInformation/*PONY_NAME*/, .SelectTheme/*PONY_NAME*/, .MoreInfo/*PONY_NAME*/ { background: linear-gradient(270deg, /*MANE -10*/, /*MANE*/, /*MANE -10*/); color: /*COAT*/; }
 			.PlayerLink/*PONY_NAME*/ { color: /*MANE*/; }
-			.SongTrack/*PONY_NAME*/, .PlayerLink/*PONY_NAME*/ + Span, .Song/*PONY_NAME*/, .VolumeX/*PONY_NAME*/ { color: /*ACCESSORY/SECOND MANE/CUTIE MARK COLOR*/; text-shadow: 0px 0px 1px /*ACCESSORY/SECOND MANE/CUTIE MARK COLOR*/; }
+			.SongTrack/*PONY_NAME*/, .PlayerLink/*PONY_NAME*/ + Span, .Song/*PONY_NAME*/, .VolumeX/*PONY_NAME*/, .SongSearch/*PONY_NAME*/ { color: /*ACCESSORY/SECOND MANE/CUTIE MARK COLOR*/; text-shadow: 0px 0px 1px /*ACCESSORY/SECOND MANE/CUTIE MARK COLOR*/; }
 			.RangeFill/*PONY_NAME*/, .RangeThumb/*PONY_NAME*/ { background: linear-gradient(/*ACCESSORY/SECOND MANE/CUTIE MARK COLOR -10*/, /*ACCESSORY/SECOND MANE/CUTIE MARK COLOR/*/, /*ACCESSORY/SECOND MANE/CUTIE MARK COLOR -10*/); box-shadow: 0px 0px 1px /*ACCESSORY/SECOND MANE/CUTIE MARK COLOR*/; }
 			input[type=checkbox].PlayerCheckboxes/*PONY_NAME*/ + label { background-color: /*MANE*/; }
