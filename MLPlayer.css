@@ -147,7 +147,7 @@
 	div.SearchContainer:hover div.SongSearch, div.SearchContainer:focus div.SongSearch, div.SongSearch:focus { width: 40px; opacity: 1; transition: 1s; }
 	div.SearchCircle { width: 4px; height: 4px; border-width: 1px; border-style: solid; border-radius: 20px; position: absolute; left: 3.5px; }
 	div.SearchHandle { width: 5px; height: 1px; position: absolute; top: 6px; background: inherit; transform: rotate(135deg); }
-	div.SongSearch { height: 5px; width: 0; opacity: 0; font-size: 3pt; position: absolute; left: 10px; border-bottom-width: 1px; border-bottom-style: solid; transition: 1s; text-align: left; white-space: nowrap; overflow: hidden; }
+	div.SongSearch { height: 5px; width: 0; opacity: 0; font-size: 3pt; position: absolute; left: 10px; padding-left: 1px; border-bottom-width: 1px; border-bottom-style: solid; transition: 1s; text-align: left; white-space: nowrap; overflow: hidden; }
 	div.TroubleshootContainer { position: relative; z-index: 5; }
 	div.Troubleshoot { position: absolute; border-radius: 20pt; background: inherit; left: 60px; top: 5px; width: 8px; height: 8px; padding: 1px; font-size: 5pt; font-weight: bold; z-index: 2; transition: filter 1s; }
 	div.Troubleshoot:hover + div.TroubleshootMessage { visibility: visible; opacity: 0.9; transition: 0.5s; left: 29%; }
