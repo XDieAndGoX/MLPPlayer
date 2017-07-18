@@ -144,7 +144,7 @@
 	div.SearchContainer { opacity: 0; visibility: hidden; position: absolute; top: 2%; left: 1%; transition: 0.8s; }
 	div.SearchIcon { position: absolute; background: inherit; transition: 1s; }
 	div.SearchIcon:hover { filter: brightness(180%); transition: 1s; cursor: pointer; }
-	div.SearchContainer:hover div.SongSearch, div.SearchContainer:focus div.SongSearch, div.SongSearch:focus { width: 40px; opacity: 1; transition: 1s; }
+	div.SearchContainer:hover div.SongSearch, div.SearchContainer:focus div.SongSearch, div.SongSearch:focus { width: 10px; opacity: 1; transition: 1s; }
 	div.SearchCircle { width: 4px; height: 4px; border-width: 1px; border-style: solid; border-radius: 20px; position: absolute; left: 3.5px; }
 	div.SearchHandle { width: 5px; height: 1px; position: absolute; top: 6px; background: inherit; transform: rotate(135deg); }
 	div.SongSearch { height: 5px; width: 0; opacity: 0; font-size: 3pt; position: absolute; left: 10px; padding-left: 1px; border-bottom-width: 1px; border-bottom-style: solid; transition: 1s; text-align: left; white-space: nowrap; overflow: hidden; }
@@ -261,7 +261,7 @@
 	div.SearchCircleMobile { width: 25px; height: 25px; border-width: 4px; border-style: solid; border-radius: 20px; position: absolute; left: 3.5px; }
 	div.SearchHandleMobile { width: 24px; height: 4px; position: absolute; top: 32px; left: -9px; background: inherit; transform: rotate(135deg); }
 	div.SongSearchMobile { height: 30px; width: 0; opacity: 0; font-size: 60%; position: absolute; left: 40px; border-bottom-width: 1px; border-bottom-style: solid; transition: 1s; text-align: left; white-space: nowrap; overflow: hidden; }
-	div.SongSearchMobileTap { height: 30px; width: 200px; opacity: 1; font-size: 60%; position: absolute; left: 40px; border-bottom-width: 1px; border-bottom-style: solid; transition: 1s; text-align: left; white-space: nowrap; overflow: hidden; }
+	div.SongSearchMobileTap { height: 30px; width: 50px; opacity: 1; font-size: 60%; position: absolute; left: 40px; border-bottom-width: 1px; border-bottom-style: solid; transition: 1s; text-align: left; white-space: nowrap; overflow: hidden; }
 	div.SongScrollableMobile { position: absolute; top: 0; right: 6px; height: 45px; }
 	div.SongArrowUpMobile { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom-width: 15px; border-bottom-style: solid; }
 	input.SongListTrackMobile { position: absolute; left: -19px; top: 39px; z-index: 4; transform: rotate(90deg); opacity: 0; width: 60px; }
