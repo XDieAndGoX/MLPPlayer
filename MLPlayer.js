@@ -109,6 +109,7 @@
 		/* JavaScript */
 		
 			var HostURL = "http://mlplayer.000webhostapp.com/";
+			var PortableWindow;
 			var PlaylistCount;
 			var IsSongPlaying;
 			var LoopMode;
@@ -330,6 +331,10 @@
 				
 				if (IsMobile != 1)
 					{
+						if (IsMain == 1)
+							{
+								window.addEventListener("beforeunload", function() { PortableWindow.close(); });
+							}
 						RepeatOption.addEventListener ("mouseover", function() { moreInfo("Repeat"); });
 						ShuffleOption.addEventListener ("mouseover", function() { moreInfo("Shuffle"); });
 						LoopOption.addEventListener ("mouseover", function() { moreInfo("Loop"); });
@@ -1833,7 +1838,7 @@
 			
 		function portableMode()
 			{
-				window.open("Portable.html", "", "directories = no, menubar = no, scrollbars = no, status = no, toolbar = no, location = no");
+				PortableWindow = window.open("Portable.html", "", "directories = no, menubar = no, scrollbars = no, status = no, toolbar = no, location = no");
 				document.getElementById("HiddenPlayerContainer").innerHTML = "";
 				document.getElementById("MediaPlayerContainer").innerHTML = "";
 				document.getElementById("MediaPlayerRefresh").innerHTML = "Please refresh the page to get the media player back here.";
