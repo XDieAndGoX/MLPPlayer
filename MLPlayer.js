@@ -200,9 +200,14 @@
 			
 	function initialSetup()
 		{
+			if (IsMobile != 1)
+				{
+					setTimeout (function() { MediaPlayerSection.style.transition = "opacity 2s"; MediaPlayerSection.style.opacity = "1"; }, 700);
+				}
+
 			if (IsMain == 1)
 				{
-			localStorage.setItem("SongList", MusicPlayer.innerHTML);
+					localStorage.setItem("SongList", MusicPlayer.innerHTML);
 				}
 			
 			if (GetSavedUsedThemes != null)
@@ -289,10 +294,6 @@
 				
 			initialSongInfo();
 			checkControls();
-			if (IsMobile != 1)
-				{
-					setTimeout (function() { MediaPlayerSection.style.transition = "opacity 2s"; MediaPlayerSection.style.opacity = "1"; }, 700);
-				}
 		}
 		
 	function initialSongInfo()
@@ -333,7 +334,11 @@
 					{
 						if (IsMain == 1)
 							{
-								window.addEventListener("load", function() { if (PortableWindow != null) { PortableWindow.close(); } });
+								window.addEventListener("beforeunload", function() { if (PortableWindow != null) { PortableWindow.close(); } });
+							}
+						if (IsPortable == 1)
+							{
+								window.addEventListener("beforeunload", function() { window.opener.location.reload(true); });
 							}
 						RepeatOption.addEventListener ("mouseover", function() { moreInfo("Repeat"); });
 						ShuffleOption.addEventListener ("mouseover", function() { moreInfo("Shuffle"); });
@@ -350,10 +355,11 @@
 						ScaleLinkx4.addEventListener("click", function() { scalePlayer(4) });
 						SongListContainer.addEventListener("mouseenter", checkIfNotChangeStyle); 
 						SongListContainer.addEventListener("mouseenter", function() { setTimeout(function() { scrollToPlaying(0); }, 0001); MouseOverSongList = 1; });
+						SongListContainer.addEventListener("mouseenter", function() { setTimeout(focusSongSearchField, 100); });
 						SongListContainer.addEventListener("mouseleave", function() { setTimeout(function() { scrollToPlaying(6, 1); }, 0100); MouseOverSongList = 0; SongSearch.textContent = null; SongSearch.blur(); searchSong(); });
 						SearchIcon.addEventListener("click", focusSongSearchField);
-						SearchContainer.addEventListener("mouseenter", function() { setTimeout(focusSongSearchField, 1000); });
 						SongSearch.addEventListener("input", searchSong);
+						SongSearch.addEventListener("change", searchSong);
 						SongSearch.addEventListener("keypress", checkSearchKey);
 						SongListTrack.addEventListener("change", scrollSongList);
 						SongListTrack.addEventListener("input", scrollSongList);
@@ -424,7 +430,7 @@
 						ShareIcon.addEventListener("touchend", function() { setTimeout(hideShareMessageTimeout, 0001) });
 						ShareIcon.addEventListener("touchmove", hideShareMessageTimeout);
 						ShareIcon.addEventListener("touchmove", function() { ShareIcon.removeEventListener("touchend", copySongURL); });
-						SearchIcon.addEventListener("touchend", focusSongSearchField);
+						SearchIcon.addEventListener("touchend", function() { setTimeout(focusSongSearchField, 100); });
 						SongSearch.addEventListener("input", searchSong);
 						SongSearch.addEventListener("keypress", checkSearchKey);
 					}
@@ -476,6 +482,12 @@
 				if (IsPortable == 1 || IsMobile == 1)
 					{
 						MusicPlayer.innerHTML = GetSongList;
+					}
+					
+				if (IsPortable != 1)
+					{
+						localStorage.setItem("IsPlaying", 0);
+						GetIsPlaying = 0;
 					}
 
 				LastSong = MusicPlayer.childElementCount;
@@ -718,6 +730,7 @@
 			
 		function searchSong()
 			{
+				SongSelection.scrollTop = 0;
 				var SearchString = SongSearch.textContent.replace(/\s/g, "_").replace(/,/g, "").toLowerCase();
 				
 				for (Song = 0; Song < TotalSongs.length; Song++)
@@ -789,10 +802,18 @@
 										SongNumber = TotalSongs.indexOf(SongName);
 										CheckRepeatedSong = Playlist.indexOf(SongName);
 										checkIfSongNotListened();
-										Playlist.push(SongName);
-										localStorage.setItem("PlaylistStorage", Playlist);
-										PlaylistCount = Playlist.length-1;
-										localStorage.setItem("PlaylistCounter", PlaylistCount);
+										if (CheckRepeatedSong == -1)
+											{
+												Playlist.push(SongName);
+												localStorage.setItem("PlaylistStorage", Playlist);
+												PlaylistCount = Playlist.length-1;
+												localStorage.setItem("PlaylistCounter", PlaylistCount);
+											}
+										else
+											{
+												PlaylistCount = Playlist.indexOf(SongName);
+												localStorage.setItem("PlaylistCounter", PlaylistCount);
+											}
 										setSong(1);
 										checkControls();
 										break;
@@ -801,6 +822,11 @@
 							
 					SongSearch.textContent = null;
 					searchSong();
+					}
+					
+				if (KeyPressed == 9)
+					{
+						PlayButton.focus();
 					}
 			}
 		function focusSongSearchField()
@@ -850,8 +876,8 @@
 		function copySongURL()
 			{
 				var Range = document.createRange();
+				HiddenShareText.textContent = FullURL.substring(0, FullURL.lastIndexOf('/')+1)+"index.html?Song="+SongName+"&Theme="+CurrentTheme;
 				Selection = window.getSelection();
-				HiddenShareText.textContent = HostURL+"index.html?Song="+SongName+"&Theme="+CurrentTheme;
 				Range.selectNodeContents(HiddenShareText);
 				Selection.addRange(Range);
 				document.execCommand('copy');
@@ -966,17 +992,6 @@
 						ThemeModeCheck.checked = false;
 					}
 
-				if (CurrentPlayback.textContent == "LOAD" && TotalPlayback.textContent == "ING" || CurrentPlayback.textContent == "ERR" && TotalPlayback.textContent == "OR!")
-					{
-						PlayButton.disabled = true;
-						PlayTrack.disabled = true;
-					}
-				else
-					{
-						PlayButton.disabled = false;
-						PlayTrack.disabled = false;
-					}
-
 				loopMode(0);
 				repeatMode(0);
 				shuffleMode(0);
@@ -1051,10 +1066,20 @@
 				SongID = this.id.replace('-Selected', '');
 				CheckRepeatedSong = Playlist.indexOf(SongID);
 				checkIfSongNotListened();
-				Playlist.push(SongID);
-				localStorage.setItem("PlaylistStorage", Playlist);
-				PlaylistCount = Playlist.length-1;
-				localStorage.setItem("PlaylistCounter", PlaylistCount);
+				
+				if (CheckRepeatedSong == -1)
+					{
+						Playlist.push(SongID);
+						localStorage.setItem("PlaylistStorage", Playlist);
+						PlaylistCount = Playlist.length-1;
+						localStorage.setItem("PlaylistCounter", PlaylistCount);
+					}
+				else
+					{
+						PlaylistCount = Playlist.indexOf(SongID);
+						localStorage.setItem("PlaylistCounter", PlaylistCount);
+					}
+
 				setSong(1);
 				blurSongSearchField();
 				checkError(0);
@@ -1122,7 +1147,7 @@
 													}
 												else
 													{
-														SongNumber = 0;
+														SongNumber = -1;
 														SongNumber++;
 													}
 												SongName = TotalSongs[SongNumber];
@@ -2067,7 +2092,15 @@
 				localStorage.setItem("SavedSongDates", KeepSongDates);
 				localStorage.setItem("SavedThemeDates", KeepThemeDates);
 				localStorage.setItem("SongList", KeepSongList);
-				location.reload(true);
+				if (IsPortable == 1)
+					{
+						window.opener.location.reload(true);
+						window.close();
+					}
+				else
+					{
+						location.href = "index.html";
+					}
 			}
 			
 		function changeSongAndThemeHeight()
